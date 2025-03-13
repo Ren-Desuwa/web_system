@@ -1,127 +1,65 @@
-html, body {
-    overflow: hidden;
-    height: 100%; /* Ensures the body takes the full height */
-    }
+body {
+    margin: 0;
+    height: 100vh; 
+    position: relative;
+}
 
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FE9B00;
+    background-image: url("background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(9px);
+    z-index: -1;
+}
 
-    body {
-        margin: 0;
-        height: 100vh;
-        position: relative;
-    }
+.container {
+    position: relative;
+    z-index: 1;
+}
 
-    body::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #FE9B00;
-        background-image: url("bgEdited.png.png");
-        background-size: cover;
-        background-repeat: no-repeat;
-        filter: blur(1px);
-        z-index: -1;
-    }
+.ucclogo, .header {
+    display: inline-block;
+    vertical-align: middle;
+}
 
-    .container {
-        position: relative;
-        z-index: 1;
+.uccLogo {
+    height: 150px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
 
-    }
+.header {
+    position: absolute;
+    font-size: 50px;
+    font-family: Coolvetica;
+    color: white;
+    top: 10px;
+}
 
-    .ucclogo, .header {
-        display: inline-block;
-        vertical-align: middle;
-    }
+.hr-line {
+    border-top: 5px solid #ffffff;
+    width: 100%;
+    margin: 20px 0;
+}
 
-    .uccLogo {
-        height: 150px;
-        margin-top: 10px;
-        margin-left: 10px;
-    }
+.desc {
+    position: absolute;
+    font-size: 50px;
+    font-family: Coolvetica;
+    color: white;
+}
 
-    .header {
-        position: absolute;
-        font-size: 50px;
-        font-family: Coolvetica;
-        color: white;
-        top: 10px;
-    }
-
-    .hr-line {
-        border-top: 5px solid #ffffff;
-        width: 100%;
-        margin: 20px 0;
-    }
-
-    .desc {
-        position: relative;
-        font-size: 50px;
-        font-family: Coolvetica;
-        color: white;
-        top: 5px; /* Adjusts the text vertically to appear above the line */
-        left: 72%;
-        transform: translateX(-68%); /* Centering the text */
-        z-index: 1; /* Ensures the text appears above the line */
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
-    
-    .small-hrl {
-        border-top: 4px solid #ffffff;
-        width: 50%;
-        margin-left: 3%; /* Centers the line based on the width */
-        margin-top: 40px; /* Adds space above the line */
-        margin-bottom: 20px;
-        z-index: 0; /* Keeps the line below the text */
-    }
-
-    .desc2 {
-        position: relative;
-        font-size: 35px;
-        font-family: Coolvetica;
-        color: white;
-        top: 5px; /* Adjusts the text vertically to appear above the line */
-        left: 98%;
-        transform: translateX(-94%); /* Centering the text */
-        z-index: 1; /* Ensures the text appears above the line */
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        
-    }
-
-    .button {
-        position: relative;
-        height: 60px;
-        width: 220px;
-        background-color: #fe9d0000; /* Transparent background with red tint */
-        border: 2px solid #000000;
-        top: 340px;
-        left: 10%; /* Adjusted to center the button horizontally */
-        transform: translateX(-50%); /* Keeps the button centered horizontally */
-        z-index: 1;
-        cursor: pointer;
-        font-size: 35px;
-        font-family: Coolvetica;
-    }
-
-    .buttonInside {
-        position: absolute; /* Use absolute positioning to position it inside the parent button */
-        top: 0;
-        left: 0; /* Aligns the inner button to the top-left corner of the parent */
-        height: 60px;
-        width: 220px;
-        background-color: #fe9d0000;
-        border: 2px solid #000000;
-        z-index: 2; /* Ensure it's above the outer button */
-        cursor: pointer;
-        font-size: 35px;
-        font-family: Coolvetica;
-        text-align: center;
-    }
-
-    .button, .buttonInside {
-        color: white;
-        display: inline-block;
-        border:1px black;
-    }
+.small-hrl {
+    border-top: 4px solid #ffffff;
+    width: 50%;
+    margin-left: 5%;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
