@@ -18,7 +18,7 @@ html, body {
         width: 100%;
         height: 100%;
         background-color: #FE9B00;
-        background-image: url("bgEdited.png.png");
+        background-image: url("assets/image/bgEdited.png.png");
         background-size: cover;
         background-repeat: no-repeat;
         filter: blur(1px);
