@@ -1,127 +1,286 @@
-html, body {
+/* 
+  CSS for the card site 
+  #23325a - dark blue
+  #e7a572 - dark yellow
+  #f7e6d3 - light yellow
+  #782b42 - dark red
+*/
+
+
+@font-face {
+    font-family: 'Nunito';
+    src: url(assets/fonts/Nunito/Nunito-VariableFont_wght.ttf) format('truetype');
+    font-optical-sizing: auto;
+    font-weight: 200 800;
+    font-style: normal;
+}
+
+body {
+    background-color: #23325a ;
+}
+
+.get_started {
+    height: 70px;
+    width: 200px;
+    background-color: #e7a572;
+    border: #782b42 2px solid;
+    border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
     overflow: hidden;
-    height: 100%; /* Ensures the body takes the full height */
-    }
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
 
+.get_started p {
+    color: #782b42;
+    font-size: 23px;
+    font-weight: 400;
+    font-family: Nunito;
+    text-align: center;
+    cursor: pointer;
+}
 
-    body {
-        margin: 0;
-        height: 100vh;
-        position: relative;
-    }
+.get_started:hover {
+    background-color: #e7a572;
+    border-color: #23325a;
+    box-shadow: 0 0 15px rgb(0, 194, 253);
+}
 
-    body::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #FE9B00;
-        background-image: url("bgEdited.png.png");
-        background-size: cover;
-        background-repeat: no-repeat;
-        filter: blur(1px);
-        z-index: -1;
-    }
+/* Diamond Shape Stars */
+.stars {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: white;
+    transform: rotate(45deg);
+    box-shadow: 0 0 10px white;
+    opacity: 1;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-in-out;
+}
 
-    .container {
-        position: relative;
-        z-index: 1;
+.stars.large {
+    width: 10px;
+    height: 10px;
+}
+  
+#nav {
+    margin-top: 10px;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 100;
+}
+  
+.logo {
+    padding: 0px;
+    width: 75px;
+    height: 75px;
+    background-image: url(assets/image/logo_bird.png);
+    background-size: cover;
+    margin-left: -5px;
+    border-radius: 20px;
+}
+  
+.dropdown {
+    width: 110px;
+    height: 50px;
+    background-color: #23325a;
+    color: #f7e6d3;
+    border:#e7a572 4px solid;
+    border-radius: 30px;
+    position: relative;
+    margin: 0px 20px;
+    transition: background-color 0.3s ease-in-out;
+}
+  
+.for-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.dropdown p {
+    font-family: Nunito;
+    font-size: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #f7e6d3;
+    margin: 2px -5px 0px 5px;
+    padding: 6px;
+    transition: color 0.3s ease-in-out;
+}
+  
+.dropdown svg {
+    fill: #f7e6d3;
+    padding: 0px;
+    width: 30px;
+    height: 30px;
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out, transform 0.3s ease-in-out, fill 0.3s ease-in-out;
+}
+  
+.checkbox:not(:checked) ~ .for-checkbox p {
+    color: #f7e6d3;
+}
+  
+.checkbox:checked ~ .for-checkbox p {
+    color: #23325a;
+}
+  
+.checkbox:not(:checked) ~ .dropdown {
+    background-color: #23325a; /* dark blue */
+    border:#e7a572 3px solid;
 
-    }
+}
+  
+.checkbox:checked ~ .dropdown {
+    background-color: #e7a572; /* dark yellow */
+    border:#23325a 3px solid;
 
-    .ucclogo, .header {
-        display: inline-block;
-        vertical-align: middle;
+}
+  
+.checkbox:not(:checked) ~ .for-checkbox svg {
+    transform: rotate(0deg);
+    fill: #f7e6d3;
+}
+  
+.checkbox:checked ~ .for-checkbox svg {
+    transform: rotate(-180deg);
+    fill: #23325a;
+}
+  
+@keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
     }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}
+  
+@keyframes slideDown {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+}
+  
+@keyframes flip {
+    0% {
+      transform: scale(1.50) translate(0, 200px) rotateY(0deg);
+    }
+    50% {
+      transform: scale(1.50) translate(0, 200px) rotateY(180deg);
+    }
+    100% {
+      transform: scale(1.50) translate(0, 200px) rotateY(180deg);
+    }
+}
+  
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 120%;
+    left: 10px;
+    background-color: #23325a; 
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index:100;
+    border-radius: 4px; 
+    animation: slideUp 0.3s ease-in-out; 
+}
+  
+.checkbox:not(:checked) ~ .dropdown-content {
+    display: block;
+    animation: slideDown 0.3s ease-in-out forwards;
+    animation-fill-mode: forwards;
+    pointer-events: none; 
+}
+  
+.checkbox:checked ~ .dropdown-content {
+    display: block;
+    animation: slideUp 0.3s ease-in-out forwards;
+    pointer-events: auto; 
+}
+  
+.checkbox:not(:checked) ~ .dropdown-content.slideDown {
+    display: none;
+}
+  
+.dropdown-content a {
+    color: #f7e6d3; 
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-family: Nunito;
+    font-weight: 600;
+    border-radius: 4px; 
+}
+  
+.dropdown-content a:hover {
+    background-color: #e7a572;
+    color: #23325a; 
+}
+  
+[type="checkbox"]:checked, [type="checkbox"]:not(:checked){
+    position: absolute;
+    left: -99999px;
+}
 
-    .uccLogo {
-        height: 150px;
-        margin-top: 10px;
-        margin-left: 10px;
-    }
+.title {
+    position: relative;
+    font-size: 50px;
+    color: #782b42;
+    top: 5px; /* Adjusts the text vertically to appear above the line */
+    left: 72%;
+    transform: translateX(-68%); /* Centering the text */
+    z-index: 1; /* Ensures the text appears above the line */
+    font-family: nunito;
+}
 
-    .header {
-        position: absolute;
-        font-size: 50px;
-        font-family: Coolvetica;
-        color: white;
-        top: 10px;
-    }
+.line {
+    border-top: 4px solid #782b42;
+    width: 50%;
+    margin-left: 4%; 
+    margin-top: 20x; 
+    margin-bottom: 20px;
+    z-index: 0; 
+}
 
-    .hr-line {
-        border-top: 5px solid #ffffff;
-        width: 100%;
-        margin: 20px 0;
-    }
+.description {
+    position: relative;
+    font-size: 35px;
+    font-family: nunito;
+    color: #782b42;
+    top: 5px; /* Adjusts the text vertically to appear above the line */
+    left: 98%;
+    transform: translateX(-94%); /* Centering the text */
+    z-index: 1; /* Ensures the text appears above the line */
+}
 
-    .desc {
-        position: relative;
-        font-size: 50px;
-        font-family: Coolvetica;
-        color: white;
-        top: 5px; /* Adjusts the text vertically to appear above the line */
-        left: 72%;
-        transform: translateX(-68%); /* Centering the text */
-        z-index: 1; /* Ensures the text appears above the line */
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
-    
-    .small-hrl {
-        border-top: 4px solid #ffffff;
-        width: 50%;
-        margin-left: 3%; /* Centers the line based on the width */
-        margin-top: 40px; /* Adds space above the line */
-        margin-bottom: 20px;
-        z-index: 0; /* Keeps the line below the text */
-    }
-
-    .desc2 {
-        position: relative;
-        font-size: 35px;
-        font-family: Coolvetica;
-        color: white;
-        top: 5px; /* Adjusts the text vertically to appear above the line */
-        left: 98%;
-        transform: translateX(-94%); /* Centering the text */
-        z-index: 1; /* Ensures the text appears above the line */
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        
-    }
-
-    .button {
-        position: relative;
-        height: 60px;
-        width: 220px;
-        background-color: #fe9d0000; /* Transparent background with red tint */
-        border: 2px solid #000000;
-        top: 340px;
-        left: 10%; /* Adjusted to center the button horizontally */
-        transform: translateX(-50%); /* Keeps the button centered horizontally */
-        z-index: 1;
-        cursor: pointer;
-        font-size: 35px;
-        font-family: Coolvetica;
-    }
-
-    .buttonInside {
-        position: absolute; /* Use absolute positioning to position it inside the parent button */
-        top: 0;
-        left: 0; /* Aligns the inner button to the top-left corner of the parent */
-        height: 60px;
-        width: 220px;
-        background-color: #fe9d0000;
-        border: 2px solid #000000;
-        z-index: 2; /* Ensure it's above the outer button */
-        cursor: pointer;
-        font-size: 35px;
-        font-family: Coolvetica;
-        text-align: center;
-    }
-
-    .button, .buttonInside {
-        color: white;
-        display: inline-block;
-        border:1px black;
-    }
+.schedule_button {
+    height: 70px;
+    width: 200px;
+    background-color: #23325a;
+    border:  2px solid;
+    border-radius: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    overflow: visible;
+}
