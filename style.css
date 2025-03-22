@@ -81,7 +81,7 @@ body {
     padding: 0px;
     width: 75px;
     height: 75px;
-    background-image: url(assets/image/logo_bird.png);
+    background-image: url(assets/image/logo_bird_1.png);
     background-size: cover;
     margin-left: -5px;
     border-radius: 20px;
@@ -238,10 +238,14 @@ body {
     left: -99999px;
 }
 
+.introduction {
+    overflow: hidden;
+}
+
 .title {
     position: relative;
     font-size: 50px;
-    color: #782b42;
+    color: #f7e6d3;
     top: 5px; /* Adjusts the text vertically to appear above the line */
     left: 72%;
     transform: translateX(-68%); /* Centering the text */
@@ -250,8 +254,8 @@ body {
 }
 
 .line {
-    border-top: 4px solid #782b42;
-    width: 50%;
+    border-top: 4px solid #e7a572;
+    width: 600px;
     margin-left: 4%; 
     margin-top: 20x; 
     margin-bottom: 20px;
@@ -262,7 +266,7 @@ body {
     position: relative;
     font-size: 35px;
     font-family: nunito;
-    color: #782b42;
+    color: #f7e6d3;
     top: 5px; /* Adjusts the text vertically to appear above the line */
     left: 98%;
     transform: translateX(-94%); /* Centering the text */
@@ -270,17 +274,60 @@ body {
 }
 
 .schedule_button {
+    font-family: nunito;
     height: 70px;
     width: 200px;
-    background-color: #23325a;
-    border:  2px solid;
+    background-color: #e7a572;
     border-radius: 20px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: absolute;
+    bottom: 10%;
+    left: 7%;
     z-index: 1;
     justify-content: center;
     align-items: center;
     display: flex;
-    overflow: visible;
+}
+
+.schedule_button:hover {
+    box-shadow: 0 0 15px rgb(0, 194, 253);
+}
+.schedule {
+    width: 100%;
+    height: 85vh;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.layout {
+    margin: 20px;
+    border: 3px solid #782b42;
+    border-radius: 50px;
+}
+.menu {
+    background-color: #782b42;
+    margin: 20px;
+    border: 3px solid #e7a572;
+    border-radius: 50px;
+    display: grid;
+    grid-template-rows: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+    grid-template-columns: 1fr;
+}
+
+.menu_item {
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    font-size: 13px;
+}
+
+.menu hr {
+    width: 80%;
+    border: 0;
+    border-top: 2px solid black;
+    margin: auto;
+}
+
+.menu_item h1 {
+    font-family: nunito;
 }
