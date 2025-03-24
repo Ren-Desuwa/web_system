@@ -28,6 +28,7 @@ body {
     display: flex;
     align-items: center;
     z-index: 100;
+    padding: 10px;
     background: linear-gradient(rgb(44, 187, 44, 49%), rgba(193, 255, 114, 10%)),
     linear-gradient(rgba(254, 155, 0, 74%), rgba(254, 157, 0, 55%)); 
 }
@@ -41,7 +42,9 @@ body {
 
 .nav_line {
     width: 100vw;
-    margin-left: -10px;
+    height: 4px;
+    background-color: white;
+    margin: 10px -10px;
 }
 
 .logo {
@@ -61,7 +64,7 @@ body {
 .title {
     position: relative;
     font-size: 50px;
-    color: #f7e6d3;
+    color: white;
     top: 5px; /* Adjusts the text vertically to appear above the line */
     left: 72%;
     transform: translateX(-68%); /* Centering the text */
@@ -70,7 +73,7 @@ body {
 }
 
 .line {
-    border-top: 4px solid #e7a572;
+    border-top: 4px solid white;
     width: 600px;
     margin-left: 4%; 
     margin-top: 20x; 
@@ -82,7 +85,7 @@ body {
     position: relative;
     font-size: 35px;
     font-family: nunito;
-    color: #f7e6d3;
+    color: white;
     top: 5px; /* Adjusts the text vertically to appear above the line */
     left: 98%;
     transform: translateX(-94%); /* Centering the text */
@@ -93,8 +96,6 @@ body {
     font-family: nunito;
     height: 70px;
     width: 200px;
-    background-color: #e7a572;
-    border-radius: 20px;
     position: absolute;
     bottom: 10%;
     left: 7%;
@@ -102,15 +103,17 @@ body {
     justify-content: center;
     align-items: center;
     display: flex;
+    color: white;
+    border: white 2px solid;
 }
 
 .schedule_button:hover {
     box-shadow: 0 0 15px rgb(0, 194, 253);
 }
 .schedule {
-    margin-top: 80px;
+    margin-top: 100px;
     width: 100vw    ;
-    height: 85vh;
+    height: 80vh;
     display: grid;
     grid-template-columns: 3fr 1fr;
     grid-template-rows: 1fr;
@@ -118,8 +121,7 @@ body {
 
 .layout {
     margin: 20px;
-    border: 3px solid #782b42;
-    border-radius: 50px;
+    background-color: blue;
 }
 .menu {
     background: linear-gradient(rgb(44, 187, 44, 49%), rgba(193, 255, 114, 10%)),
