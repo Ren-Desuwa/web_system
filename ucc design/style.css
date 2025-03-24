@@ -1,0 +1,150 @@
+/* 
+  CSS for the card site 
+  #23325a - dark blue
+  #e7a572 - dark yellow
+  #f7e6d3 - light yellow
+  #782b42 - dark red    
+*/
+
+
+@font-face {
+    font-family: 'Nunito';
+    src: url(assets/fonts/Nunito/Nunito-VariableFont_wght.ttf) format('truetype');
+    font-optical-sizing: auto;
+    font-weight: 200 800;
+    font-style: normal;
+}
+
+body {
+    background-image: url(assets/image/ucc_background_orange.png);
+    overflow: hidden;
+}
+
+#nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 100;
+    background: linear-gradient(rgb(44, 187, 44, 49%), rgba(193, 255, 114, 10%)),
+    linear-gradient(rgba(254, 155, 0, 74%), rgba(254, 157, 0, 55%)); 
+}
+
+#nav.intro {
+    margin-top: 10px;
+    margin-left: 20px;
+    background: none;
+    position: relative;
+}
+
+.nav_line {
+    width: 100vw;
+    margin-left: -10px;
+}
+
+.logo {
+    padding: 0px;
+    width: 75px;
+    height: 75px;
+    background-image: url(assets/image/logo_ucc.png);
+    background-size: cover;
+    margin-left: -5px;
+    border-radius: 20px;
+}
+
+.introduction {
+    overflow: hidden;
+}
+
+.title {
+    position: relative;
+    font-size: 50px;
+    color: #f7e6d3;
+    top: 5px; /* Adjusts the text vertically to appear above the line */
+    left: 72%;
+    transform: translateX(-68%); /* Centering the text */
+    z-index: 1; /* Ensures the text appears above the line */
+    font-family: nunito;
+}
+
+.line {
+    border-top: 4px solid #e7a572;
+    width: 600px;
+    margin-left: 4%; 
+    margin-top: 20x; 
+    margin-bottom: 20px;
+    z-index: 0; 
+}
+
+.description {
+    position: relative;
+    font-size: 35px;
+    font-family: nunito;
+    color: #f7e6d3;
+    top: 5px; /* Adjusts the text vertically to appear above the line */
+    left: 98%;
+    transform: translateX(-94%); /* Centering the text */
+    z-index: 1; /* Ensures the text appears above the line */
+}
+
+.schedule_button {
+    font-family: nunito;
+    height: 70px;
+    width: 200px;
+    background-color: #e7a572;
+    border-radius: 20px;
+    position: absolute;
+    bottom: 10%;
+    left: 7%;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.schedule_button:hover {
+    box-shadow: 0 0 15px rgb(0, 194, 253);
+}
+.schedule {
+    margin-top: 80px;
+    width: 100vw    ;
+    height: 85vh;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.layout {
+    margin: 20px;
+    border: 3px solid #782b42;
+    border-radius: 50px;
+}
+.menu {
+    background: linear-gradient(rgb(44, 187, 44, 49%), rgba(193, 255, 114, 10%)),
+    linear-gradient(rgba(254, 155, 0, 74%), rgba(254, 157, 0, 55%));
+    height: 400hz;
+    border-radius: 50px 0 0 50px;
+    display: grid;
+    grid-template-rows: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+    grid-template-columns: 1fr;
+}
+
+.menu_item {
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    font-size: 13px;
+}
+
+.menu hr {
+    width: 80%;
+    border: 0;
+    border-top: 2px solid black;
+    margin: auto;
+}
+
+.menu_item h1 {
+    font-family: nunito;
+}
