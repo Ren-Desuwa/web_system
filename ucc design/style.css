@@ -20,6 +20,15 @@ body {
     overflow: hidden;
 }
 
+.title{
+    font-family: 'Nunito';
+    src: url(assets/fonts/Nunito/Nunito-VariableFont_wght.ttf) format('truetype');
+    font-optical-sizing: auto;
+    font-weight: 200 800;
+    font-style: normal;
+    
+}
+
 #nav {
     position: absolute;
     top: 0;
@@ -65,11 +74,10 @@ body {
     position: relative;
     font-size: 50px;
     color: white;
-    top: 5px; /* Adjusts the text vertically to appear above the line */
-    left: 72%;
-    transform: translateX(-68%); /* Centering the text */
-    z-index: 1; /* Ensures the text appears above the line */
-    font-family: nunito;
+    text-align: center; /* Centers the text horizontally */
+    font-weight: bold;  /* Makes the text bold */
+    margin-top: 20px;   /* Adds spacing from the top */
+    left: 110%;
 }
 
 .line {
