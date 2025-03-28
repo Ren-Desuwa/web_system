@@ -1,9 +1,9 @@
-/* 
-  CSS for the card site 
-  #23325a - dark blue
-  #e7a572 - dark yellow
-  #f7e6d3 - light yellow
-  #782b42 - dark red    
+/*
+CSS for the card site
+#23325a - dark blue
+#e7a572 - dark yellow
+#f7e6d3 - light yellow
+#782b42 - dark red
 */
 
 
@@ -47,14 +47,36 @@ body {
     margin: 10px -10px;
 }
 
-.logo {
+.home {
     padding: 0px;
-    width: 75px;
-    height: 75px;
+    width: 50px;
+    height: 50px;
     background-image: url(assets/image/logo_ucc.png);
     background-size: cover;
-    margin-left: -5px;
+    margin-left: 10px;
     border-radius: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.home h1 {
+    position: absolute;
+    font-family: nunito;
+    font-size: 20px;
+    color: white;
+    margin-left: 65px;
+}
+
+.home.intro {
+    width: 75px;
+    height: 75px;
+    margin-left: -5px;
+}
+
+.home.intro h1 {
+    font-size: 30px;
+    margin-left: 100px;
 }
 
 .introduction {
@@ -75,10 +97,10 @@ body {
 .line {
     border-top: 4px solid white;
     width: 600px;
-    margin-left: 4%; 
-    margin-top: 20x; 
+    margin-left: 4%;
+    margin-top: 20x;
     margin-bottom: 20px;
-    z-index: 0; 
+    z-index: 0;
 }
 
 .description {
