@@ -31,6 +31,7 @@ body {
     display: inline-block; /* Ensures the text stays in one line */
     white-space: nowrap;   /* Prevents text from wrapping to the next line */
     text-align: center;    /* Centers the text if inside a container */
+    /*testing nga kung nag aano*/
 }
 
 #nav {
