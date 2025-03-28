@@ -74,7 +74,7 @@ body {
     cursor: pointer;
 }
 
-.home h1 {
+.home h1{
     position: absolute;
     font-family: nunito;
     font-size: 20px;
@@ -85,10 +85,10 @@ body {
 .home.intro {
     width: 75px;
     height: 75px;
-    margin-left: -5px;
+    margin: 10px;
 }
 
-.home.intro h1 {
+.home.intro h1{
     font-size: 30px;
     margin-left: 100px;
 }
