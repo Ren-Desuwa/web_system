@@ -166,27 +166,17 @@ body {
 .login {
     display: none;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 30vw;
-    height: auto;
+    top: 20px;
+    left: 25%;
+    width: 50vw;
+    height: 40vw;
     font-family: nunito;
     color: black;
     background-color: white;
-    border-radius: 20px;
+    border-radius: 30px ;
     text-align: center;
     align-content: center;
     z-index: 1000;
-    padding: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.5s ease, opacity 0.5s ease;
-    opacity: 0;
-}
-
-.login.transitioned {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.05);
 }
 
 .login form {
@@ -194,178 +184,49 @@ body {
     grid-template-rows: 1fr 1fr auto;
 }
 
-.input-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.input-container img {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.profile {
-    content: url(assets/images/profile.svg);
-}
-
-.lock {
-    content: url(assets/images/lock.svg);
-}
-
-.input-container input {
-    flex: 1;
-    padding: 10px;
-    margin-left: 50px; /* Add margin to move input away from the icon */
-    font-family: nunito;
-    font-size: 14px;
-    border: none;
-    border-bottom: 2px solid #ccc;
-    border-radius: 0;
-    outline: none;
-    transition: border-color 0.3s; /* Removed padding-top transition */
-}
-
-.input-container input:focus {
-    border-bottom: 2px solid #03e005;
-}
-
-.input-container label {
-    position: absolute;
-    top: 10px;
-    left: 60px; /* Add margin to align label with the input */
-    font-family: nunito;
-    font-size: 14px;
-    color: #aaa;
-    transition: all 0.3s;
-}
-
-.input-container input:focus + label,
-.input-container input:not(:placeholder-shown) + label {
-    top: -10px;
-    left: 5px;
-    font-size: 12px;
-    color: #03e005;
-}
-
-.input-container .helper-text {
-    font-family: nunito;
-    font-size: 12px;
-    color: #aaa;
-    margin-top: 5px;
-    display: none;
-}
-
-.input-container input:focus ~ .helper-text {
-    display: block;
-}
-
-button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    font-family: nunito;
-    font-size: 16px;
-    font-weight: 800;
-    color: white;
-    background-color: #03e005;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button[type="submit"]:hover {
-    background-color: #028c04;
-}
-
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5); /* Gray background */
-    z-index: 999; /* Below the login modal */
-}
-
-.overlay.active {
-    display: block;
-}
-
 .schedule {
-    display: flex;
-    flex-direction: column;
-    margin: 20px;
-}
-
-.menu-tabs {
-    position: relative;
-    z-index: 2;
-}
-
-.tab-container {
-    display: flex;
-    gap: 4px;
-    margin-bottom: -2px;
-}
-
-.tab {
-    display: block;
-    padding: 12px 24px;
-    font-family: nunito;
-    font-size: 14px;
-    cursor: pointer;
-    background: white;
-    border: 2px solid black;
-    border-radius: 16px 16px 0 0;
-    position: relative;
-    transition: all 0.2s ease;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto 1fr;
+    width: 100vw;
+    height: 45vw;
     z-index: 1;
 }
 
-.tab:hover {
-    background: #f0f0f0;
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0px 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 3fr;
+    z-index: 10;
 }
 
-.tab-container input[type="radio"] {
-    position: absolute;
-    opacity: 0;
+.menu li {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background: white;
+    border: black solid 2px;
+    border-radius: 1000px;
+    cursor: pointer;
+    margin: 0px 10px;
 }
 
-.tab-container input[type="radio"]:checked + .tab {
-    background: #03e005;
-    color: white;
-    border-bottom-color: white;
-
-    border-radius: 16px;
-    z-index: 3;
+.menu h1 {
+    font-family: nunito;
+    font-size: 10px;
+    font-weight: 800;
+    color: black;
+    text-align: center;
 }
 
 .schedule-container {
-    background: white;
-    border: 2px solid black;
-    border-radius: 0 16px 16px 16px;
-    padding: 20px;
-    min-height: 400px;
-    position: relative;
-    z-index: 1;
-}
-
-/* Create merged border effect */
-.tab-container input[type="radio"]:checked + .tab {
-    border-bottom: 2px solid white;
-    margin-bottom: -2px;
-}
-
-/* Hide bottom border of unselected tabs */
-.tab:not(:checked) {
-    border-bottom: 2px solid transparent;
+    background-color: white;
+    border: black solid 2px;
+    border-radius: 20px;
+    margin: 20px;
+    margin-top: 5px;
 }
 
 .footer {
