@@ -1,0 +1,374 @@
+@font-face {
+    font-family: 'Nunito';
+    src: url(assets/fonts/Nunito/Nunito-VariableFont_wght.ttf) format('truetype');
+    font-optical-sizing: auto;
+    font-weight: 200 800;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #03e005;
+}
+
+.background-fixed {
+    position: fixed;
+    z-index: -3;
+}
+
+.background {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+.background img {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+}
+
+.background img:nth-child(1) {
+    content: url(assets/images/upside.svg);
+    top: -10px;
+    left: -400px;
+}
+
+.background img:nth-child(2) {
+    content: url(assets/images/downside.svg);
+    bottom: -300px;
+    right: -400px;
+}
+
+.intro {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 3fr auto 0.5fr;
+}
+
+#nav {
+    position: relative;
+    width: 100vw;
+    height: 8vw;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: inline-block;
+    margin: 20px 30px;
+    height: 60px;
+    width: 60px;
+    background-image: url(assets/images/logo_ucc.png);
+    background-size: cover;
+    cursor: pointer;
+}
+
+.logo.intro {
+    height: 1080px;
+    width: 1080px;
+    position: absolute;
+    transform: translate(-20%,28%) scale(0.4);
+}
+
+#nav a {
+    font-family: nunito;
+    text-decoration: none;
+    color: black;
+    margin-left: 100px;
+    margin-right: 20px;
+}
+
+.right {
+    position: absolute;
+    right: 50px;
+    top: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.right div {
+    margin: 0 20px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.nav-search img {
+    content: url(assets/images/search.png);
+    width: 20px;
+    height: 20px;
+}
+
+.nav-menu img {
+    content: url(assets/images/menu.png);
+    width: 20px;
+    height: 20px;
+}
+
+.title {
+    position: relative;
+    width: 100vw;
+    font-family: nunito;
+    font-size: 20px;
+    font-weight: 800;
+    color: black;
+    text-align: right;
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto;
+}
+
+.title p {
+    font-family: nunito;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.title-right {
+    width: 60vw;
+    margin-right: 20px;
+}
+
+.subtext-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto;
+}
+
+.subtext {
+    width: 30vw;
+}
+
+.get_started {
+    position: fixed;
+    width: 20vw;
+    height: 7vw;
+    font-family: nunito;
+    font-size: 20px;
+    font-weight: 800;
+    color: black;
+    background-color: #7b7a7a5e;
+    border-radius: 1000px ;
+    text-align: center;
+    align-content: center; ;
+    right: 50px;
+    bottom: 100px;
+    cursor: pointer;
+}
+
+.login {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30vw;
+    height: auto;
+    font-family: nunito;
+    color: black;
+    background-color: white;
+    border-radius: 20px;
+    text-align: center;
+    align-content: center;
+    z-index: 1000;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+}
+
+.login.transitioned {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.login form {
+    display: grid;
+    grid-template-rows: 1fr 1fr auto;
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.input-container img {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.profile {
+    content: url(assets/images/profile.svg);
+}
+
+.lock {
+    content: url(assets/images/lock.svg);
+}
+
+.input-container input {
+    flex: 1;
+    padding: 10px;
+    margin-left: 50px; /* Add margin to move input away from the icon */
+    font-family: nunito;
+    font-size: 14px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    border-radius: 0;
+    outline: none;
+    transition: border-color 0.3s; /* Removed padding-top transition */
+}
+
+.input-container input:focus {
+    border-bottom: 2px solid #03e005;
+}
+
+.input-container label {
+    position: absolute;
+    top: 10px;
+    left: 60px; /* Add margin to align label with the input */
+    font-family: nunito;
+    font-size: 14px;
+    color: #aaa;
+    transition: all 0.3s;
+}
+
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 5px;
+    font-size: 12px;
+    color: #03e005;
+}
+
+.input-container .helper-text {
+    font-family: nunito;
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 5px;
+    display: none;
+}
+
+.input-container input:focus ~ .helper-text {
+    display: block;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    font-family: nunito;
+    font-size: 16px;
+    font-weight: 800;
+    color: white;
+    background-color: #03e005;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #028c04;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Gray background */
+    z-index: 999; /* Below the login modal */
+}
+
+.overlay.active {
+    display: block;
+}
+
+.schedule {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.menu-tabs {
+    position: relative;
+    z-index: 2;
+}
+
+.tab-container {
+    display: flex;
+    gap: 4px;
+    margin-bottom: -2px;
+}
+
+.tab {
+    display: block;
+    padding: 12px 24px;
+    font-family: nunito;
+    font-size: 14px;
+    cursor: pointer;
+    background: white;
+    border: 2px solid black;
+    border-radius: 16px 16px 0 0;
+    position: relative;
+    transition: all 0.2s ease;
+    z-index: 1;
+}
+
+.tab:hover {
+    background: #f0f0f0;
+}
+
+.tab-container input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.tab-container input[type="radio"]:checked + .tab {
+    background: #03e005;
+    color: white;
+    border-bottom-color: white;
+
+    border-radius: 16px;
+    z-index: 3;
+}
+
+.schedule-container {
+    background: white;
+    border: 2px solid black;
+    border-radius: 0 16px 16px 16px;
+    padding: 20px;
+    min-height: 400px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Create merged border effect */
+.tab-container input[type="radio"]:checked + .tab {
+    border-bottom: 2px solid white;
+    margin-bottom: -2px;
+}
+
+/* Hide bottom border of unselected tabs */
+.tab:not(:checked) {
+    border-bottom: 2px solid transparent;
+}
+
+.footer {
+    width: 100vw;
+    display: none;
+}
