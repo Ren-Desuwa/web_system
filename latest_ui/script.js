@@ -62,6 +62,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    const sched = document.getElementById('schedule');
+    const ground = document.getElementById('ground');
+    sched.style.borderRadius = isChecked ? '0 5px 5px 5px' : '5px';
+
+    function updateBorderRadius() {
+        sched.style.borderRadius = ground.checked ? '0 5px 5px 5px' : '5px';
+    }
+
+    updateBorderRadius();
+
+    ground.addEventListener('change', updateBorderRadius);
     
     // Trigger initial state
     document.querySelector('.tab-container input[type="radio"]:checked').dispatchEvent(new Event('change'));
