@@ -363,3 +363,73 @@ button[type="submit"]:hover {
     width: 100vw;
     display: none;
 }
+
+.info5 {
+    position: fixed; /* Fix the position relative to the viewport */
+    bottom: 140px; /* Adjust the distance from the bottom */
+    right: 200px; /* Adjust the distance from the right */
+    width: 40px; /* Set the desired width */
+    height: 40px; /* Set the desired height */
+    background-image: url(assets/images/info.png); /* Set the image */
+    background-size: contain; /* Ensure the image fits within the element */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image */
+    cursor: pointer; /* Add a pointer cursor for interactivity */
+    z-index: 100; /* Ensure it appears above other elements */
+}
+
+.info4 {
+    position: fixed; /* Fix the position relative to the viewport */
+    bottom: 140px; /* Adjust the distance from the bottom */
+    right: 550px; /* Adjust the distance from the right */
+    width: 40px; /* Set the desired width */
+    height: 40px; /* Set the desired height */
+    background-image: url(assets/images/info.png); /* Set the image */
+    background-size: contain; /* Ensure the image fits within the element */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image */
+    cursor: pointer; /* Add a pointer cursor for interactivity */
+    z-index: 100; /* Ensure it appears above other elements */
+}
+
+.info3 {
+    position: fixed; /* Fix the position relative to the viewport */
+    bottom: 140px; /* Adjust the distance from the bottom */
+    right: 900px; /* Adjust the distance from the right */
+    width: 40px; /* Set the desired width */
+    height: 40px; /* Set the desired height */
+    background-image: url(assets/images/info.png); /* Set the image */
+    background-size: contain; /* Ensure the image fits within the element */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image */
+    cursor: pointer; /* Add a pointer cursor for interactivity */
+    z-index: 100; /* Ensure it appears above other elements */
+}
+
+.info2 {
+    position: fixed; /* Fix the position relative to the viewport */
+    bottom: 350px; /* Adjust the distance from the bottom */
+    right: 900px; /* Adjust the distance from the right */
+    width: 40px; /* Set the desired width */
+    height: 40px; /* Set the desired height */
+    background-image: url(assets/images/info.png); /* Set the image */
+    background-size: contain; /* Ensure the image fits within the element */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image */
+    cursor: pointer; /* Add a pointer cursor for interactivity */
+    z-index: 100; /* Ensure it appears above other elements */
+}
+
+.info1 {
+    position: fixed; /* Fix the position relative to the viewport */
+    bottom: 350px; /* Adjust the distance from the bottom */
+    right: 550px; /* Adjust the distance from the right */
+    width: 40px; /* Set the desired width */
+    height: 40px; /* Set the desired height */
+    background-image: url(assets/images/info.png); /* Set the image */
+    background-size: contain; /* Ensure the image fits within the element */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image */
+    cursor: pointer; /* Add a pointer cursor for interactivity */
+    z-index: 100; /* Ensure it appears above other elements */
+}
