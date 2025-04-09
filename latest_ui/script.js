@@ -1,27 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const getStartedButton = document.getElementById('getStartedButton');
+    const loginModal = document.querySelector('.login');
+    const overlay = document.querySelector('.overlay');
+    const loginButtons = document.querySelectorAll('.login-button, .get_started');
+
+    loginButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            loginModal.style.display = 'block';
+            overlay.classList.add('active');
+            setTimeout(() => {
+                loginModal.classList.add('transitioned');
+            }, 10);
+        });
+    });
+
+    overlay.addEventListener('click', () => {
+        loginModal.classList.remove('transitioned');
+        setTimeout(() => {
+            loginModal.style.display = 'none';
+            overlay.classList.remove('active');
+        }, 500);
+    });
+
     const loginDiv = document.getElementById('loginDiv');
-    const overlay = document.getElementById('overlay');
     const loginForm = document.getElementById('loginForm');
     const inputs = loginForm.querySelectorAll('input');
     let hasTransitioned = false;
-
-    // Show the login div and overlay when "Get Started" is clicked
-    getStartedButton.addEventListener('click', () => {
-        loginDiv.style.display = 'block';
-        overlay.classList.add('active');
-        setTimeout(() => {
-            loginDiv.classList.add('transitioned'); // Add the transition class after making it visible
-        }, 10); // Small delay to ensure the transition is applied
-    });
-
-    // Hide the login div and overlay when clicking outside the login
-    overlay.addEventListener('click', () => {
-        loginDiv.style.display = 'none';
-        overlay.classList.remove('active');
-        loginDiv.classList.remove('transitioned');
-        hasTransitioned = false; // Reset transition state
-    });
 
     // Add a single transition effect for the login container
     inputs.forEach(input => {
@@ -63,17 +66,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    const sched = document.getElementById('schedule');
+    const sched = document.getElementsByClassName('schedule');
     const ground = document.getElementById('ground');
-    sched.style.borderRadius = isChecked ? '0 5px 5px 5px' : '5px';
+    sched.forEach(scheds => {
+        ground.addEventListener(checked, () => {
+            scheds.style.borderRadius = ground.checked ? '0 5px 5px 5px' : '5px';
+        });
+    });
 
-    function updateBorderRadius() {
-        sched.style.borderRadius = ground.checked ? '0 5px 5px 5px' : '5px';
-    }
-
-    updateBorderRadius();
-
-    ground.addEventListener('change', updateBorderRadius);
+    document.getElementsByClassName('ground').forEach((ground) => {
+        ground.addEventListener(checked, () => {
+            ground.forEach(test => {
+                test.style.backgroundColor = ground.checked ? '#e7a572' : '#23325a';
+            });
+        });
+    });
+    
     
     // Trigger initial state
     document.querySelector('.tab-container input[type="radio"]:checked').dispatchEvent(new Event('change'));
