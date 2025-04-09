@@ -6,8 +6,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="../style.css">
 </head>
-<body>
-    <div style="position: fixed;">
+<body class="no-scroll">
+    <div class="background-fixed">
         <div class="background">
             <img>
             <img>
@@ -15,54 +15,20 @@
     </div>
     <div id="nav">
         <div onclick="location.href='../index.html'" class="logo"></div>
-        <a href="#blank">about us</a>
-        <a href="#blank">login</a>
-        <a href="#blank">support</a>
-        <div class="right">
-            <div class="nav-search">
-                <img class="search">
-            </div>
-            <div class="nav-menu">
-                <img class="menu">
-            </div>
-        </div>
     </div>
-    <div></div>
-    <div class="schedule-content">
+    <div class="admin-view-title">
+
+    </div>
+   <div class="schedule-content">
         <div class="menu-container">
-            <input type="radio" name="menu" id="ground" checked>
-            <label for="ground">GROUND FLOOR</label>
-            <input type="radio" name="menu" id="first">
-            <label for="first">1ST FLOOR</label>
-            <input type="radio" name="menu" id="second">
-            <label for="second">2ND FLOOR</label>
-            <input type="radio" name="menu" id="third">
-            <label for="third">3RD FLOOR</label>
-            <input type="radio" name="menu" id="fourth">
-            <label for="fourth">4TH FLOOR</label>
+            <h2 class="menu-title">Computer Science Department</h2>
         </div>
         <div class="schedule-container">
             <div class="schedule" id="schedule">
-                <div class="101 room">
-
-                </div>
-                <div class="102 room">
-
-                </div>
-                <div class="103 room">
-
-                </div>
-                <div class="104 room">
-
-                </div>
-                <div class="105 room">
-
-                </div>
-                <div class="106 room">
-
-                </div>
+                <img class="schedule-img" src="../assets/images/blueprint.png" alt="schedule">
             </div>
         </div>
    </div>
+    <script src="../script.js"></script>
 </body>
 </html>
