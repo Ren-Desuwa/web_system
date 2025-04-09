@@ -349,6 +349,10 @@ button[type="submit"]:hover {
     height: 100%; /* Maintain the aspect ratio */
     display: block; /* Ensure the image is treated as a block element */
     margin: 0 auto; /* Center the image horizontally */
+    z-index: 5; /* Ensure it appears above the background */
+    position: relative;
+    top: -65vh; /* Reset any top positioning */
+
 }
 
 .footer {
@@ -464,4 +468,19 @@ button[type="submit"]:hover {
     font-family: nunito; /* Use the desired font */
     font-size: 22px; /* Set the font size */
     color: black; /* Set the text color */
+}
+
+.grid-room {
+            display: grid; 
+            grid: auto auto / auto auto auto; 
+            grid-gap: 10px; 
+            padding: 10px; 
+            z-index: 1000;
+}
+
+.room {
+    background-color: lightgray; 
+            text-align: center; 
+            padding: 25px 0; 
+            font-size: 30px; 
 }
