@@ -1,0 +1,338 @@
+/* ----- Universal CSS ----- */
+
+@font-face {
+    font-family: 'Nunito';
+    src: url(assets/fonts/Nunito/Nunito-VariableFont_wght.ttf) format('truetype');
+    font-optical-sizing: auto;
+    font-weight: 200 800;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito';
+}
+
+/* ----- Universal - background ----- */
+
+.background {
+    width: 100vw;
+    height: 100vh;
+    background-color: #03e005;
+    position: fixed;
+    z-index: -1000;
+}
+
+.background img {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    transition: all 0.3s ease;
+}
+
+.background img:nth-child(1) {
+    content: url(assets/images/upside.svg);
+    top: -20vh;
+    left: -30vw;
+}
+
+.background img:nth-child(2) {
+    content: url(assets/images/downside.svg);
+    bottom: -30vh;
+    right: -30vw;
+}
+
+
+@media (min-width: 480px) and (max-width: 900px) {
+    .background img:nth-child(1) {
+        top: -20vh;
+        left: -25vw;
+    }
+    .background img:nth-child(2) {
+        bottom: -40vh;
+        right: -20vw;
+    }
+}
+
+/* ----- Universal - background ----- */
+
+/* ----- Universal - Navigation Bar ----- */
+
+#nav {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 8vh;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+.nav-home {
+    width: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.nav-home a{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo {
+    display: inline-block;
+    height: 60px;
+    width: 60px;
+    margin-right: 10px;
+    background-image: url(assets/images/logo_ucc.png);
+    background-size: cover;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.logo:hover {
+    transform: scale(1.2);
+}
+
+.nav-home h1 {
+    font-size: 2rem;
+    font-weight: 500;
+    color: black;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-home h1:hover {
+    color: #03e005;
+    transform: scale(1.1);
+}
+
+.menu-checkbox {
+    display: none;
+}
+
+.menu-dots {
+    width: 2rem;
+    height: 2rem;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(90deg);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.menu-dot {
+    width: 0.25rem;
+    height: 0.25rem;
+    background-color: #000000;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.menu-dot + .menu-dot {
+    margin-top: 0.3rem;
+}
+
+.menu-dots:hover {
+    transform: rotate(90deg) scale(1.3);
+}
+
+.menu-dots:hover .menu-dot{
+    background-color: #03e005;
+}
+
+.menu-checkbox:checked + .nav-menu > .menu-dots {
+    transform: none;
+}
+
+.menu-checkbox:checked + .nav-menu > .menu-dots:hover {
+    transform: scale(1.3);
+}
+
+.menu-checkbox:checked + .nav-menu > .menu-items {
+    pointer-events: auto;
+}
+
+@media (min-width: 480px) and (max-width: 900px) {
+    #nav {
+        height: 13vh;
+    }
+
+    .logo {
+        height: 13vw;
+        width: 13vw;
+        margin-right: 0;
+    }
+
+    .nav-home h1 {
+        font-size: 1.5rem;
+    }
+
+    .nav-menu {
+        margin-left: 3vw;
+    }
+    
+    .menu-dots {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
+    .logo {
+        height: 8vw;
+        width: 8vw;
+    }
+}
+
+/* ----- Universal - Navigation Bar ----- */
+
+/* ----- Introduction - Navigation Bar ----- */
+
+.introduction-page #nav .nav-home .logo {
+    position: absolute;
+    width: 30vw;
+    height: 30vw;
+
+    top: 20vh;
+    left: 10vw;
+}
+
+.introduction-page #nav .nav-home h1, .introduction-page #nav .nav-home a ,.introduction-page #nav .nav-menu {
+    margin-left: 30px;
+}
+
+.introduction-page #nav .nav-home .logo:hover {
+    transform: none;
+    cursor: default;
+}
+
+@media (min-width: 480px) and (max-width: 900px) {
+    .introduction-page #nav .nav-home .logo {
+        height: 40vw;
+        width: 40vw;
+        margin-left: -5vw;
+    }
+
+    .introduction-page #nav .nav-home h1 {
+        display: inline-block;
+    }
+    
+    .menu-dots {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 800px) and (max-width: 1100px) {
+    .introduction-page #nav .nav-home .logo {
+        height: 40vw;
+        width: 40vw;
+        margin-left: -10vw;
+    }
+}
+
+@media (min-width: 700px) and (max-width: 900px) {
+    .introduction-page #nav {
+        height: 8vh;
+    }
+}
+
+/* ----- Introduction - Navigation Bar ----- */
+
+/* ----- Introduction - Titles and Get Started ----- */
+
+.title {
+    position: absolute;
+    top: 20vh;
+    right: 10vw;
+    width: 60vw;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.subtext {
+    width: 40vw;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+}
+
+.get_started {
+    position: absolute;
+    bottom: 10vh;
+    right: 10vw;
+    width: 20vw;
+    height: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0000003c;
+    color: #000000;
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-align: justify;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.get_started:hover {
+    background-color: #03e005;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.get_started a {
+    text-decoration: none;
+    color: inherit;
+}
+
+@media (min-width: 480px) and (max-width: 900px) {
+
+    .title {
+        top: 25vh;
+        right: 5vw;
+        width: 45vw;
+        height: 50vh;
+        text-align: justify;    
+        font-size: 0.8rem;
+    }
+
+    .subtext {
+        width: 80vw;
+        font-size: 1rem;
+        margin-top: 5vh;
+    }
+
+    .get_started {
+        bottom: 10vh;
+        right: 5vw;
+        width: 40vw;
+        height: 8vh;
+    }
+}
+
+@media (min-width: 700px) and (max-width: 900px) {
+    .subtext {
+        width: 60vw;
+        font-size: 1rem;
+        margin-top: 5vh;
+    }
+}
+
+/* ----- Introduction - Title and Get Started ----- */
