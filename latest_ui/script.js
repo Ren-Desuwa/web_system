@@ -86,3 +86,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Trigger initial state
     document.querySelector('.tab-container input[type="radio"]:checked').dispatchEvent(new Event('change'));
 });
+
+
+const infoIcon = document.querySelector('.info-icon'); // Select the info-icon
+const infoPopup = document.querySelector('.MIS-info-container'); // Select the popup
+
+// Show the popup when the info-icon is clicked
+infoIcon.addEventListener('click', () => {
+    infoPopup.style.display = 'block';
+    setTimeout(() => {
+        infoPopup.classList.add('transitioned');
+    }, 10);
+});
+
+// Optional: Hide the popup when clicking outside of it
+window.addEventListener('click', (event) => {
+    if (!infoPopup.contains(event.target) && event.target !== infoIcon) {
+        infoPopup.classList.remove('transitioned');
+        setTimeout(() => {
+            infoPopup.style.display = 'none';
+        }, 500);
+    }
+});
