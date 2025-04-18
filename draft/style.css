@@ -539,10 +539,9 @@ button[type="submit"]:hover {
 
 .schedule-img {
     position: absolute;
-    background-color: #fee798;
-    width: 99%;
-    height: 98%;
-    border-radius: 15px;
+    content: url(assets/images/CSD_Floor_Plain.svg);
+    width: 97%;
+    height: 97%;
     z-index: 1;
 }
 
@@ -555,21 +554,56 @@ button[type="submit"]:hover {
 }
 
 .room {
-    width: 29vw;
+    width: 27vw;
     height: 28vh;
-    background-color: #03e005;
-    border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.room h1 {
+    border-radius: 15px;
+    ;
+}
+
+/* Styles for available rooms */
+/* Available rooms = green text, transparent background */
+.room.Availability h1 {
+    background-color: lightgreen;
+    color: green;
+    font-weight: bold;
+}
+
+/* Unavailable rooms = red background */
+.room:not(.Availability) h1 {
+    background-color: red;
+    color: white;
+}
+
+  /* Keep everything else default (black text, transparent bg) */
+.room h1 {
+    margin: 0;
+    font-size: 1rem; /* or whatever size you want */
+    text-align: center;
+    width: 90%;
+    line-height: 1.4;
+    word-break: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    overflow: visible; /* ensure it grows */
+    display: block;
+}
 .corridor {
-    height: 9vh;
+    height: 6vh;
     grid-column: 1 / 4;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#room-MIS h1 {
+    background-color: transparent;
+    color: black;
 }
 
 

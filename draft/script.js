@@ -8,18 +8,30 @@ const Database = {
     ],
 
     schedules: [
-        // {
-        //   id: 1,
-        //   userId: 1,
-        //   date: "2025-04-10",
-        //   room: "Room 101",
-        //   timeStart: "11:00",
-        //   meridianStart: "AM",
-        //   timeEnd: "03:00",
-        //   meridianEnd: "PM",
-        //   subject: "Mathematics",
-        //   professor: "Prof. Smith"
-        // }
+        {
+            id: 1,
+            userId: 1,
+            date: "2025-04-18",
+            room: "room-302",
+            timeStart: "10:00",
+            meridianStart: "AM",
+            timeEnd: "12:00",
+            meridianEnd: "PM",
+            subject: "Math Class",
+            professor: "Prof. Reyes"
+        },
+        {
+            id: 2,
+            userId: 2,
+            date: "2025-04-18",
+            room: "room-304",
+            timeStart: "1:00",
+            meridianStart: "PM",
+            timeEnd: "3:00",
+            meridianEnd: "PM",
+            subject: "Physics Class",
+            professor: "Prof. Santos"
+        }
     ],
 
     getUserById(id) {
@@ -143,6 +155,7 @@ function logout() {
     sessionStorage.clear();
     window.location.href = "../pages/login.html";
 }
+
 
 // const user = controller.validateUser("Admin", "admin123");
 

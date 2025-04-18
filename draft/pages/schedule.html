@@ -37,15 +37,15 @@
             </div>
         </div>
         <div class="schedule" id="schedule">
-            <div class="schedule-img"></div>
+            <img class="schedule-img">
             <div class="rooms">
-                <div class="room">room 1</div>
-                <div class="room">room 2</div>
-                <div class="room">room 3</div>
-                <div class="corridor">space for corridor</div>
-                <div class="room">room 4</div>
-                <div class="room">room 5</div>
-                <div class="room">room 6</div>
+                <div class="room" id="room-301"><h1>room 302</h1></div>
+                <div class="room" id="room-302"><h1>room 301</h1></div>
+                <div class="room"><!-- no room just stair case --></div>
+                <div class="corridor"></div>
+                <div class="room" id="room-303"><h1>room 303</h1></div>
+                <div class="room" id="room-304"><h1>room 304</h1></div>
+                <div class="room" id="room-MIS"><h1>MIS</h1></div>
             </div>
         </div>
     </div>
@@ -55,11 +55,36 @@
         window.addEventListener("DOMContentLoaded", () => {
             const loggedIn = sessionStorage.getItem("loggedIn");
             const role = sessionStorage.getItem("role");
-        
+    
             if (loggedIn !== "true" || role !== "user") {
-                // Not logged in or not a user
                 window.location.href = "../pages/login.html";
             }
+    
+            const scheduledRooms = Database.schedules.map(s => s.room.toLowerCase());
+    
+            const roomSchedules = {};
+            Database.schedules.forEach(schedule => {
+                const roomKey = schedule.room.toLowerCase();
+                roomSchedules[roomKey] = `${schedule.subject} - ${schedule.timeStart} ${schedule.meridianStart} to ${schedule.timeEnd} ${schedule.meridianEnd}`;
+            });
+    
+            document.querySelectorAll(".room[id]").forEach(room => {
+                const roomHeader = room.querySelector("h1");
+                const id = room.id.toLowerCase();
+                if (id === "room-mis") return;
+
+                // Debug:
+                console.log("Checking", id, "against", scheduledRooms);
+
+                if (!scheduledRooms.includes(id)) {
+                    room.classList.add("Availability");
+                    roomHeader.textContent = `${roomHeader.textContent} (Available)`;
+                } else {
+                    room.classList.remove("Availability");
+                    const sched = roomSchedules[id] || "No schedule available";
+                    roomHeader.textContent = `${roomHeader.textContent} (Unavailable - ${sched})`;
+                }
+            });
         });
     </script>
 </body>
