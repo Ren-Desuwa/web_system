@@ -64,7 +64,7 @@ body {
     top: 0;
     width: 100vw;
     height: 8vh;
-    padding: 10px;
+    padding: 20px;
     display: flex;
     align-items: center;
     align-content: center;
@@ -336,3 +336,243 @@ body {
 }
 
 /* ----- Introduction - Title and Get Started ----- */
+
+/* ----- Introduction - Second Page ----- */
+
+
+
+/* ----- Introduction - Second Page ----- */
+
+/* ----- Login - Design ----- */
+
+.login {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30vw;
+    min-width: 350px;
+    height: auto;
+    font-family: nunito;
+    color: black;
+    background-color: white;
+    border-radius: 20px;
+    text-align: center;
+    align-content: center;
+    z-index: 1000;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.login.transitioned {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.login form {
+    display: grid;
+    grid-template-rows: 1fr 1fr auto;
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.input-container img {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.profile {
+    content: url(assets/images/profile.svg);
+}
+
+.lock {
+    content: url(assets/images/lock.svg);
+}
+
+.input-container input {
+    flex: 1;
+    padding: 10px;
+    margin-left: 50px; /* Add margin to move input away from the icon */
+    font-family: nunito;
+    font-size: 14px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    border-radius: 0;
+    outline: none;
+    transition: border-color 0.3s; /* Removed padding-top transition */
+}
+
+.input-container input:focus {
+    border-bottom: 2px solid #03e005;
+}
+
+.input-container label {
+    position: absolute;
+    top: 10px;
+    left: 60px; /* Add margin to align label with the input */
+    font-family: nunito;
+    font-size: 14px;
+    color: #aaa;
+    transition: all 0.3s;
+}
+
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label {
+    top: -20px;
+    left: 5px;
+    font-size: 12px;
+    color: #03e005;
+}
+
+.input-container .helper-text {
+    font-family: nunito;
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 5px;
+    display: none;
+}
+
+.input-container input:focus ~ .helper-text {
+    display: block;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    font-family: nunito;
+    font-size: 16px;
+    font-weight: 800;
+    color: white;
+    background-color: #03e005;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #028c04;
+}
+
+/* ----- Login - Design ----- */
+
+/* ----- Admin View - Design ----- */
+
+.schedule-container {
+    position: absolute;
+    width: 100vw;
+    height: 85vh;
+    top: 13vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    z-index: 2;
+    margin: 0 5vw;
+}
+
+.schedule-header {
+    width: 30vw;
+    min-width: 360px;
+    height: 10vh;
+    background-color: rgb(193, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px 15px 0 0;
+    z-index: 2;
+}
+
+.schedule-border-smoother {
+    width: 5vw;
+    min-width: 20px;
+    height: 10vh;
+    background-color: #03e005;
+    border-radius: 0 0 0 15px;
+    z-index: 2;
+}
+
+.menu-background {
+    position: absolute;
+    left: 0;
+    z-index: 1;
+}
+.up {
+    border-radius: 15px;
+    width: 35vw;
+    min-width: 380px;
+    height: 5vh;
+    background-color: #03e005;
+}
+.down {
+    width: 35vw;
+    min-width: 380px;
+    height: 5vh;
+    background-color: rgb(193, 255, 255);
+}
+
+.schedule {
+    position: relative;
+    width: 90vw;
+    height: 70vh;
+    margin: 0 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(193, 255, 255);
+    border-radius: 0 15px 15px 15px;
+}
+
+.schedule-img {
+    position: absolute;
+    background-color: #fee798;
+    width: 99%;
+    height: 98%;
+    border-radius: 15px;
+    z-index: 1;
+}
+
+.rooms {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr auto 1fr;
+    gap: 0.5vw;
+    z-index: 2;
+}
+
+.room {
+    width: 29vw;
+    height: 28vh;
+    background-color: #03e005;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.corridor {
+    height: 9vh;
+    grid-column: 1 / 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* ----- Admin View - Design ----- */
+
