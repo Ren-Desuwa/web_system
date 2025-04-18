@@ -3,6 +3,8 @@ const Database = {
         { id: 1, name: "Alice", password: "alice12", role: "user" },
         { id: 2, name: "Bob", password: "bobrich123", role: "user" },
         { id: 3, name: "Admin", password: "Admin123", role: "admin" },
+        { id: 4, name: "admin", password: "admin", role: "admin" },
+        { id: 5, name: "asd", password: "asd", role: "user" }
     ],
 
     schedules: [
@@ -22,6 +24,11 @@ const Database = {
 
     getUserById(id) {
         return this.users.find(user => user.id === id);
+    },
+
+    getUserId(username) {
+        const user = this.users.find(u => u.name === username);
+        return user ? user.id : null;
     },
 
     getSchedulesByUserId(userId) {
@@ -104,24 +111,32 @@ const Database = {
 document.getElementById("loginForm").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
 
-    // Get values from the form
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    // Create an object to send with the request
-    const user = Database.validateUser(username, password);
+    const userIsValid = Database.validateUser(username, password);
 
-    if (user) {
-        // Successful login
+    if (userIsValid) {
         alert("Login successful!");
-        window.location.href = "../index.html"; // Redirect to a dashboard or any other page
+
+        const userId = Database.getUserId(username);
+        const isAdmin = Database.isAdmin(userId);
+
+        // ✅ Store session data
+        sessionStorage.setItem("loggedIn", "true");
+        sessionStorage.setItem("username", username);
+        sessionStorage.setItem("userId", userId);
+        sessionStorage.setItem("role", isAdmin ? "admin" : "user");
+
+        // 🔁 Redirect based on role
+        if (isAdmin) {
+            window.location.href = "../pages/admin.html";
+        } else {
+            window.location.href = "../pages/schedule.html";
+        }
     } else {
-        // Invalid credentials
         alert("Invalid username or password");
     }
-
-    // Send login data to the server using fetch (POST request)
-    
 });
 
 // const user = controller.validateUser("Admin", "admin123");
