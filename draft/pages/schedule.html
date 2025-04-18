@@ -51,5 +51,16 @@
     </div>
 
     <script src="../script.js"></script>
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const loggedIn = sessionStorage.getItem("loggedIn");
+            const role = sessionStorage.getItem("role");
+        
+            if (loggedIn !== "true" || role !== "user") {
+                // Not logged in or not a user
+                window.location.href = "../pages/login.html";
+            }
+        });
+    </script>
 </body>
 </html>

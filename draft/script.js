@@ -139,6 +139,11 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
     }
 });
 
+function logout() {
+    sessionStorage.clear();
+    window.location.href = "../pages/login.html";
+}
+
 // const user = controller.validateUser("Admin", "admin123");
 
 // if (user) {
