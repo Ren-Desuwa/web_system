@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <div class="modal-overlay" id="loginModal" onclick="closeLoginModal(event)">
-        <div class="login" id="loginDiv" onclick="event.stopPropagation()">
-            <span class="close-button" onclick="closeLoginModal()">×</span> 
+    <div class="modal-overlay" id="loginModal">
+        <div class="login" id="loginDiv">
+            <span class="close-button" id="closeLoginBtn">×</span>
             <h1>Login</h1>
             <form id="loginForm">
                 <div class="input-container">
@@ -22,9 +22,10 @@
                     <input type="password" id="password" placeholder=" " required>
                     <label for="password">Password</label>
                 </div>
-                <button type="submit">login</button>
+                <button type="submit">Login</button>
             </form>
         </div>
     </div>
+    <script src="../script.js"></script>
 </body>
 </html>

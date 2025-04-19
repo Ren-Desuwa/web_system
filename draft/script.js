@@ -121,71 +121,78 @@ const Database = {
 };
 
 function loadLoginModal() {
-    fetch("pages/login.html")
-        .then(response => response.text())
-        .then(html => {
-            const modalContainer = document.createElement("div");
-            modalContainer.innerHTML = html;
-            document.body.appendChild(modalContainer);
+    fetch('pages/login.html')
+    .then(res => res.text())
+    .then(html => {
+        // Insert it into the document
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = html;
+        document.body.appendChild(wrapper);
 
-            // Attach event listeners for modal functionality
-            document.getElementById("loginForm").addEventListener("submit", function (event) {
-                event.preventDefault(); // Prevent default form submission
+        const modal = document.getElementById('loginModal');
+        const closeBtn = document.getElementById('closeLoginBtn');
+        const loginDiv = document.getElementById('loginDiv');
+        const form = document.getElementById('loginForm');
 
-                const username = document.getElementById("username").value;
-                const password = document.getElementById("password").value;
+        // a) Show it
+        modal.classList.add('active');
 
-                const userIsValid = Database.validateUser(username, password);
+        // b) Close when you click the “×”
+        closeBtn.addEventListener('click', closeLoginModal);
 
-                if (userIsValid) {
-                    alert("Login successful!");
+        // c) Prevent clicks _inside_ the white box from bubbling up
+        loginDiv.addEventListener('click', e => e.stopPropagation());
 
-                    const userId = Database.getUserId(username);
-                    const isAdmin = Database.isAdmin(userId);
+        // d) Close when you click _outside_ the white box
+        modal.addEventListener('click', closeLoginModal);
 
-                    // ✅ Store session data
-                    sessionStorage.setItem("loggedIn", "true");
-                    sessionStorage.setItem("username", username);
-                    sessionStorage.setItem("userId", userId);
-                    sessionStorage.setItem("role", isAdmin ? "admin" : "user");
+        // e) Handle form submission
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const username = form.username.value;
+            const password = form.password.value;
 
-                    // 🔁 Redirect based on role
-                    if (isAdmin) {
-                        window.location.href = "../pages/admin.html";
-                    } else {
-                        window.location.href = "../pages/schedule.html";
-                    }
-                } else {
-                    alert("Invalid username or password");
-                }
-            });
+            const userIsValid = Database.validateUser(username, password);
+            if (!userIsValid) {
+                return alert('Invalid username or password');
+            }
 
-            window.addEventListener("click", function (e) {
-                const modal = document.getElementById("loginModal");
-                if (e.target === modal) {
-                    closeLoginModal(e);
-                }
-            });
-        })
-        .catch(error => console.error("Error loading login modal:", error));
+            alert('Login successful!');
+            const userId = Database.getUserId(username);
+            const isAdmin = Database.isAdmin(userId);
+
+            sessionStorage.setItem('loggedIn', 'true');
+            sessionStorage.setItem('username', username);
+            sessionStorage.setItem('userId', userId);
+            sessionStorage.setItem('role', isAdmin ? 'admin' : 'user');
+
+            window.location.href = isAdmin
+            ? 'pages/admin.html'
+            : 'pages/schedule.html';
+        });
+    })
+    .catch(err => console.error('Error loading login modal:', err));
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    const openBtn = document.getElementById('openLoginBtn');
+    openBtn.addEventListener('click', openLoginModal);
+});
+
 function openLoginModal() {
-    const modal = document.getElementById("loginModal");
+    const modal = document.getElementById('loginModal');
     if (modal) {
-        modal.classList.add("active");
+        modal.classList.add('active');
     } else {
         loadLoginModal();
     }
 }
 
-function closeLoginModal(event) {
-    const modal = document.getElementById("loginModal");
-    if (event.target === modal || event.type === "click") {
-        modal.classList.remove("active");
-    }
-}
+function closeLoginModal() {
+    const modal = document.getElementById('loginModal');
+    if (modal) modal.classList.remove('active');
 
+}  
 document.getElementById("loginForm").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -208,9 +215,9 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
 
         // 🔁 Redirect based on role
         if (isAdmin) {
-            window.location.href = "../pages/admin.html";
+            window.location.href = "pages/admin.html";
         } else {
-            window.location.href = "../pages/schedule.html";
+            window.location.href = "pages/schedule.html";
         }
     } else {
         alert("Invalid username or password");
@@ -219,7 +226,7 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
 
 function logout() {
     sessionStorage.clear();
-    window.location.href = "../pages/login.html";
+    window.location.href = "pages/login.html";
 }
 
 // Optional: close modal when clicking outside the login box
