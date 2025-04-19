@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Room Reservation</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -23,68 +23,40 @@
             <div style="display: none;"><!-- drop down menu --></div>
         </div>
     </div>
-    
-    
-        <div class="reservation-container">
-            <div class="reservations-sidebar" id="roomScheduleList">
-                <h3>Room Schedules</h3>
-                <ul id="roomScheduleTimes">
-                <!-- Filled by JS -->
-                </ul>
+
+    <!-- Reservation -->
+
+    <div class="reservation-container">
+        <div class="reservation-card">
+            <div class="card-header">
+                <h3>Date | Day | Time</h3>
+                <button class="close-btn">×</button>
             </div>
-
-            <div class="login upload-schedule">
-                <span class="close-button" onclick="closeScheduleModal()">×</span>
-                <h2>Upload Schedule</h2>
-                <form id="scheduleForm">
-
-                    <div class="input-container">
-                        <img src="assets/images/profile.svg" alt="room icon">
-                        <select id="roomSelect" name="room" required>
-                            <option value="" disabled selected>Select an available room</option>
-                            <!-- Options added by JS -->
-                        </select>
-                        <label for="roomSelect">Room</label>
-                    </div>
-
-                    <div class="input-container">
-                        <img src="assets/images/profile.svg" alt="subject icon">
-                        <input type="text" id="subject" name="subject" required placeholder=" ">
-                        <label for="subject">Subject</label>
-                    </div>
-
-                    <div class="input-container">
-                        <img src="assets/images/profile.svg" alt="professor icon">
-                        <input type="text" id="professor" name="professor" required placeholder=" ">
-                        <label for="professor">Professor</label>
-                    </div>
-
-                    <div class="input-container">
-                        <img src="assets/images/profile.svg" alt="date icon">
-                        <input type="date" id="date" name="date" required placeholder=" ">
-                        <label for="date">Date</label>
-                    </div>
-
-                    <div class="input-container">
-                        <img src="assets/images/lock.svg" alt="time start icon">
-                        <input type="time" id="timeStart" name="timeStart" required placeholder=" ">
-                        <label for="timeStart">Start Time</label>
-                    </div>
-
-                    <div class="input-container">
-                        <img src="assets/images/lock.svg" alt="time end icon">
-                        <input type="time" id="timeEnd" name="timeEnd" required placeholder=" ">
-                        <label for="timeEnd">End Time</label>
-                    </div>
-
-                    <button type="submit">Upload Schedule</button>
-                </form>
+            
+            <div class="card-body">
+                <div class="reserved-list">
+                    <h4>RESERVED LIST:</h4>
+                    <ul>
+                        <li></li>
+                    </ul>
+                </div>
+                
+                <div class="reservation-form">
+                    <form id="scheduleForm">
+                        <input type="text" placeholder="Subject" class="form-input">
+                        <input type="text" placeholder="Professor" class="form-input">
+                        <input type="date" placeholder="Date" class="form-input">
+                        <input type="time" placeholder="Start Time" class="form-input">
+                        <input type="time" placeholder="End Time" class="form-input">
+                        <button type="submit" class="request-btn">REQUEST</button>
+                    </form>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- Reservation -->
 
     <script src="script.js"></script>
-    <script>
-
-    </script>
-    </body>
+</body>
 </html>
