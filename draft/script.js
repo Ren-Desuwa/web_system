@@ -120,150 +120,111 @@ const Database = {
     }
 };
 
-function loadLoginModal() {
-    fetch('pages/login.html')
-    .then(res => res.text())
-    .then(html => {
-        // Insert it into the document
-        const wrapper = document.createElement('div');
-        wrapper.innerHTML = html;
-        document.body.appendChild(wrapper);
+document.addEventListener("DOMContentLoaded", () => {
+    const loggedIn = sessionStorage.getItem("loggedIn") === "true";
+    const role = sessionStorage.getItem("role");
+    const path = window.location.pathname;
+    const isLanding = !path.includes("/pages/");
 
-        const modal = document.getElementById('loginModal');
-        const closeBtn = document.getElementById('closeLoginBtn');
-        const loginDiv = document.getElementById('loginDiv');
-        const form = document.getElementById('loginForm');
+    if (isLanding) {
+        // Landing page logic
+        document.querySelectorAll(".openLoginBtn, #getStarted").forEach(btn =>
+            btn.addEventListener("click", () => {
+                if (loggedIn && role) {
+                    window.location.href = role === "admin" ? "pages/admin.html" : "pages/schedule.html";
+                } else {
+                    openLoginModal();
+                }
+            })
+        );
+    } else {
+        // Pages under /pages/ logic
+        if (!loggedIn) {
+            window.location.href = "../index.html";
+            return;
+        }
 
-        // a) Show it
-        modal.classList.add('active');
-
-        // b) Close when you click the “×”
-        closeBtn.addEventListener('click', closeLoginModal);
-
-        // c) Prevent clicks _inside_ the white box from bubbling up
-        loginDiv.addEventListener('click', e => e.stopPropagation());
-
-        // d) Close when you click _outside_ the white box
-        modal.addEventListener('click', closeLoginModal);
-
-        // e) Handle form submission
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            const username = form.username.value;
-            const password = form.password.value;
-
-            const userIsValid = Database.validateUser(username, password);
-            if (!userIsValid) {
-                return alert('Invalid username or password');
-            }
-
-            alert('Login successful!');
-            const userId = Database.getUserId(username);
-            const isAdmin = Database.isAdmin(userId);
-
-            sessionStorage.setItem('loggedIn', 'true');
-            sessionStorage.setItem('username', username);
-            sessionStorage.setItem('userId', userId);
-            sessionStorage.setItem('role', isAdmin ? 'admin' : 'user');
-
-            window.location.href = isAdmin
-            ? 'pages/admin.html'
-            : 'pages/schedule.html';
-        });
-    })
-    .catch(err => console.error('Error loading login modal:', err));
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const openBtn = document.getElementById('openLoginBtn');
-    openBtn.addEventListener('click', openLoginModal);
+        if (path.endsWith("admin.html") && role !== "admin") {
+            window.location.href = "schedule.html";
+            return;
+        }
+        if (path.endsWith("schedule.html") && role !== "user") {
+            window.location.href = "admin.html";
+            return;
+        }
+    }
 });
 
 function openLoginModal() {
-    const modal = document.getElementById('loginModal');
-    if (modal) {
-        modal.classList.add('active');
-    } else {
-        loadLoginModal();
+    let modal = document.getElementById("loginModal");
+    if (!modal) {
+        modal = document.createElement("div");
+        modal.id = "loginModal";
+        modal.className = "modal-overlay";
+        document.body.appendChild(modal);
     }
+
+    if (!modal.innerHTML.trim()) {
+        loadLoginModal();
+    } else {
+        modal.classList.add("active");
+    }
+}
+
+function loadLoginModal() {
+    fetch("pages/login.html")
+        .then(r => {
+            if (!r.ok) throw new Error(r.status);
+            return r.text();
+        })
+        .then(html => {
+            const modal = document.getElementById("loginModal");
+            modal.innerHTML = html;
+            attachModalHandlers();
+            modal.classList.add("active");
+        })
+        .catch(err => console.error("Error loading login modal:", err));
+}
+
+function attachModalHandlers() {
+    const modal = document.getElementById("loginModal");
+    const loginDiv = modal.querySelector(".login");
+    const closeBtn = modal.querySelector(".close-button");
+    const form = modal.querySelector("#loginForm");
+
+    if (loginDiv) loginDiv.addEventListener("click", e => e.stopPropagation());
+    if (closeBtn) closeBtn.addEventListener("click", closeLoginModal);
+    modal.addEventListener("click", closeLoginModal);
+
+    if (form)
+        form.addEventListener("submit", e => {
+            e.preventDefault();
+            const u = form.username.value.trim();
+            const p = form.password.value;
+
+            if (!Database.validateUser(u, p)) {
+                return alert("Invalid username or password");
+            }
+
+            alert("Login successful!");
+            const userId = Database.getUserId(u);
+            const isAdmin = Database.isAdmin(userId);
+
+            sessionStorage.setItem("loggedIn", "true");
+            sessionStorage.setItem("username", u);
+            sessionStorage.setItem("userId", userId);
+            sessionStorage.setItem("role", isAdmin ? "admin" : "user");
+
+            window.location.href = isAdmin ? "pages/admin.html" : "pages/schedule.html";
+        });
 }
 
 function closeLoginModal() {
-    const modal = document.getElementById('loginModal');
-    if (modal) modal.classList.remove('active');
-
-}  
-document.getElementById("loginForm").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent default form submission
-
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
-    const userIsValid = Database.validateUser(username, password);
-
-    if (userIsValid) {
-        alert("Login successful!");
-
-        const userId = Database.getUserId(username);
-        const isAdmin = Database.isAdmin(userId);
-
-        // ✅ Store session data
-        sessionStorage.setItem("loggedIn", "true");
-        sessionStorage.setItem("username", username);
-        sessionStorage.setItem("userId", userId);
-        sessionStorage.setItem("role", isAdmin ? "admin" : "user");
-
-        // 🔁 Redirect based on role
-        if (isAdmin) {
-            window.location.href = "pages/admin.html";
-        } else {
-            window.location.href = "pages/schedule.html";
-        }
-    } else {
-        alert("Invalid username or password");
-    }
-});
+    const modal = document.getElementById("loginModal");
+    if (modal) modal.classList.remove("active");
+}
 
 function logout() {
     sessionStorage.clear();
-    window.location.href = "pages/login.html";
+    window.location.href = "index.html";
 }
-
-// Optional: close modal when clicking outside the login box
-window.addEventListener("click", function (e) {
-    const modal = document.getElementById("loginModal");
-    if (e.target === modal) {
-        closeLoginModal(e);
-    }
-});
-
-// const user = controller.validateUser("Admin", "admin123");
-
-// if (user) {
-//     console.log("Login successful:", user.name);
-
-//     // 2. Check if user is admin
-//     if (controller.isAdmin(user.id)) {
-//         console.log("User is an admin.");
-//     } else {
-//         console.log("User is a regular user.");
-//     }
-
-//     // // 3. Create a schedule
-//     // controller.createSchedule(
-//     //     user.id,
-//     //     "2025-04-15",
-//     //     "Room 202",
-//     //     "11:00", "AM",
-//     //     "03:00", "PM",
-//     //     "Physics",
-//     //     "Dr. Newton"
-//     // );
-
-//     // // 4. View schedules for user
-//     // const schedules = controller.viewSchedules(user.id);
-//     // console.log("Schedules:", schedules);
-
-//     // // 5. Remove a schedule (admin only)
-//     // controller.removeSchedule(user.id, 1); // Try removing schedule with ID 1
-// }
