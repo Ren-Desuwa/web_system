@@ -769,6 +769,8 @@ button[type="submit"]:hover {
     margin-top: 2rem;
     position: relative;
     perspective: 1000px;
+    width: 300px; /* Added width to contain the cards */
+    height: 400px; /* Added height to match card height */
 }
 
 .card {
@@ -779,6 +781,7 @@ button[type="submit"]:hover {
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     position: absolute;
     transition: transform 0.5s ease;
+    right: 0; /* Anchors all cards to the right side */
 }
 
 .card:nth-child(1) {
