@@ -7,43 +7,24 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <div class="background"><img><img></div>
-    <div id="nav">
-        <div class="nav-home">
-            <a href="../index.html"><div class="logo homebutton"></div></a>
-            <a href="../index.html"><h1 class="homebutton">Blueprint - CSD</h1></a>
-        </div>
-        <input class="menu-checkbox" id="menu" type="checkbox" name="menu" />
-        <div class="nav-menu">
-            <label class="menu-dots" for="menu">
-                <span class="menu-dot"></span>
-                <span class="menu-dot"></span>
-                <span class="menu-dot"></span>
-            </label>
-            <div style="display: none;"><!-- drop down menu --></div>
-        </div>
-    </div>  
-    <div class="overlay" id="overlay"></div>
-    <div class="login" id="loginDiv">
-        <div class="login-container">
-            <div class="login-form">
-                <h1>Login</h1>
-                <form id="loginForm">
-                    <div class="input-container">
-                        <img class="profile" alt="Profile Icon">
-                        <input type="text" id="username" placeholder=" " required>
-                        <label for="username">Username</label>
-                    </div>
-                    <div class="input-container">
-                        <img class="lock" alt="Lock Icon">
-                        <input type="password" id="password" placeholder=" " required>
-                        <label for="password">Password</label>
-                    </div>
-                    <button type="submit">login</button>
-                </form>
-            </div>
+    <div class="modal-overlay" id="loginModal" onclick="closeLoginModal(event)">
+        <div class="login" id="loginDiv" onclick="event.stopPropagation()">
+            <span class="close-button" onclick="closeLoginModal()">×</span> 
+            <h1>Login</h1>
+            <form id="loginForm">
+                <div class="input-container">
+                    <img class="profile" alt="Profile Icon">
+                    <input type="text" id="username" placeholder=" " required>
+                    <label for="username">Username</label>
+                </div>
+                <div class="input-container">
+                    <img class="lock" alt="Lock Icon">
+                    <input type="password" id="password" placeholder=" " required>
+                    <label for="password">Password</label>
+                </div>
+                <button type="submit">login</button>
+            </form>
         </div>
     </div>
-    <script src="../script.js"></script>
 </body>
 </html>

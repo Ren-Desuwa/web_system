@@ -275,6 +275,10 @@ button[type="submit"] {
     transition: background-color 0.3s;
 }
 
+.schedule-container {
+
+}
+
 button[type="submit"]:hover {
     background-color: #028c04;
 }
@@ -444,6 +448,8 @@ button[type="submit"]:hover {
     justify-content: space-between; /* Space between menu and schedule */
     padding: 40px; /* Add padding for spacing */
 }
+
+.menu-container {}
 
 .schedule {
     display: flex;

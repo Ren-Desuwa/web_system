@@ -64,7 +64,7 @@ body {
     top: 0;
     width: 100vw;
     height: 8vh;
-    padding: 20px;
+    padding: 2vh;
     display: flex;
     align-items: center;
     align-content: center;
@@ -166,6 +166,11 @@ body {
 @media (min-width: 480px) and (max-width: 900px) {
     #nav {
         height: 13vh;
+        padding: 0;
+    }
+
+    .nav-home {
+        height: 50%;
     }
 
     .logo {
@@ -297,8 +302,11 @@ body {
     transform: scale(1.1);
 }
 
-.get_started a {
-    text-decoration: none;
+.get_started button {
+    font-family: 'Nunito';
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
     color: inherit;
 }
 
@@ -464,9 +472,35 @@ button[type="submit"]:hover {
     background-color: #028c04;
 }
 
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #000;
+}
+
 /* ----- Login - Design ----- */
 
-/* ----- Admin View - Design ----- */
+/* ----- Schedule View - Design ----- */
 
 .schedule-container {
     position: absolute;
@@ -566,31 +600,26 @@ button[type="submit"]:hover {
     ;
 }
 
-/* Styles for available rooms */
-/* Available rooms = green text, transparent background */
 .room.Availability h1 {
     background-color: lightgreen;
     color: green;
     font-weight: bold;
 }
 
-/* Unavailable rooms = red background */
 .room:not(.Availability) h1 {
     background-color: red;
     color: white;
 }
 
-  /* Keep everything else default (black text, transparent bg) */
 .room h1 {
     margin: 0;
-    font-size: 1rem; /* or whatever size you want */
+    font-size: 1rem;
     text-align: center;
     width: 90%;
     line-height: 1.4;
     word-break: break-word;
     white-space: normal;
     overflow-wrap: break-word;
-    overflow: visible; /* ensure it grows */
     display: block;
 }
 .corridor {
@@ -606,7 +635,11 @@ button[type="submit"]:hover {
     color: black;
 }
 
+/* ----- Schedule View - Design ----- */
+
+/* ----- Reservation View - Design ----- */
 
 
-/* ----- Admin View - Design ----- */
+
+/* ----- Reservation View - Design ----- */
 

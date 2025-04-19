@@ -1,10 +1,10 @@
 const Database = {
     users: [
-        { id: 1, name: "Alice", password: "alice12", role: "user" },
-        { id: 2, name: "Bob", password: "bobrich123", role: "user" },
+        { id: 1, name: "Alice", password: "alice12", role: "user", section: "BSCS 1-A" },
+        { id: 2, name: "Bob", password: "bobrich123", role: "user", section: "BSIT 2-B" },
         { id: 3, name: "Admin", password: "Admin123", role: "admin" },
         { id: 4, name: "admin", password: "admin", role: "admin" },
-        { id: 5, name: "asd", password: "asd", role: "user" }
+        { id: 5, name: "asd", password: "asd", role: "user", section: "BSCS 1-B" }
     ],
 
     schedules: [
@@ -120,6 +120,72 @@ const Database = {
     }
 };
 
+function loadLoginModal() {
+    fetch("pages/login.html")
+        .then(response => response.text())
+        .then(html => {
+            const modalContainer = document.createElement("div");
+            modalContainer.innerHTML = html;
+            document.body.appendChild(modalContainer);
+
+            // Attach event listeners for modal functionality
+            document.getElementById("loginForm").addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+
+                const userIsValid = Database.validateUser(username, password);
+
+                if (userIsValid) {
+                    alert("Login successful!");
+
+                    const userId = Database.getUserId(username);
+                    const isAdmin = Database.isAdmin(userId);
+
+                    // ✅ Store session data
+                    sessionStorage.setItem("loggedIn", "true");
+                    sessionStorage.setItem("username", username);
+                    sessionStorage.setItem("userId", userId);
+                    sessionStorage.setItem("role", isAdmin ? "admin" : "user");
+
+                    // 🔁 Redirect based on role
+                    if (isAdmin) {
+                        window.location.href = "../pages/admin.html";
+                    } else {
+                        window.location.href = "../pages/schedule.html";
+                    }
+                } else {
+                    alert("Invalid username or password");
+                }
+            });
+
+            window.addEventListener("click", function (e) {
+                const modal = document.getElementById("loginModal");
+                if (e.target === modal) {
+                    closeLoginModal(e);
+                }
+            });
+        })
+        .catch(error => console.error("Error loading login modal:", error));
+}
+
+function openLoginModal() {
+    const modal = document.getElementById("loginModal");
+    if (modal) {
+        modal.classList.add("active");
+    } else {
+        loadLoginModal();
+    }
+}
+
+function closeLoginModal(event) {
+    const modal = document.getElementById("loginModal");
+    if (event.target === modal || event.type === "click") {
+        modal.classList.remove("active");
+    }
+}
+
 document.getElementById("loginForm").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -156,6 +222,13 @@ function logout() {
     window.location.href = "../pages/login.html";
 }
 
+// Optional: close modal when clicking outside the login box
+window.addEventListener("click", function (e) {
+    const modal = document.getElementById("loginModal");
+    if (e.target === modal) {
+        closeLoginModal(e);
+    }
+});
 
 // const user = controller.validateUser("Admin", "admin123");
 
