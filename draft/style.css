@@ -17,6 +17,35 @@
     display: none; /* for Chrome, Safari, and Opera */
 }
 
+.title1-left {
+    transform: translateX(150px); 
+}
+
+.title2-right {
+    transform: translateX(450px); 
+}
+
+.title2-right h2 {
+    margin-left: 20px; 
+}
+
+.title3-left {
+    transform: translateX(10px); 
+}
+
+.title2-right .subtext {
+    text-align: right;
+
+}
+
+.title2-right h2 {
+    transform: translateX(250px);  
+}
+
+
+
+
+
 
 body {
     margin: 0;
