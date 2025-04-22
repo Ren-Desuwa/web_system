@@ -506,6 +506,11 @@ button[type="submit"]:hover {
 
 /* ----- Schedule View - Design ----- */
 
+.schedule {
+    z-index: 2;
+}
+
+
 .schedule-container {
     position: absolute;
     width: 100vw;
@@ -521,6 +526,7 @@ button[type="submit"]:hover {
     position: relative;
     z-index: 2;
     margin: 0 5vw;
+
 }
 
 .schedule-header {
@@ -536,11 +542,11 @@ button[type="submit"]:hover {
 }
 
 .schedule-border-smoother {
-    width: 5vw;
+    width: 90vw;
     min-width: 20px;
     height: 10vh;
-    background-color: #03e005;
-    border-radius: 0 0 0 15px;
+    background-color: rgb(141, 198, 198);
+    border-radius: 0 15px 0 15px;
     z-index: 2;
 }
 
@@ -548,6 +554,8 @@ button[type="submit"]:hover {
     position: absolute;
     left: 0;
     z-index: 1;
+    border-radius: 15px;
+    
 }
 
 .up {
@@ -555,7 +563,7 @@ button[type="submit"]:hover {
     width: 35vw;
     min-width: 380px;
     height: 5vh;
-    background-color: #03e005;
+    background-color: rgb(141, 198, 198);
 }
 
 .down {
@@ -563,6 +571,13 @@ button[type="submit"]:hover {
     min-width: 380px;
     height: 5vh;
     background-color: rgb(193, 255, 255);
+}
+.down2 {
+    width: 90vw;
+    min-width: 380px;
+    height: 5vh;
+    background-color: rgb(141, 198, 198);
+    z-index: -5;
 }
 
 .schedule {
