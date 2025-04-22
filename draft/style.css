@@ -71,9 +71,44 @@ body {
     background-attachment: scroll;
 }
 
-/* @media (min-width: 480px) and (max-width: 900px) {
 
-} */
+.background {
+    width: 100vw;
+    height: 100vh;
+    background-color: #03e005;
+    position: fixed;
+    z-index: -1000;
+}
+
+.background img {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    transition: all 0.3s ease;
+}
+
+.background img:nth-child(1) {
+    content: url(assets/images/upside.svg);
+    top: -20vh;
+    left: -30vw;
+}
+
+.background img:nth-child(2) {
+    content: url(assets/images/downside.svg);
+    bottom: -30vh;
+    right: -30vw;
+}
+
+@media (min-width: 480px) and (max-width: 900px) {
+    .background img:nth-child(1) {
+        top: -20vh;
+        left: -25vw;
+    }
+    .background img:nth-child(2) {
+        bottom: -40vh;
+        right: -20vw;
+    }
+}
 
 /* ----- Universal - background ----- */
 
@@ -535,6 +570,11 @@ button[type="submit"]:hover {
 
 /* ----- Schedule View - Design ----- */
 
+.schedule {
+    z-index: 2;
+}
+
+
 .schedule-container {
     position: absolute;
     width: 100vw;
@@ -550,26 +590,28 @@ button[type="submit"]:hover {
     position: relative;
     z-index: 2;
     margin: 0 5vw;
+
 }
 
 .schedule-header {
     width: 30vw;
     min-width: 360px;
-    height: 10vh;
-    background-color: rgb(193, 255, 255);
+    height: 8vh;
+    background-color: 	#ffffee;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 15px 15px 0 0;
+    padding: 6px;
     z-index: 2;
 }
 
 .schedule-border-smoother {
-    width: 5vw;
+    width: 90vw;
     min-width: 20px;
     height: 10vh;
-    background-color: #03e005;
-    border-radius: 0 0 0 15px;
+    background-color: rgb(141, 198, 198);
+    border-radius: 0 15px 0 15px;
     z-index: 2;
 }
 
@@ -577,6 +619,8 @@ button[type="submit"]:hover {
     position: absolute;
     left: 0;
     z-index: 1;
+    border-radius: 15px;
+    
 }
 
 .up {
@@ -584,14 +628,21 @@ button[type="submit"]:hover {
     width: 35vw;
     min-width: 380px;
     height: 5vh;
-    background-color: #03e005;
+    background-color: rgb(141, 198, 198);
 }
 
 .down {
     width: 35vw;
     min-width: 380px;
     height: 5vh;
-    background-color: rgb(193, 255, 255);
+    background-color: #ffffee;
+}
+.down2 {
+    width: 90vw;
+    min-width: 380px;
+    height: 5vh;
+    background-color: rgb(141, 198, 198);
+    z-index: -5;
 }
 
 .schedule {
@@ -602,7 +653,7 @@ button[type="submit"]:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(193, 255, 255);
+    background-color: #ffffee;
     border-radius: 0 15px 15px 15px;
 }
 
@@ -667,12 +718,417 @@ button[type="submit"]:hover {
 
 #room-MIS h1 {
     background-color: transparent;
+    font-family: nunito;
+    font-size: 26px;
     color: black;
 }
 
 /* ----- Schedule View - Design ----- */
 
-/* ----- Reservation View - Design ----- */
+/* Date/Time Display */
+.date-time-display {
+    position: fixed;
+    top: 8vh;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    z-index: 50;
+}
+
+.date-time-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 8px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 15px;
+    font-family: 'Nunito';
+    font-weight: 600;
+}
+
+#currentTime {
+    font-weight: 800;
+    color: #03e005;
+}
+
+/* Reservation Form Styles */
+.reservation-card {
+    width: 90%;
+    max-width: 800px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: #03e005;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .card-body {
+        grid-template-columns: 1fr;
+    }
+    
+    .reserved-list {
+        border-right: none !important;
+        border-bottom: 1px solid #eee;
+        padding-right: 0 !important;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+.reserved-list {
+    border-right: 1px solid #eee;
+    padding-right: 20px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.reserved-list h3, 
+.reservation-form h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #03e005;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Nunito';
+    box-sizing: border-box;
+}
+
+.time-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.time-input-container {
+    display: flex;
+    align-items: center;
+}
+
+.time-input {
+    flex: 2;
+}
+
+.meridian-select {
+    flex: 1;
+    padding: 10px;
+    margin-left: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Nunito';
+}
+
+.request-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #03e005;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Nunito';
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.request-btn:hover {
+    background-color: #02b004;
+    transform: scale(1.02);
+}
+
+/* Reservation List Styles */
+.reservation-item {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-left: 4px solid #03e005;
+}
+
+.reservation-details p {
+    margin: 5px 0;
+}
+
+.reservation-date {
+    font-weight: 700;
+    color: #03e005;
+}
+
+.reservation-subject {
+    font-weight: 600;
+}
+
+.reservation-time {
+    color: #666;
+}
+
+.reservation-user {
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
+}
+
+.no-reservations {
+    color: #999;
+    font-style: italic;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Make rooms clickable */
+.room[id] {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.room[id]:hover:not(#room-MIS) {
+    transform: scale(1.02);
+}
+
+.room[id]:hover h1 {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ----- Admin View - Design ----- */
+
+/* Room with requests styling */
+.room.has-requests h1 {
+    background-color: #ff9800;
+    color: white;
+    position: relative;
+}
+
+.room.has-requests h1::after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 12px;
+    height: 12px;
+    background-color: red;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+}
+
+/* Request Panel */
+.request-panel {
+    font-family: nunito;
+    background-color: white;
+    border-radius: 15px;
+    width: 85%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: 0.5s ease; }
+    to { opacity: 1; transform: 0.5s ease; }
+}
+
+.request-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #03e005;
+    color: white;
+    border-radius: 15px 15px 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.request-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.request-list {
+    padding: 20px;
+}
+
+.request-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.request-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.request-info {
+    flex: 3;
+}
+
+.request-info h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.request-info p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.request-actions {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.accept-btn, .decline-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    font-family: 'Nunito';
+}
+
+.accept-btn {
+    background-color: #03e005;
+    color: white;
+}
+
+.accept-btn:hover {
+    background-color: #02b004;
+    transform: scale(1.05);
+}
+
+.decline-btn {
+    background-color: #ff3333;
+    color: white;
+}
+
+.decline-btn:hover {
+    background-color: #e60000;
+    transform: scale(1.05);
+}
+
+.no-requests {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    padding: 20px;
+}
+
+/* Animation for removing request cards */
+.fade-out {
+    animation: fadeOut 0.5s ease;
+    opacity: 0;
+    transform: translateX(20px);
+    pointer-events: none;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(20px); }
+}
+
+/* Make rooms clickable */
+.room[id] {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.room[id]:hover {
+    transform: scale(1.02);
+}
+
+/* Logout button in dropdown */
+.menu-items {
+    position: absolute;
+    right: 10px;
+    top: 40px;
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.menu-checkbox:checked + .nav-menu .menu-items {
+    display: block !important;
+}
+
+.menu-items a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 8px 12px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.menu-items a:hover {
+    background-color: #f5f5f5;
+    color: #03e005;
+}
 
 .background {
     position: fixed;
@@ -764,3 +1220,119 @@ button[type="submit"]:hover {
 
 /* ----- Reservation View - Design ----- */
 
+/* ----- user profile View - Design ----- */
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #4CAF50;
+    z-index: -1;
+}
+
+.profile-content {
+    padding: 2rem;
+    color: rgb(0, 0, 0);  /* Changed to white */
+    max-width: 50%;
+    margin-top: 80px;
+    margin-left: 100px;  /* Added margin to move content right */
+}
+
+.profile-content h2 {
+    font-weight: normal;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.profile-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 900;
+}
+
+.role {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.details {
+    margin: 2rem 0;
+    padding-left: 20px;  /* Added padding to indent details */
+}
+
+.detail-item {
+    margin-bottom: 1.5rem;
+}
+
+.detail-item h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.detail-item p {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.edit-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: rgb(0, 0, 0);  /* Changed to white */
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+    position: absolute;  /* Added */
+    right: 12.7%;  /* Added */
+    bottom: 20%;  /* Added */
+}
+
+.edit-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.landscape-circle {
+    position: absolute;
+    right: 10%;
+    top: 30%;  /* Changed from 50% */
+    transform: translateY(-50%);
+    width: 250px;  /* Changed from 300px */
+    height: 250px;  /* Changed from 300px */
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .profile-content {
+        max-width: 100%;
+    }
+    
+    .landscape-circle {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin: 2rem auto;
+    }
+
+    .edit-btn {
+        position: static;  /* Reset position for mobile */
+        margin-top: 2rem;
+    }
+}
+
+/* Edit Profile */
+
+
+/* Edit Profile */
+
+/* ----- user profile View - Design ----- */

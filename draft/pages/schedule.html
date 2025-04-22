@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Room Schedule - Blueprint CSD</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body class="no-scroll">
@@ -20,10 +20,22 @@
                 <span class="menu-dot"></span>
                 <span class="menu-dot"></span>
             </label>
-            <div style="display: none;"><!-- drop down menu --></div>
+            <div class="menu-items" style="display: none;">
+                <!-- drop down menu -->
+                <a href="#" id="logoutBtn" onclick="logoutpages()">Logout</a>
+            </div>
         </div>
     </div>
     
+    <!-- Date/Day/Time Display -->
+    <div class="date-time-display">
+        <div class="date-time-container">
+            <span id="currentDate">Loading date...</span>
+            <span id="currentDay">Day</span>
+            <span id="currentTime">00:00:00</span>
+        </div>
+    </div>
+
     <div class="schedule-container">
         <div class="menu-container">
             <div class="menu-background">
@@ -39,53 +51,76 @@
         <div class="schedule" id="schedule">
             <img class="schedule-img">
             <div class="rooms">
-                <div class="room" id="room-301"><h1>room 302</h1></div>
-                <div class="room" id="room-302"><h1>room 301</h1></div>
+                <div class="room" id="room-301" onclick="showReservationForm('room-301')"><h1>Room 302</h1></div>
+                <div class="room" id="room-302" onclick="showReservationForm('room-302')"><h1>Room 301</h1></div>
                 <div class="room"><!-- no room just stair case --></div>
                 <div class="corridor"></div>
-                <div class="room" id="room-303"><h1>room 303</h1></div>
-                <div class="room" id="room-304"><h1>room 304</h1></div>
+                <div class="room" id="room-303" onclick="showReservationForm('room-303')"><h1>Room 303</h1></div>
+                <div class="room" id="room-304" onclick="showReservationForm('room-304')"><h1>Room 304</h1></div>
                 <div class="room" id="room-MIS"><h1>MIS</h1></div>
             </div>
         </div>
     </div>
 
+    <!-- Room Reservation Modal -->
+    <div id="reservationModal" class="modal-overlay">
+        <div class="reservation-card">
+            <div class="card-header">
+                <h2 id="reservationRoomTitle">Room Reservation</h2>
+                <span class="close-button" id="closeReservationModal">&times;</span>
+            </div>
+            <div class="card-body">
+                <div class="reserved-list">
+                    <h3>Current Reservations</h3>
+                    <div id="roomReservations">
+                        <p class="no-reservations">No current reservations for this room.</p>
+                    </div>
+                </div>
+                <div class="reservation-form">
+                    <h3>Make a Reservation</h3>
+                    <form id="reserveForm">
+                        <input type="hidden" id="roomId" name="roomId">
+                        <div class="form-group">
+                            <label for="date">Date:</label>
+                            <input type="date" id="date" name="date" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject:</label>
+                            <input type="text" id="subject" name="subject" class="form-input" placeholder="Enter subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="professor">Professor:</label>
+                            <input type="text" id="professor" name="professor" class="form-input" placeholder="Enter professor name" required>
+                        </div>
+                        <div class="form-group time-group">
+                            <div>
+                                <label for="timeStart">Start Time:</label>
+                                <div class="time-input-container">
+                                    <input type="text" id="timeStart" name="timeStart" class="form-input time-input" placeholder="HH:MM" required pattern="([0-9]|0[0-9]|1[0-2]):[0-5][0-9]">
+                                    <select id="meridianStart" name="meridianStart" class="meridian-select">
+                                        <option value="AM">AM</option>
+                                        <option value="PM">PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="timeEnd">End Time:</label>
+                                <div class="time-input-container">
+                                    <input type="text" id="timeEnd" name="timeEnd" class="form-input time-input" placeholder="HH:MM" required pattern="([0-9]|0[0-9]|1[0-2]):[0-5][0-9]">
+                                    <select id="meridianEnd" name="meridianEnd" class="meridian-select">
+                                        <option value="AM">AM</option>
+                                        <option value="PM" selected>PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="request-btn">Submit Reservation Request</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../script.js"></script>
-    <script>
-        window.addEventListener("DOMContentLoaded", () => {
-            const loggedIn = sessionStorage.getItem("loggedIn");
-            const role = sessionStorage.getItem("role");
-    
-            if (loggedIn !== "true" || role !== "user") {
-                window.location.href = "../pages/login.html";
-            }
-    
-            const scheduledRooms = Database.schedules.map(s => s.room.toLowerCase());
-    
-            const roomSchedules = {};
-            Database.schedules.forEach(schedule => {
-                const roomKey = schedule.room.toLowerCase();
-                roomSchedules[roomKey] = `${schedule.subject} - ${schedule.timeStart} ${schedule.meridianStart} to ${schedule.timeEnd} ${schedule.meridianEnd}`;
-            });
-    
-            document.querySelectorAll(".room[id]").forEach(room => {
-                const roomHeader = room.querySelector("h1");
-                const id = room.id.toLowerCase();
-                if (id === "room-mis") return;
-
-                // Debug:
-                console.log("Checking", id, "against", scheduledRooms);
-
-                if (!scheduledRooms.includes(id)) {
-                    room.classList.add("Availability");
-                    roomHeader.textContent = `${roomHeader.textContent} (Available)`;
-                } else {
-                    room.classList.remove("Availability");
-                    const sched = roomSchedules[id] || "No schedule available";
-                    roomHeader.textContent = `${roomHeader.textContent} (Unavailable - ${sched})`;
-                }
-            });
-        });
-    </script>
 </body>
 </html>
