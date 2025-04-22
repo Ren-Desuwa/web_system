@@ -936,3 +936,119 @@ button[type="submit"]:hover {
 
 /* ----- Reservation View - Design ----- */
 
+/* ----- user profile View - Design ----- */
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #4CAF50;
+    z-index: -1;
+}
+
+.profile-content {
+    padding: 2rem;
+    color: rgb(0, 0, 0);  /* Changed to white */
+    max-width: 50%;
+    margin-top: 80px;
+    margin-left: 100px;  /* Added margin to move content right */
+}
+
+.profile-content h2 {
+    font-weight: normal;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.profile-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 900;
+}
+
+.role {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.details {
+    margin: 2rem 0;
+    padding-left: 20px;  /* Added padding to indent details */
+}
+
+.detail-item {
+    margin-bottom: 1.5rem;
+}
+
+.detail-item h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.detail-item p {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.edit-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: rgb(0, 0, 0);  /* Changed to white */
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+    position: absolute;  /* Added */
+    right: 12.7%;  /* Added */
+    bottom: 20%;  /* Added */
+}
+
+.edit-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.landscape-circle {
+    position: absolute;
+    right: 10%;
+    top: 30%;  /* Changed from 50% */
+    transform: translateY(-50%);
+    width: 250px;  /* Changed from 300px */
+    height: 250px;  /* Changed from 300px */
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .profile-content {
+        max-width: 100%;
+    }
+    
+    .landscape-circle {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin: 2rem auto;
+    }
+
+    .edit-btn {
+        position: static;  /* Reset position for mobile */
+        margin-top: 2rem;
+    }
+}
+
+/* Edit Profile */
+
+
+/* Edit Profile */
+
+/* ----- user profile View - Design ----- */
