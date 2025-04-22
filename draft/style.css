@@ -203,11 +203,7 @@ body {
 /* ----- Introduction - Navigation Bar ----- */
 
 .introduction-page #nav .nav-home .logo {
-    position: absolute;
-    width: 30vw;
-    height: 30vw;
-    top: 20vh;
-    left: 10vw;
+    display: none;
 }
 
 .introduction-page #nav .nav-home h1,
@@ -254,6 +250,16 @@ body {
 /* ----- Introduction - Navigation Bar ----- */
 
 /* ----- Introduction - Titles and Get Started ----- */
+
+.first-page {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #03e005;
+}
 
 .title {
     position: absolute;
@@ -345,6 +351,18 @@ body {
 /* ----- Introduction - Title and Get Started ----- */
 
 /* ----- Introduction - Second Page ----- */
+
+.second-page {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #03e005;
+}
+
+
 
 /* ----- Introduction - Second Page ----- */
 
