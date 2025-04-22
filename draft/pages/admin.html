@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Blueprint CSD</title>
     <link rel="stylesheet" href="../style.css">
-    <style>
-            
-    </style>
 </head>
 <body class="no-scroll">
     <div class="background"><img><img></div>
@@ -25,7 +22,7 @@
             </label>
             <div class="menu-items" style="display: none;">
                 <!-- drop down menu -->
-                <a href="#" id="logoutBtn" onclick="logout()">Logout</a>
+                <a href="#" id="logoutBtn" onclick="logoutpages()">Logout</a>
             </div>
         </div>
     </div>
@@ -70,168 +67,5 @@
     </div>
     
     <script src="../script.js"></script>
-    <script>
-        // Admin-specific JavaScript
-        window.addEventListener("DOMContentLoaded", () => {
-            const loggedIn = sessionStorage.getItem("loggedIn");
-            const role = sessionStorage.getItem("role");
-    
-            if (loggedIn !== "true" || role !== "admin") {
-                window.location.href = "../pages/login.html";
-                return;
-            }
-
-            // Add request status counters to each room
-            updateRoomRequestCounts();
-            
-            // Add click event to each room to show requests
-            document.querySelectorAll(".room[id]").forEach(room => {
-                if (room.id === "room-MIS") return; // Skip MIS room if needed
-                
-                room.addEventListener("click", () => showRoomRequests(room.id));
-            });
-
-            // Close modal when clicking on X or outside the modal
-            document.getElementById("closeRequestModal").addEventListener("click", closeRequestModal);
-            document.getElementById("requestModal").addEventListener("click", (e) => {
-                if (e.target === document.getElementById("requestModal")) {
-                    closeRequestModal();
-                }
-            });
-        });
-
-        function updateRoomRequestCounts() {
-            // Group schedules by room
-            const schedulesByRoom = {};
-            Database.schedules.forEach(schedule => {
-                const roomId = schedule.room.toLowerCase();
-                if (!schedulesByRoom[roomId]) {
-                    schedulesByRoom[roomId] = [];
-                }
-                schedulesByRoom[roomId].push(schedule);
-            });
-
-            // Update each room with request count
-            document.querySelectorAll(".room[id]").forEach(room => {
-                const roomId = room.id.toLowerCase();
-                if (roomId === "room-mis") return; // Skip MIS room
-
-                const schedules = schedulesByRoom[roomId] || [];
-                const requestCount = schedules.length;
-                
-                const roomHeader = room.querySelector("h1");
-                const roomName = roomHeader.textContent.split("(")[0].trim();
-                roomHeader.textContent = `${roomName} (${requestCount} Requests)`;
-                
-                // Add a visual indicator for requests
-                if (requestCount > 0) {
-                    room.classList.add("has-requests");
-                } else {
-                    room.classList.remove("has-requests");
-                }
-            });
-        }
-
-        function showRoomRequests(roomId) {
-            const modal = document.getElementById("requestModal");
-            const modalTitle = document.getElementById("modalRoomTitle");
-            const requestsList = document.getElementById("requestsList");
-            
-            // Clear previous requests
-            requestsList.innerHTML = "";
-            
-            // Update title
-            const roomName = roomId.replace("room-", "Room ").toUpperCase();
-            modalTitle.textContent = `${roomName} - Reservation Requests`;
-            
-            // Get schedules for this room
-            const roomSchedules = Database.schedules.filter(
-                schedule => schedule.room.toLowerCase() === roomId.toLowerCase()
-            );
-            
-            if (roomSchedules.length === 0) {
-                requestsList.innerHTML = "<p class='no-requests'>No reservation requests for this room.</p>";
-            } else {
-                // Create a request card for each schedule
-                roomSchedules.forEach(schedule => {
-                    const user = Database.getUserById(schedule.userId);
-                    const requestCard = document.createElement("div");
-                    requestCard.className = "request-card";
-                    requestCard.innerHTML = `
-                        <div class="request-info">
-                            <h3>${schedule.subject}</h3>
-                            <p><strong>Date:</strong> ${schedule.date}</p>
-                            <p><strong>Time:</strong> ${schedule.timeStart} ${schedule.meridianStart} - ${schedule.timeEnd} ${schedule.meridianEnd}</p>
-                            <p><strong>Professor:</strong> ${schedule.professor}</p>
-                            <p><strong>Requested by:</strong> ${user ? user.name : 'Unknown'} (${user ? user.section : 'N/A'})</p>
-                        </div>
-                        <div class="request-actions">
-                            <button class="accept-btn" data-id="${schedule.id}">Accept</button>
-                            <button class="decline-btn" data-id="${schedule.id}">Decline</button>
-                        </div>
-                    `;
-                    requestsList.appendChild(requestCard);
-                });
-                
-                // Add event listeners to accept/decline buttons
-                document.querySelectorAll(".accept-btn").forEach(btn => {
-                    btn.addEventListener("click", () => acceptRequest(parseInt(btn.dataset.id)));
-                });
-                
-                document.querySelectorAll(".decline-btn").forEach(btn => {
-                    btn.addEventListener("click", () => declineRequest(parseInt(btn.dataset.id)));
-                });
-            }
-            
-            // Show modal
-            modal.classList.add("active");
-        }
-
-        function closeRequestModal() {
-            document.getElementById("requestModal").classList.remove("active");
-        }
-
-        function acceptRequest(scheduleId) {
-            // Here you would normally update the status in the database
-            // For now, we'll just show an alert and remove from the list
-            const schedule = Database.schedules.find(s => s.id === scheduleId);
-            if (schedule) {
-                alert(`Reservation for ${schedule.subject} has been accepted!`);
-                // In a real system, you might update a status field instead of removing
-                updateRequestDisplay(scheduleId, true);
-            }
-        }
-
-        function declineRequest(scheduleId) {
-            // Similar to accept but with different message
-            const schedule = Database.schedules.find(s => s.id === scheduleId);
-            if (schedule) {
-                alert(`Reservation for ${schedule.subject} has been declined.`);
-                Database.removeSchedule(scheduleId);
-                updateRequestDisplay(scheduleId, false);
-            }
-        }
-
-        function updateRequestDisplay(scheduleId, accepted) {
-            // Remove the request card from the display
-            const requestCard = document.querySelector(`.request-card button[data-id="${scheduleId}"]`).closest('.request-card');
-            if (requestCard) {
-                // Add a fade-out animation
-                requestCard.classList.add('fade-out');
-                setTimeout(() => {
-                    requestCard.remove();
-                    
-                    // If no more requests, show the "no requests" message
-                    const requestsList = document.getElementById("requestsList");
-                    if (requestsList.children.length === 0) {
-                        requestsList.innerHTML = "<p class='no-requests'>No reservation requests for this room.</p>";
-                    }
-                    
-                    // Update the room request counts
-                    updateRoomRequestCounts();
-                }, 500); // Match the animation duration
-            }
-        }
-    </script>
 </body>
 </html>

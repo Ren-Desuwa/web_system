@@ -42,9 +42,44 @@ body {
     background-attachment: scroll;
 }
 
-/* @media (min-width: 480px) and (max-width: 900px) {
 
-} */
+.background {
+    width: 100vw;
+    height: 100vh;
+    background-color: #03e005;
+    position: fixed;
+    z-index: -1000;
+}
+
+.background img {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    transition: all 0.3s ease;
+}
+
+.background img:nth-child(1) {
+    content: url(assets/images/upside.svg);
+    top: -20vh;
+    left: -30vw;
+}
+
+.background img:nth-child(2) {
+    content: url(assets/images/downside.svg);
+    bottom: -30vh;
+    right: -30vw;
+}
+
+@media (min-width: 480px) and (max-width: 900px) {
+    .background img:nth-child(1) {
+        top: -20vh;
+        left: -25vw;
+    }
+    .background img:nth-child(2) {
+        bottom: -40vh;
+        right: -20vw;
+    }
+}
 
 /* ----- Universal - background ----- */
 
@@ -506,6 +541,11 @@ button[type="submit"]:hover {
 
 /* ----- Schedule View - Design ----- */
 
+.schedule {
+    z-index: 2;
+}
+
+
 .schedule-container {
     position: absolute;
     width: 100vw;
@@ -521,6 +561,7 @@ button[type="submit"]:hover {
     position: relative;
     z-index: 2;
     margin: 0 5vw;
+
 }
 
 .schedule-header {
@@ -537,11 +578,11 @@ button[type="submit"]:hover {
 }
 
 .schedule-border-smoother {
-    width: 5vw;
+    width: 90vw;
     min-width: 20px;
     height: 10vh;
-    background-color: #03e005;
-    border-radius: 0 0 0 15px;
+    background-color: rgb(141, 198, 198);
+    border-radius: 0 15px 0 15px;
     z-index: 2;
 }
 
@@ -549,6 +590,8 @@ button[type="submit"]:hover {
     position: absolute;
     left: 0;
     z-index: 1;
+    border-radius: 15px;
+    
 }
 
 .up {
@@ -556,7 +599,7 @@ button[type="submit"]:hover {
     width: 35vw;
     min-width: 380px;
     height: 5vh;
-    background-color: #03e005;
+    background-color: rgb(141, 198, 198);
 }
 
 .down {
@@ -564,6 +607,13 @@ button[type="submit"]:hover {
     min-width: 380px;
     height: 5vh;
     background-color: #ffffee;
+}
+.down2 {
+    width: 90vw;
+    min-width: 380px;
+    height: 5vh;
+    background-color: rgb(141, 198, 198);
+    z-index: -5;
 }
 
 .schedule {
@@ -639,14 +689,219 @@ button[type="submit"]:hover {
 
 #room-MIS h1 {
     background-color: transparent;
+    font-family: nunito;
+    font-size: 26px;
     color: black;
 }
 
 /* ----- Schedule View - Design ----- */
 
-/* ----- Reservation View - Design ----- */
+/* Date/Time Display */
+.date-time-display {
+    position: fixed;
+    top: 8vh;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    z-index: 50;
+}
 
-/* Admin Panel Specific Styles */
+.date-time-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 8px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 15px;
+    font-family: 'Nunito';
+    font-weight: 600;
+}
+
+#currentTime {
+    font-weight: 800;
+    color: #03e005;
+}
+
+/* Reservation Form Styles */
+.reservation-card {
+    width: 90%;
+    max-width: 800px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: #03e005;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .card-body {
+        grid-template-columns: 1fr;
+    }
+    
+    .reserved-list {
+        border-right: none !important;
+        border-bottom: 1px solid #eee;
+        padding-right: 0 !important;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+.reserved-list {
+    border-right: 1px solid #eee;
+    padding-right: 20px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.reserved-list h3, 
+.reservation-form h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #03e005;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Nunito';
+    box-sizing: border-box;
+}
+
+.time-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.time-input-container {
+    display: flex;
+    align-items: center;
+}
+
+.time-input {
+    flex: 2;
+}
+
+.meridian-select {
+    flex: 1;
+    padding: 10px;
+    margin-left: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Nunito';
+}
+
+.request-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #03e005;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Nunito';
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.request-btn:hover {
+    background-color: #02b004;
+    transform: scale(1.02);
+}
+
+/* Reservation List Styles */
+.reservation-item {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-left: 4px solid #03e005;
+}
+
+.reservation-details p {
+    margin: 5px 0;
+}
+
+.reservation-date {
+    font-weight: 700;
+    color: #03e005;
+}
+
+.reservation-subject {
+    font-weight: 600;
+}
+
+.reservation-time {
+    color: #666;
+}
+
+.reservation-user {
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
+}
+
+.no-reservations {
+    color: #999;
+    font-style: italic;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Make rooms clickable */
+.room[id] {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.room[id]:hover:not(#room-MIS) {
+    transform: scale(1.02);
+}
+
+.room[id]:hover h1 {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ----- Admin View - Design ----- */
 
 /* Room with requests styling */
 .room.has-requests h1 {
