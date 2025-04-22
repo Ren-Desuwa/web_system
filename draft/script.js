@@ -388,3 +388,250 @@ function updateRequestDisplay(scheduleId, accepted) {
         }, 500); // Match the animation duration
     }
 }
+
+
+// Variables
+let currentRoom = null;
+        
+// Check if user is logged in
+window.addEventListener("DOMContentLoaded", () => {
+    const loggedIn = sessionStorage.getItem("loggedIn");
+    const role = sessionStorage.getItem("role");
+
+    if (loggedIn !== "true" || role !== "user") {
+        window.location.href = "../pages/login.html";
+        return;
+    }
+
+    // Update room status
+    updateRoomStatus();
+    
+    // Add clock functionality
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+});
+
+// Update date and time
+function updateDateTime() {
+    const now = new Date();
+    
+    // Format the date: April 23, 2025
+    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+    
+    // Get day name
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayName = days[now.getDay()];
+    
+    // Format time: HH:MM:SS
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+    const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
+    
+    // Update the DOM
+    document.getElementById('currentDate').textContent = formattedDate;
+    document.getElementById('currentDay').textContent = dayName;
+    document.getElementById('currentTime').textContent = formattedTime;
+}
+
+function updateRoomStatus() {
+    const rooms = {};
+    
+    // Group schedules by room
+    Database.schedules.forEach(schedule => {
+        const roomId = schedule.room.toLowerCase();
+        if (!rooms[roomId]) {
+            rooms[roomId] = [];
+        }
+        rooms[roomId].push(schedule);
+    });
+    
+    // Update each room's display
+    document.querySelectorAll(".room[id]").forEach(room => {
+        const roomHeader = room.querySelector("h1");
+        const id = room.id.toLowerCase();
+        if (id === "room-mis") return;
+        
+        const roomSchedules = rooms[id] || [];
+        
+        if (roomSchedules.length === 0) {
+            room.classList.add("Availability");
+            roomHeader.textContent = `${getRoomName(id)} (Available)`;
+        } else {
+            room.classList.remove("Availability");
+            roomHeader.textContent = `${getRoomName(id)} (${roomSchedules.length} Reservations)`;
+        }
+    });
+}
+
+function getRoomName(roomId) {
+    // Convert room-301 to Room 301
+    return "Room " + roomId.split("-")[1];
+}
+
+function showReservationForm(roomId) {
+    currentRoom = roomId;
+    
+    // Update modal title
+    const roomName = getRoomName(roomId);
+    document.getElementById("reservationRoomTitle").textContent = `${roomName} - Reservation`;
+    
+    // Set the hidden room ID field
+    document.getElementById("roomId").value = roomId;
+    
+    // Set default date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById("date").value = today;
+    document.getElementById("date").min = today;
+    
+    // Load existing reservations for this room
+    loadRoomReservations(roomId);
+    
+    // Show the modal
+    document.getElementById("reservationModal").classList.add("active");
+}
+
+function loadRoomReservations(roomId) {
+    const reservationsContainer = document.getElementById("roomReservations");
+    reservationsContainer.innerHTML = "";
+    
+    // Get schedules for this room
+    const roomSchedules = Database.schedules.filter(
+        schedule => schedule.room.toLowerCase() === roomId.toLowerCase()
+    );
+    
+    if (roomSchedules.length === 0) {
+        reservationsContainer.innerHTML = "<p class='no-reservations'>No current reservations for this room.</p>";
+    } else {
+        // Sort schedules by date and time
+        roomSchedules.sort((a, b) => {
+            if (a.date !== b.date) return new Date(a.date) - new Date(b.date);
+            
+            // Compare times
+            const timeA = convertTo24Hour(a.timeStart, a.meridianStart);
+            const timeB = convertTo24Hour(b.timeStart, b.meridianStart);
+            return timeA - timeB;
+        });
+        
+        // Create a list of reservations
+        roomSchedules.forEach(schedule => {
+            const user = Database.getUserById(schedule.userId);
+            const reservationItem = document.createElement("div");
+            reservationItem.className = "reservation-item";
+            
+            reservationItem.innerHTML = `
+                <div class="reservation-details">
+                    <p class="reservation-date">${schedule.date}</p>
+                    <p class="reservation-subject">${schedule.subject}</p>
+                    <p class="reservation-time">${schedule.timeStart} ${schedule.meridianStart} - ${schedule.timeEnd} ${schedule.meridianEnd}</p>
+                    <p class="reservation-user">By: ${user ? user.name : 'Unknown'}</p>
+                </div>
+            `;
+            
+            reservationsContainer.appendChild(reservationItem);
+        });
+    }
+}
+
+function convertTo24Hour(time, meridian) {
+    let [hours, minutes] = time.split(':');
+    hours = parseInt(hours);
+    
+    if (meridian === 'PM' && hours < 12) {
+        hours += 12;
+    }
+    if (meridian === 'AM' && hours === 12) {
+        hours = 0;
+    }
+    
+    return hours * 60 + parseInt(minutes);
+}
+
+// Close modal when clicking X or outside
+document.getElementById("closeReservationModal").addEventListener("click", () => {
+    document.getElementById("reservationModal").classList.remove("active");
+});
+
+document.getElementById("reservationModal").addEventListener("click", (e) => {
+    if (e.target === document.getElementById("reservationModal")) {
+        document.getElementById("reservationModal").classList.remove("active");
+    }
+});
+
+// Handle form submission
+document.getElementById("reserveForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    
+    const form = e.target;
+    const userId = parseInt(sessionStorage.getItem("userId"));
+    const roomId = form.roomId.value;
+    const date = form.date.value;
+    const subject = form.subject.value;
+    const professor = form.professor.value;
+    const timeStart = form.timeStart.value;
+    const meridianStart = form.meridianStart.value;
+    const timeEnd = form.timeEnd.value;
+    const meridianEnd = form.meridianEnd.value;
+    
+    // Validate times
+    if (!isValidTimeFormat(timeStart) || !isValidTimeFormat(timeEnd)) {
+        alert("Please enter valid times in HH:MM format (e.g., 9:30, 11:00)");
+        return;
+    }
+    
+    // Check for time conflict
+    if (!isTimeAvailable(roomId, date, timeStart, meridianStart, timeEnd, meridianEnd)) {
+        alert("This time slot conflicts with an existing reservation. Please choose a different time.");
+        return;
+    }
+    
+    // Create the schedule
+    Database.createSchedule(
+        userId,
+        date,
+        roomId,
+        timeStart,
+        meridianStart,
+        timeEnd,
+        meridianEnd,
+        subject,
+        professor
+    );
+    
+    alert("Your reservation request has been submitted and is pending approval.");
+    form.reset();
+    document.getElementById("reservationModal").classList.remove("active");
+    
+    // Update room status
+    updateRoomStatus();
+});
+
+function isValidTimeFormat(time) {
+    const timeRegex = /^([0-9]|0[0-9]|1[0-2]):([0-5][0-9])$/;
+    return timeRegex.test(time);
+}
+
+function isTimeAvailable(roomId, date, startTime, startMeridian, endTime, endMeridian) {
+    // Get existing schedules for this room and date
+    const existingSchedules = Database.schedules.filter(
+        schedule => schedule.room.toLowerCase() === roomId.toLowerCase() && schedule.date === date
+    );
+    
+    if (existingSchedules.length === 0) return true;
+    
+    // Convert times to minutes from midnight for easier comparison
+    const newStart = convertTo24Hour(startTime, startMeridian);
+    const newEnd = convertTo24Hour(endTime, endMeridian);
+    
+    // Check for overlap with any existing schedule
+    for (const schedule of existingSchedules) {
+        const existingStart = convertTo24Hour(schedule.timeStart, schedule.meridianStart);
+        const existingEnd = convertTo24Hour(schedule.timeEnd, schedule.meridianEnd);
+        
+        // Check for overlap
+        if (!(newEnd <= existingStart || newStart >= existingEnd)) {
+            return false; // There is an overlap
+        }
+    }
+    
+    return true; // No overlap found
+}
