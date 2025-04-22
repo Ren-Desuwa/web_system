@@ -25,7 +25,7 @@
             </label>
             <div class="menu-items" style="display: none;">
                 <!-- drop down menu -->
-                <a href="#" id="logoutBtn" onclick="logout()">Logout</a>
+                <a href="#" id="logoutBtn" onclick="logoutpages()">Logout</a>
             </div>
         </div>
     </div>
@@ -73,13 +73,6 @@
     <script>
         // Admin-specific JavaScript
         window.addEventListener("DOMContentLoaded", () => {
-            const loggedIn = sessionStorage.getItem("loggedIn");
-            const role = sessionStorage.getItem("role");
-    
-            if (loggedIn !== "true" || role !== "admin") {
-                window.location.href = "../pages/login.html";
-                return;
-            }
 
             // Add request status counters to each room
             updateRoomRequestCounts();
