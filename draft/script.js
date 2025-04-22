@@ -224,36 +224,72 @@ function closeLoginModal() {
     if (modal) modal.classList.remove("active");
 }
 
+// Unified logout function for all pages
 function logout() {
     sessionStorage.clear();
-    window.location.href = "index.html";
-}
-
-function logoutpages() {
-    sessionStorage.clear();
-    window.location.href = "../index.html";
+    // Check if we're in a subdirectory
+    if (window.location.pathname.includes("/pages/")) {
+        window.location.href = "../index.html";
+    } else {
+        window.location.href = "index.html";
+    }
 }
 
 // Admin-specific JavaScript
 window.addEventListener("DOMContentLoaded", () => {
-
-    // Add request status counters to each room
-    updateRoomRequestCounts();
-    
-    // Add click event to each room to show requests
-    document.querySelectorAll(".room[id]").forEach(room => {
-        if (room.id === "room-MIS") return; // Skip MIS room if needed
+    // Only run admin functionality on admin page
+    if (document.querySelectorAll(".room[id]").length > 0) {
+        // Add request status counters to each room
+        updateRoomRequestCounts();
         
-        room.addEventListener("click", () => showRoomRequests(room.id));
-    });
+        // Add click event to each room to show requests
+        document.querySelectorAll(".room[id]").forEach(room => {
+            if (room.id === "room-MIS") return; // Skip MIS room if needed
+            
+            room.addEventListener("click", () => {
+                const role = sessionStorage.getItem("role");
+                if (role === "admin") {
+                    showRoomRequests(room.id);
+                } else {
+                    showReservationForm(room.id);
+                }
+            });
+        });
 
-    // Close modal when clicking on X or outside the modal
-    document.getElementById("closeRequestModal").addEventListener("click", closeRequestModal);
-    document.getElementById("requestModal").addEventListener("click", (e) => {
-        if (e.target === document.getElementById("requestModal")) {
-            closeRequestModal();
+        // Close modals when clicking on X or outside the modal
+        const requestModal = document.getElementById("requestModal");
+        const reservationModal = document.getElementById("reservationModal");
+        
+        if (requestModal) {
+            document.getElementById("closeRequestModal")?.addEventListener("click", closeRequestModal);
+            requestModal.addEventListener("click", (e) => {
+                if (e.target === requestModal) {
+                    closeRequestModal();
+                }
+            });
         }
-    });
+        
+        if (reservationModal) {
+            document.getElementById("closeReservationModal")?.addEventListener("click", () => {
+                reservationModal.classList.remove("active");
+            });
+            
+            reservationModal.addEventListener("click", (e) => {
+                if (e.target === reservationModal) {
+                    reservationModal.classList.remove("active");
+                }
+            });
+            
+            // Handle form submission
+            document.getElementById("reserveForm")?.addEventListener("submit", handleReservationSubmit);
+        }
+        
+        // Add clock functionality if element exists
+        if (document.getElementById('currentTime')) {
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+        }
+    }
 });
 
 function updateRoomRequestCounts() {
@@ -276,16 +312,33 @@ function updateRoomRequestCounts() {
         const requestCount = schedules.length;
         
         const roomHeader = room.querySelector("h1");
-        const roomName = roomHeader.textContent.split("(")[0].trim();
-        roomHeader.textContent = `${roomName} (${requestCount} Requests)`;
+        const roomName = getRoomName(roomId);
         
-        // Add a visual indicator for requests
-        if (requestCount > 0) {
-            room.classList.add("has-requests");
+        const role = sessionStorage.getItem("role");
+        if (role === "admin") {
+            roomHeader.textContent = `${roomName} (${requestCount} Requests)`;
+            // Add a visual indicator for requests
+            if (requestCount > 0) {
+                room.classList.add("has-requests");
+            } else {
+                room.classList.remove("has-requests");
+            }
         } else {
-            room.classList.remove("has-requests");
+            // User view
+            if (requestCount === 0) {
+                room.classList.add("Availability");
+                roomHeader.textContent = `${roomName} (Available)`;
+            } else {
+                room.classList.remove("Availability");
+                roomHeader.textContent = `${roomName} (${requestCount} Reservations)`;
+            }
         }
     });
+}
+
+function getRoomName(roomId) {
+    // Convert room-301 to Room 301
+    return "Room " + roomId.split("-")[1].toUpperCase();
 }
 
 function showRoomRequests(roomId) {
@@ -297,7 +350,7 @@ function showRoomRequests(roomId) {
     requestsList.innerHTML = "";
     
     // Update title
-    const roomName = roomId.replace("room-", "Room ").toUpperCase();
+    const roomName = getRoomName(roomId);
     modalTitle.textContent = `${roomName} - Reservation Requests`;
     
     // Get schedules for this room
@@ -389,28 +442,6 @@ function updateRequestDisplay(scheduleId, accepted) {
     }
 }
 
-
-// Variables
-let currentRoom = null;
-        
-// Check if user is logged in
-window.addEventListener("DOMContentLoaded", () => {
-    const loggedIn = sessionStorage.getItem("loggedIn");
-    const role = sessionStorage.getItem("role");
-
-    if (loggedIn !== "true" || role !== "user") {
-        window.location.href = "../pages/login.html";
-        return;
-    }
-
-    // Update room status
-    updateRoomStatus();
-    
-    // Add clock functionality
-    updateDateTime();
-    setInterval(updateDateTime, 1000);
-});
-
 // Update date and time
 function updateDateTime() {
     const now = new Date();
@@ -433,43 +464,8 @@ function updateDateTime() {
     document.getElementById('currentTime').textContent = formattedTime;
 }
 
-function updateRoomStatus() {
-    const rooms = {};
-    
-    // Group schedules by room
-    Database.schedules.forEach(schedule => {
-        const roomId = schedule.room.toLowerCase();
-        if (!rooms[roomId]) {
-            rooms[roomId] = [];
-        }
-        rooms[roomId].push(schedule);
-    });
-    
-    // Update each room's display
-    document.querySelectorAll(".room[id]").forEach(room => {
-        const roomHeader = room.querySelector("h1");
-        const id = room.id.toLowerCase();
-        if (id === "room-mis") return;
-        
-        const roomSchedules = rooms[id] || [];
-        
-        if (roomSchedules.length === 0) {
-            room.classList.add("Availability");
-            roomHeader.textContent = `${getRoomName(id)} (Available)`;
-        } else {
-            room.classList.remove("Availability");
-            roomHeader.textContent = `${getRoomName(id)} (${roomSchedules.length} Reservations)`;
-        }
-    });
-}
-
-function getRoomName(roomId) {
-    // Convert room-301 to Room 301
-    return "Room " + roomId.split("-")[1];
-}
-
 function showReservationForm(roomId) {
-    currentRoom = roomId;
+    const currentRoom = roomId;
     
     // Update modal title
     const roomName = getRoomName(roomId);
@@ -546,19 +542,7 @@ function convertTo24Hour(time, meridian) {
     return hours * 60 + parseInt(minutes);
 }
 
-// Close modal when clicking X or outside
-document.getElementById("closeReservationModal").addEventListener("click", () => {
-    document.getElementById("reservationModal").classList.remove("active");
-});
-
-document.getElementById("reservationModal").addEventListener("click", (e) => {
-    if (e.target === document.getElementById("reservationModal")) {
-        document.getElementById("reservationModal").classList.remove("active");
-    }
-});
-
-// Handle form submission
-document.getElementById("reserveForm").addEventListener("submit", (e) => {
+function handleReservationSubmit(e) {
     e.preventDefault();
     
     const form = e.target;
@@ -603,7 +587,7 @@ document.getElementById("reserveForm").addEventListener("submit", (e) => {
     
     // Update room status
     updateRoomStatus();
-});
+}
 
 function isValidTimeFormat(time) {
     const timeRegex = /^([0-9]|0[0-9]|1[0-2]):([0-5][0-9])$/;
