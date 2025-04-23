@@ -222,7 +222,6 @@ body {
 
 .nav-menu {
     position: relative;
-    margin-left: auto;
     display: flex;
     align-items: center;
 }
@@ -311,6 +310,16 @@ body {
     display: none;
 }
 
+.introduction-logo {
+    display: block;
+    width: 40vw;
+    height: 40vw;
+    margin-left: -50vw;
+    background-image: url(assets/images/logo_ucc.png);
+    background-size: cover;
+    background-position: center;
+}
+
 .introduction-page #nav .nav-home h1,
 .introduction-page #nav .nav-home a,
 .introduction-page #nav .nav-menu {
@@ -323,10 +332,10 @@ body {
 }
 
 @media (min-width: 480px) and (max-width: 900px) {
-    .introduction-page #nav .nav-home .logo {
-        height: 40vw;
-        width: 40vw;
-        margin-left: -5vw;
+    
+    .introduction-logo {   
+        margin-left: -40vw;
+        margin-top: -30vh;
     }
 
     .introduction-page #nav .nav-home h1 {
@@ -338,15 +347,13 @@ body {
     }
 }
 
-@media (min-width: 800px) and (max-width: 1100px) {
-    .introduction-page #nav .nav-home .logo {
-        height: 40vw;
-        width: 40vw;
-        margin-left: -10vw;
-    }
-}
-
 @media (min-width: 700px) and (max-width: 900px) {
+
+    .introduction-logo {   
+        margin-left: -40vw;
+        margin-top: -20vh;
+    }
+    
     .introduction-page #nav {
         height: 8vh;
     }
@@ -459,7 +466,7 @@ body {
 .second-page {
     position: relative;
     width: 100vw;
-    height: 100vh;
+    height: 120vh;
 }
 
 /* ----- Introduction - Second Page ----- */
@@ -1150,8 +1157,6 @@ button[type="submit"]:hover {
 
 /* Logout button in dropdown */
 
-
-
 .background {
     position: fixed;
     top: 0;
@@ -1445,3 +1450,161 @@ button[type="submit"]:hover {
 /* Edit Profile */
 
 /* ----- user profile View - Design ----- */
+
+/* Adding the rooms page CSS to style.css */
+
+/* Tab Navigation Styles */
+
+.tabs-container {
+    width: 90vw;
+    display: flex;
+    overflow-x: auto;
+    margin-left: 5vw;
+    margin-top: 15vh;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+}
+
+.tab {
+    padding: 12px 20px;
+    background-color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Nunito';
+    font-weight: 600;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.tab:first-child {
+    border-radius: 8px 0 0 0;
+}
+
+.tab:last-child {
+    border-radius: 0 8px 0 0;
+}
+
+.tab.active {
+    background-color: #03e005;
+    color: white;
+}
+
+.tab:hover:not(.active) {
+    background-color: #e0e0e0;
+}
+
+/* Room Content Styles */
+.tab-content {
+    width: 90vw;
+    margin-left: 5vw;
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Room layout styles */
+.room-container {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.room-info {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.room-gallery {
+    flex: 2;
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.gallery-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    object-fit: cover;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gallery-slide.active {
+    opacity: 1;
+}
+
+.gallery-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    z-index: 10;
+}
+
+.gallery-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gallery-dot.active {
+    background-color: #03e005;
+    transform: scale(1.2);
+}
+
+.text-section h1 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.text-section p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Room Content Mobile Responsiveness */
+@media (max-width: 768px) {
+    .room-container {
+        flex-direction: column;
+    }
+    
+    .room-gallery {
+        height: 300px;
+        margin-top: 20px;
+    }
+    
+    .room-info {
+        padding-right: 0;
+    }
+}
