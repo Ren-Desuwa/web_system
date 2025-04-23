@@ -1351,6 +1351,94 @@ button[type="submit"]:hover {
     }
 }
 
+/* Drop Down Menu */
+/* Improved CSS for Room Dropdown Menu */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dropdown-arrow {
+    margin-left: 10px;
+    font-size: 10px;
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+}
+
+.dropdown-trigger.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.sub-menu {
+    position: absolute;
+    top: 0;
+    left: 100%; /* Position to the right of the parent */
+    background-color: #ffffee;
+    border-radius: 8px;
+    margin-left: 5px; /* Small gap between main menu and submenu */
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    width: 200px; /* Fixed width for the dropdown */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1002; /* Ensure it's above other elements */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sub-menu.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sub-item {
+    padding: 10px 15px !important;
+    font-size: 0.95rem;
+    display: block;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.sub-item:last-child {
+    border-bottom: none;
+}
+
+.sub-item:hover {
+    background-color: #f5f5f5;
+    color: #03e005;
+}
+
+/* Add hover intent behavior */
+.dropdown-container:hover .sub-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown-container:hover .dropdown-trigger .dropdown-arrow {
+    transform: rotate(90deg);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .sub-menu {
+        left: 20px; /* Indent to the right on mobile */
+        top: 100%;
+        width: calc(100% - 20px);
+        margin-top: 5px;
+        margin-left: 0;
+    }
+    
+    .dropdown-trigger.active + .sub-menu {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
 /* Edit Profile */
 
 

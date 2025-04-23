@@ -197,6 +197,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
     }
+    setupRoomDropdown();
+
+        window.addEventListener('resize', function() {
+            setupRoomDropdown(); 
+        }); 
 });
 
 // Login modal functionality
@@ -305,3 +310,72 @@ function updateDateTime() {
     if (dayElement) dayElement.textContent = dayName;
     if (timeElement) timeElement.textContent = formattedTime;
 }
+
+// Function to handle the MIS Room dropdown
+function setupRoomDropdown() {
+    const trigger = document.getElementById('misRoomTrigger');
+    const subMenu = document.getElementById('roomsSubMenu');
+    const dropdownContainer = document.querySelector('.dropdown-container');
+    
+    if (!trigger || !subMenu || !dropdownContainer) return;
+    
+    let timeout;
+    const delay = 300; // milliseconds to wait before hiding submenu
+    
+    // Open submenu on click (works on all devices)
+    trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        this.classList.toggle('active');
+        subMenu.classList.toggle('active');
+        
+        // If menu is now active, add a click handler to the document to close it
+        if (this.classList.contains('active')) {
+            setTimeout(() => {
+                document.addEventListener('click', closeSubmenuOnClickOutside);
+            }, 10);
+        } else {
+            document.removeEventListener('click', closeSubmenuOnClickOutside);
+        }
+    });
+    
+    // For desktop: Add hover behavior with delay
+    if (window.matchMedia("(min-width: 769px)").matches) {
+        // Mouse enter dropdown container
+        dropdownContainer.addEventListener('mouseenter', function() {
+            clearTimeout(timeout);
+            trigger.classList.add('active');
+            subMenu.classList.add('active');
+        });
+        
+        // Mouse leave dropdown container
+        dropdownContainer.addEventListener('mouseleave', function() {
+            timeout = setTimeout(() => {
+                // Only close if it wasn't clicked open
+                if (!trigger.classList.contains('clicked')) {
+                    trigger.classList.remove('active');
+                    subMenu.classList.remove('active');
+                }
+            }, delay);
+        });
+        
+        // Keep menu open when moving from trigger to submenu
+        subMenu.addEventListener('mouseenter', function() {
+            clearTimeout(timeout);
+        });
+    }
+
+    // Function to close submenu when clicking outside
+    function closeSubmenuOnClickOutside(e) {
+        if (!dropdownContainer.contains(e.target)) {
+            trigger.classList.remove('active', 'clicked');
+            subMenu.classList.remove('active');
+            document.removeEventListener('click', closeSubmenuOnClickOutside);
+        }
+    }
+    trigger.addEventListener('mousedown', function() {
+        this.classList.add('clicked');
+    });
+}
+
