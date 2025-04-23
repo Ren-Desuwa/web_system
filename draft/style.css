@@ -998,7 +998,7 @@ button[type="submit"]:hover {
     
     .reserved-list {
         border-right: none !important;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid #ffffee;
         padding-right: 0 !important;
         padding-bottom: 20px;
         margin-bottom: 20px;
@@ -1006,7 +1006,7 @@ button[type="submit"]:hover {
 }
 
 .reserved-list {
-    border-right: 1px solid #eee;
+    border-right: 1px solid #ffffee;
     padding-right: 20px;
     overflow-y: auto;
     max-height: 400px;
@@ -1036,7 +1036,7 @@ button[type="submit"]:hover {
 .form-input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #ffffee;
     border-radius: 5px;
     font-family: 'Nunito';
     box-sizing: border-box;
@@ -1061,7 +1061,7 @@ button[type="submit"]:hover {
     flex: 1;
     padding: 10px;
     margin-left: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid #ffffee;
     border-radius: 5px;
     font-family: 'Nunito';
 }
@@ -1070,7 +1070,7 @@ button[type="submit"]:hover {
     width: 100%;
     padding: 12px;
     background-color: #03e005;
-    color: white;
+    color: #ffffee;
     border: none;
     border-radius: 5px;
     font-family: 'Nunito';
@@ -1086,7 +1086,7 @@ button[type="submit"]:hover {
 
 /* Reservation List Styles */
 .reservation-item {
-    background-color: #f8f8f8;
+    background-color: #ffffee;
     border-radius: 8px;
     padding: 12px;
     margin-bottom: 10px;
@@ -1142,7 +1142,7 @@ button[type="submit"]:hover {
 /* Room with requests styling */
 .room.has-requests h1 {
     background-color: #ff9800;
-    color: white;
+    color: #ffffee;
     position: relative;
 }
 
@@ -1167,7 +1167,7 @@ button[type="submit"]:hover {
 /* Request Panel */
 .request-panel {
     font-family: nunito;
-    background-color: white;
+    background-color: #ffffee;
     border-radius: 15px;
     width: 85%;
     max-width: 800px;
@@ -1187,7 +1187,7 @@ button[type="submit"]:hover {
     align-items: center;
     padding: 15px 20px;
     background-color: #03e005;
-    color: white;
+    color: #ffffee;
     border-radius: 15px 15px 0 0;
     position: sticky;
     top: 0;
@@ -1208,7 +1208,7 @@ button[type="submit"]:hover {
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-    background-color: #f9f9f9;
+    background-color: #ffffee;
     border-radius: 10px;
     margin-bottom: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -1254,7 +1254,7 @@ button[type="submit"]:hover {
 
 .accept-btn {
     background-color: #03e005;
-    color: white;
+    color: #ffffee;
 }
 
 .accept-btn:hover {
@@ -1264,7 +1264,7 @@ button[type="submit"]:hover {
 
 .decline-btn {
     background-color: #ff3333;
-    color: white;
+    color: #ffffee;
 }
 
 .decline-btn:hover {
