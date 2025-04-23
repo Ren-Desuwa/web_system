@@ -455,17 +455,17 @@ body {
 
 /* Reset transform for title3 to ensure it's on the left */
 .title1-left {
-    transform: translateX(150px);
+    transform: translateX(50px);
     text-align: left;
 }
 
 .title2-right {
-    transform: translateX(450px);
+    transform: translateX(650px);
     text-align: right;
 }
 
 .title3-left {
-    transform: translateX(150px); /* Ensures title3 is on the left */
+    transform: translateX(50px); /* Ensures title3 is on the left */
     text-align: left;
 }
 
