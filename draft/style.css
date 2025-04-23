@@ -383,7 +383,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #0000003c;
+    background-color: #9191913c;
     color: #000000;
     font-size: 1.5rem;
     font-weight: 500;
@@ -395,6 +395,7 @@ body {
 
 .get_started:hover {
     background-color: #03e005;
+    box-shadow: #000000 0px 0px 2px 0px;
     color: #ffffff;
     transform: scale(1.1);
 }
@@ -548,6 +549,43 @@ body {
     }
 }
 
+/* Special styling for info-2 section - right aligned */
+.info-2 .header {
+    flex-direction: row-reverse; /* Reverse the order of elements */
+}
+
+.info-2 .header h2 {
+    text-align: right; /* Right-align the heading text */
+}
+
+.info-2 .info-2-icon {
+    margin-right: 0;
+    margin-left: 20px; /* Move margin from right to left */
+}
+
+.info-2 .subtext {
+    padding-left: 0;
+    padding-right: 100px; /* Move padding from left to right */
+}
+
+/* Responsive design adjustments for info-2 */
+@media (min-width: 480px) and (max-width: 900px) {
+    .info-2 .subtext {
+        padding-left: 0;
+        padding-right: 80px; /* Adjusted for medium screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .info-2 .header {
+        flex-direction: column; /* Stack vertically on very small screens */
+        align-items: flex-end; /* Align to the right */
+    }
+    
+    .info-2 .subtext {
+        padding-right: 0;
+    }
+}
 
 /* ----- Login - Design ----- */
 
