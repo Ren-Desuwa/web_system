@@ -199,9 +199,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     setupRoomDropdown();
 
+    handleRoomTabSelection();
+
         window.addEventListener('resize', function() {
             setupRoomDropdown(); 
         }); 
+
+
 });
 
 // Login modal functionality
@@ -379,3 +383,38 @@ function setupRoomDropdown() {
     });
 }
 
+function handleRoomTabSelection() {
+    // Check if we're on the rooms.html page
+    if (window.location.pathname.includes('rooms.html')) {
+        // Get the room parameter from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const roomParam = urlParams.get('room');
+        
+        // If a room parameter exists, open that tab
+        if (roomParam) {
+            openRoom(roomParam);
+            
+            // Also update the active tab button
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('onclick').includes(`'${roomParam}'`)) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+    }
+}
+
+function openRoom(roomId) {
+    // Hide all tab content
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    // Show the selected tab content
+    const selectedTab = document.getElementById(roomId);
+    if (selectedTab) {
+        selectedTab.classList.add('active');
+    }
+}
