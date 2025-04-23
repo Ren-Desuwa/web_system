@@ -1510,28 +1510,6 @@ button[type="submit"]:hover {
 
 /* Drop Down Menu */
 /* Improved CSS for Room Dropdown Menu */
-.dropdown-container {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-trigger {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-}
-
-.dropdown-arrow {
-    margin-left: 10px;
-    font-size: 10px;
-    transform: rotate(90deg);
-    transition: transform 0.3s ease;
-}
-
-.dropdown-trigger.active .dropdown-arrow {
-    transform: rotate(180deg);
-}
 
 .sub-menu {
     position: absolute;
