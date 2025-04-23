@@ -400,7 +400,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const role = sessionStorage.getItem("role");
 
     if (loggedIn !== "true" || role !== "user") {
-        window.location.href = "../pages/login.html";
+        window.location.href = "/schedule.html";
         return;
     }
 
