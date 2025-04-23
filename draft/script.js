@@ -197,6 +197,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
     }
+
+    // Run room gallery initialization if on the rooms page
+    if (path.includes("rooms.html")) {
+        initializeGallery();
+    }
 });
 
 // Login modal functionality
@@ -304,4 +309,99 @@ function updateDateTime() {
     if (dateElement) dateElement.textContent = formattedDate;
     if (dayElement) dayElement.textContent = dayName;
     if (timeElement) timeElement.textContent = formattedTime;
+}
+
+// Room tabs functionality
+function openRoom(roomId) {
+    // Hide all tab contents
+    const tabContents = document.getElementsByClassName('tab-content');
+    for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove('active');
+    }
+    
+    // Remove active class from all tabs
+    const tabs = document.getElementsByClassName('tab');
+    for (let i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove('active');
+    }
+    
+    // Show the selected tab content
+    document.getElementById(roomId).classList.add('active');
+    
+    // Add active class to the clicked tab
+    const clickedTab = document.querySelector(`[onclick="openRoom('${roomId}')"]`);
+    clickedTab.classList.add('active');
+    
+    // Reset all galleries to show first slide
+    initializeGallery();
+}
+
+// Gallery functionality
+function initializeGallery() {
+    const galleries = document.querySelectorAll('.gallery-container');
+    
+    galleries.forEach(gallery => {
+        const slides = gallery.querySelectorAll('.gallery-slide');
+        const dots = gallery.querySelectorAll('.gallery-dot');
+        let currentSlide = 0;
+        
+        // Initial state
+        if (slides.length > 0) {
+            slides[0].classList.add('active');
+        }
+        if (dots.length > 0) {
+            dots[0].classList.add('active');
+        }
+        
+        // Start automatic slideshow
+        const interval = setInterval(() => {
+            nextSlide(gallery);
+        }, 5000);
+        
+        // Store interval reference
+        gallery.dataset.interval = interval;
+        
+        // Set up dot click handlers
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                clearInterval(parseInt(gallery.dataset.interval));
+                showSlide(gallery, index);
+                
+                // Restart automatic slideshow
+                gallery.dataset.interval = setInterval(() => {
+                    nextSlide(gallery);
+                }, 5000);
+            });
+        });
+    });
+}
+
+function showSlide(gallery, index) {
+    const slides = gallery.querySelectorAll('.gallery-slide');
+    const dots = gallery.querySelectorAll('.gallery-dot');
+    
+    // Hide all slides
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Show selected slide
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+}
+
+function nextSlide(gallery) {
+    const slides = gallery.querySelectorAll('.gallery-slide');
+    const dots = gallery.querySelectorAll('.gallery-dot');
+    
+    // Find current active slide
+    let currentIndex = 0;
+    slides.forEach((slide, index) => {
+        if (slide.classList.contains('active')) {
+            currentIndex = index;
+        }
+    });
+    
+    // Move to next slide
+    const nextIndex = (currentIndex + 1) % slides.length;
+    showSlide(gallery, nextIndex);
 }

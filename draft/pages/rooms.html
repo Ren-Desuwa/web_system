@@ -5,92 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rooms - Blueprint CSD</title>
     <link rel="stylesheet" href="../style.css">
-    <style>
-        /* Tab Navigation Styles */
-        .tabs-container {
-            display: flex;
-            overflow-x: auto;
-            margin-bottom: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 8px 8px 0 0;
-        }
-        
-        .tab {
-            padding: 12px 20px;
-            background-color: #f0f0f0;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Nunito';
-            font-weight: 600;
-            font-size: 1rem;
-            white-space: nowrap;
-        }
-        
-        .tab:first-child {
-            border-radius: 8px 0 0 0;
-        }
-        
-        .tab:last-child {
-            border-radius: 0 8px 0 0;
-        }
-        
-        .tab.active {
-            background-color: #03e005;
-            color: white;
-        }
-        
-        .tab:hover:not(.active) {
-            background-color: #e0e0e0;
-        }
-        
-        /* Room Content Styles */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .cards-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 20px;
-            margin-top: 30px;
-        }
-        
-        .card {
-            flex: 0 0 calc(33.333% - 20px);
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            min-height: 200px;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        @media (max-width: 768px) {
-            .card {
-                flex: 0 0 100%;
-            }
-            
-            .tabs-container {
-                justify-content: flex-start;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="background"><img><img></div>
@@ -106,7 +20,19 @@
                 <span class="menu-dot"></span>
                 <span class="menu-dot"></span>
             </label>
-            <div style="display: none;"><!-- drop down menu --></div>
+            <div class="menu-items">
+                <a href="../index.html">Home</a>
+                <a href="rooms.html">Rooms</a>
+                <a href="MIS_room.html">MIS Room</a>
+                <a href="room_301.html">Room 301 (BSIS)</a>
+                <a href="room_302.html">Room 302 (BSCS)</a>
+                <a href="room_303.html">Room 303 (BSIT)</a>
+                <a href="room_304.html">Room 304 (EMC)</a>
+                <a href="schedule.html">Schedule</a>
+                <a href="#" id="logoutBtn" onclick="logout()">Logout</a>
+                <a href="#" id="loginMenuItem">Log in</a>
+                <a href="profile.html">Profile</a>
+            </div>
         </div>
     </div>
 
@@ -120,109 +46,166 @@
         </div>
 
         <div id="mis" class="tab-content active">
-            <div class="text-section">
-                <h1>Management Information Systems (MIS)</h1>
-                <p>The Management Information Systems (MIS) is a central facility that houses computer systems and related equipment for the College of Software Development. It provides technical support, maintenance, and administration for the college's computing resources and network infrastructure. The MIS room serves as the technological backbone for the entire department, ensuring that all systems run efficiently for both students and faculty.</p>
-            </div>
-            
-            <div class="cards-container">
-                <div class="card"><!-- Add your image here --></div>
-                <div class="card"><!-- Add your image here --></div>
-                <div class="card"><!-- Add your image here --></div>
+            <div class="room-container">
+                <div class="room-info">
+                    <div class="text-section">
+                        <h1>Management Information Systems (MIS)</h1>
+                        <p>The Management Information Systems (MIS) is a central facility that houses computer systems and related equipment for the College of Software Development. It provides technical support, maintenance, and administration for the college's computing resources and network infrastructure. The MIS room serves as the technological backbone for the entire department, ensuring that all systems run efficiently for both students and faculty.</p>
+                    </div>
+                </div>
+                <div class="room-gallery">
+                    <div class="gallery-container">
+                        <div class="gallery-slide active">
+                            <!-- Placeholder for image 1 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">MIS Room Image 1</div>
+                        </div>
+                        <div class="gallery-slide">
+                            <!-- Placeholder for image 2 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">MIS Room Image 2</div>
+                        </div>
+                        <div class="gallery-slide">
+                            <!-- Placeholder for image 3 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">MIS Room Image 3</div>
+                        </div>
+                        <div class="gallery-controls">
+                            <div class="gallery-dot active"></div>
+                            <div class="gallery-dot"></div>
+                            <div class="gallery-dot"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div id="301" class="tab-content">
-            <div class="text-section">
-                <h1>BSIS Room (301)</h1>
-                <p>BSIS refers to a Bachelor of Science in Information Systems degree program. This degree focuses on the application of information technology in business settings, preparing graduates for roles in areas like systems analysis, development, and management. It combines computer science, business management, and IT skills to provide a broad understanding of how technology impacts businesses.</p>
-            </div>
-            
-            <div class="cards-container">
-                <div class="card"><!-- Add your image here --></div>
-                <div class="card"><!-- Add your image here --></div>
-                <div class="card"><!-- Add your image here --></div>
+            <div class="room-container">
+                <div class="room-info">
+                    <div class="text-section">
+                        <h1>BSIS Room (301)</h1>
+                        <p>BSIS refers to a Bachelor of Science in Information Systems degree program. This degree focuses on the application of information technology in business settings, preparing graduates for roles in areas like systems analysis, development, and management. It combines computer science, business management, and IT skills to provide a broad understanding of how technology impacts businesses.</p>
+                    </div>
+                </div>
+                <div class="room-gallery">
+                    <div class="gallery-container">
+                        <div class="gallery-slide active">
+                            <!-- Placeholder for image 1 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">BSIS Room Image 1</div>
+                        </div>
+                        <div class="gallery-slide">
+                            <!-- Placeholder for image 2 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">BSIS Room Image 2</div>
+                        </div>
+                        <div class="gallery-slide">
+                            <!-- Placeholder for image 3 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">BSIS Room Image 3</div>
+                        </div>
+                        <div class="gallery-controls">
+                            <div class="gallery-dot active"></div>
+                            <div class="gallery-dot"></div>
+                            <div class="gallery-dot"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div id="302" class="tab-content">
-            <div class="text-section">
-                <h1>BSCS Room (302)</h1>
-                <p>BSCS refers to a Bachelor of Science in Computer Science. It's a four-year undergraduate degree program that focuses on the study of computing concepts, theories, algorithmic foundations, and the application of information and computing solutions. BSCS programs typically prepare students for careers in IT, software development, research, and other areas requiring a strong understanding of computer science.</p>
-            </div>
-            
-            <div class="cards-container">
-                <div class="card"><!-- Add your image here --></div>
-                <div class="card"><!-- Add your image here --></div>
-                <div class="card"><!-- Add your image here --></div>
+            <div class="room-container">
+                <div class="room-info">
+                    <div class="text-section">
+                        <h1>BSCS Room (302)</h1>
+                        <p>BSCS refers to a Bachelor of Science in Computer Science. It's a four-year undergraduate degree program that focuses on the study of computing concepts, theories, algorithmic foundations, and the application of information and computing solutions. BSCS programs typically prepare students for careers in IT, software development, research, and other areas requiring a strong understanding of computer science.</p>
+                    </div>
+                </div>
+                <div class="room-gallery">
+                    <div class="gallery-container">
+                        <div class="gallery-slide active">
+                            <!-- Placeholder for image 1 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">BSCS Room Image 1</div>
+                        </div>
+                        <div class="gallery-slide">
+                            <!-- Placeholder for image 2 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">BSCS Room Image 2</div>
+                        </div>
+                        <div class="gallery-slide">
+                            <!-- Placeholder for image 3 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">BSCS Room Image 3</div>
+                        </div>
+                        <div class="gallery-controls">
+                            <div class="gallery-dot active"></div>
+                            <div class="gallery-dot"></div>
+                            <div class="gallery-dot"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div id="303" class="tab-content">
-            <div class="text-section">
-                <h1>BSIT Room (303)</h1>
-                <p>BSIT stands for Bachelor of Science in Information Technology. It's a four-year undergraduate degree program that focuses on the application of computer science and technology to solve real-world problems. BSIT programs equip students with the skills and knowledge needed to plan, install, customize, operate, manage, administer, and maintain information technology infrastructure.</p>
-            </div>
-            
-            <div class="cards-container">
-                <div class="card"><!-- Add your image here --></div>
-                <div class="card"><!-- Add your image here --></div>
-                <div class="card"><!-- Add your image here --></div>
+            <div class="room-container">
+                <div class="room-info">
+                    <div class="text-section">
+                        <h1>BSIT Room (303)</h1>
+                        <p>BSIT stands for Bachelor of Science in Information Technology. It's a four-year undergraduate degree program that focuses on the application of computer science and technology to solve real-world problems. BSIT programs equip students with the skills and knowledge needed to plan, install, customize, operate, manage, administer, and maintain information technology infrastructure.</p>
+                    </div>
+                </div>
+                <div class="room-gallery">
+                    <div class="gallery-container">
+                        <div class="gallery-slide active">
+                            <!-- Placeholder for image 1 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">BSIT Room Image 1</div>
+                        </div>
+                        <div class="gallery-slide">
+                            <!-- Placeholder for image 2 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">BSIT Room Image 2</div>
+                        </div>
+                        <div class="gallery-slide">
+                            <!-- Placeholder for image 3 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">BSIT Room Image 3</div>
+                        </div>
+                        <div class="gallery-controls">
+                            <div class="gallery-dot active"></div>
+                            <div class="gallery-dot"></div>
+                            <div class="gallery-dot"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div id="304" class="tab-content">
-            <div class="text-section">
-                <h1>EMC Room (304)</h1>
-                <p>The Bachelor of Science in Entertainment and Multimedia Computing (BSEMC). It's a multidisciplinary degree program that combines computer science principles with creative disciplines like game development, animation, and multimedia production. BSEMC graduates are often referred to as "creative technologists" and are skilled in designing multimedia experiences and working with artists and programmers to create digital worlds.</p>
-            </div>
-            
-            <div class="cards-container">
-                <div class="card"><!-- Add your image here --></div>
-                <div class="card"><!-- Add your image here --></div>
-                <div class="card"><!-- Add your image here --></div>
+            <div class="room-container">
+                <div class="room-info">
+                    <div class="text-section">
+                        <h1>EMC Room (304)</h1>
+                        <p>The Bachelor of Science in Entertainment and Multimedia Computing (BSEMC). It's a multidisciplinary degree program that combines computer science principles with creative disciplines like game development, animation, and multimedia production. BSEMC graduates are often referred to as "creative technologists" and are skilled in designing multimedia experiences and working with artists and programmers to create digital worlds.</p>
+                    </div>
+                </div>
+                <div class="room-gallery">
+                    <div class="gallery-container">
+                        <div class="gallery-slide active">
+                            <!-- Placeholder for image 1 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">EMC Room Image 1</div>
+                        </div>
+                        <div class="gallery-slide">
+                            <!-- Placeholder for image 2 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">EMC Room Image 2</div>
+                        </div>
+                        <div class="gallery-slide">
+                            <!-- Placeholder for image 3 -->
+                            <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">EMC Room Image 3</div>
+                        </div>
+                        <div class="gallery-controls">
+                            <div class="gallery-dot active"></div>
+                            <div class="gallery-dot"></div>
+                            <div class="gallery-dot"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
-    <script>
-        function openRoom(roomId) {
-            // Hide all tab contents
-            const tabContents = document.getElementsByClassName('tab-content');
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove('active');
-            }
-            
-            // Remove active class from all tabs
-            const tabs = document.getElementsByClassName('tab');
-            for (let i = 0; i < tabs.length; i++) {
-                tabs[i].classList.remove('active');
-            }
-            
-            // Show the selected tab content
-            document.getElementById(roomId).classList.add('active');
-            
-            // Add active class to the clicked tab
-            const clickedTab = document.querySelector(`[onclick="openRoom('${roomId}')"]`);
-            clickedTab.classList.add('active');
-        }
-        
-        // Initialize dropdown menu from script.js
-        function toggleMenu() {
-            const menuCheckbox = document.getElementById('menu');
-            const dropdownMenu = document.querySelector('.nav-menu > div');
-            
-            if (menuCheckbox && dropdownMenu) {
-                dropdownMenu.style.display = menuCheckbox.checked ? 'block' : 'none';
-            }
-        }
-        
-        document.addEventListener("DOMContentLoaded", () => {
-            const menuCheckbox = document.getElementById('menu');
-            if (menuCheckbox) {
-                menuCheckbox.addEventListener('change', toggleMenu);
-            }
-        });
-    </script>
+    <script src="../script.js"></script>
 </body>
 </html>
