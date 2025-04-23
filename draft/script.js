@@ -1,3 +1,9 @@
+/**
+ * Main JavaScript file for Blueprint CSD
+ * Contains core functionality used across all pages
+ */
+
+// Database mock - in production this would be replaced with actual server calls
 const Database = {
     users: [
         { id: 1, name: "Alice", password: "alice12", role: "user", section: "BSCS 1-A" },
@@ -75,11 +81,7 @@ const Database = {
 
     validateUser(name, password) {
         const user = this.users.find(u => u.name === name && u.password === password);
-        if (!user) {
-            console.log("Invalid username or password.");
-            return false;
-        }
-        return true;
+        return !!user;
     },
 
     isAdmin(userId) {
@@ -89,37 +91,22 @@ const Database = {
 
     createSchedule(userId, date, room, timeStart, meridianStart, timeEnd, meridianEnd, subject, professor) {
         const user = this.getUserById(userId);
-        if (!user) {
-            console.log("User not found.");
-            return null;
-        }
-        const schedule = this.addSchedule(userId, date, room, timeStart, meridianStart, timeEnd, meridianEnd, subject, professor);
-        console.log("Schedule added:", schedule);
-        return schedule;
+        if (!user) return null;
+        return this.addSchedule(userId, date, room, timeStart, meridianStart, timeEnd, meridianEnd, subject, professor);
     },
 
     viewSchedules(userId) {
         const user = this.getUserById(userId);
-        if (!user) {
-            console.log("User not found.");
-            return [];
-        }
-        const schedules = this.getSchedulesByUserId(userId);
-        console.log(`Schedules for ${user.name}:`, schedules);
-        return schedules;
+        if (!user) return [];
+        return this.getSchedulesByUserId(userId);
     },
 
     removeSchedule(scheduleId) {
-        const success = this.deleteSchedule(scheduleId);
-        if (success) {
-            console.log("Schedule deleted.");
-        } else {
-            console.log("Schedule not found.");
-        }
-        return success;
+        return this.deleteSchedule(scheduleId);
     }
 };
 
+// Auth and routing functions
 document.addEventListener("DOMContentLoaded", () => {
     const loggedIn = sessionStorage.getItem("loggedIn") === "true";
     const role = sessionStorage.getItem("role");
@@ -153,8 +140,104 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
     }
+
+    // Setup logout button event handler
+    const menuCheckbox = document.getElementById('menu');
+    
+    // Close menu when clicking anywhere on the document
+    document.addEventListener('click', function(event) {
+        // If the clicked element is not the menu or a descendant of the menu
+        if (!event.target.closest('.nav-menu') && !event.target.matches('.menu-checkbox')) {
+            menuCheckbox.checked = false;
+        }
+    });
+    
+    // Prevent clicks inside the menu from bubbling up to document
+    const navMenu = document.querySelector('.nav-menu');
+    navMenu.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    const loginMenuItem = document.getElementById('loginMenuItem');
+    const userIsLoggedIn = checkIfUserIsLoggedIn(); // This function will check login status
+    
+    // Update menu item text based on login status
+    let loginMenuItem = document.querySelector('.menu-items a:first-child');
+    if (!loginMenuItem) {
+        console.error("Menu item not found. Check your HTML structure.");
+        return;
+    }
+    
+    // Check if user is logged in
+    const userIsLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+    
+    // Set initial text
+    loginMenuItem.textContent = userIsLoggedIn ? 'Log out' : 'Log in';
+    
+    // Add click handler
+    loginMenuItem.addEventListener('click', function(event) {
+        event.preventDefault();
+        
+        if (userIsLoggedIn) {
+            // Handle logout
+            localStorage.removeItem('userLoggedIn');
+            alert('You have been logged out.');
+            loginMenuItem.textContent = 'Log in';
+            window.location.reload(); // Refresh page to update UI
+        } else {
+            // Handle login - show modal
+            const loginModal = document.getElementById('loginModal');
+            if (loginModal) {
+                loginModal.classList.add('active');
+                // Make login form visible
+                const loginForm = document.querySelector('.login');
+                if (loginForm) {
+                    loginForm.style.display = 'block';
+                }
+            }
+        }
+    });
+    
+    // Close menu when clicking anywhere on the document
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.nav-menu') && !event.target.matches('.menu-checkbox')) {
+            menuCheckbox.checked = false;
+        }
+    });
+    
+    // Prevent clicks inside the menu from bubbling up to document
+    navMenu.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+    
+    // Function to check if user is logged in
+    function checkIfUserIsLoggedIn() {
+        // Check localStorage, cookies, or session for login status
+        return localStorage.getItem('userLoggedIn') === 'true';
+    }
+    
+    // Function to handle logout
+    function handleLogout(event) {
+        event.preventDefault();
+        // Clear login data
+        localStorage.removeItem('userLoggedIn');
+        // Update UI or redirect
+        window.location.reload();
+    }
+    
+    // Function to show login modal
+    function showLoginModal(event) {
+        event.preventDefault();
+        const loginModal = document.getElementById('loginModal');
+        if (loginModal) {
+            loginModal.classList.add('active');
+            // Add your login form display code here
+            // You might already have this function elsewhere
+        }
+    }
 });
 
+// Login modal functions
 function openLoginModal() {
     let modal = document.getElementById("loginModal");
     if (!modal) {
@@ -224,7 +307,7 @@ function closeLoginModal() {
     if (modal) modal.classList.remove("active");
 }
 
-// Unified logout function for all pages
+// Logout function for all pages
 function logout() {
     sessionStorage.clear();
     // Check if we're in a subdirectory
@@ -235,237 +318,34 @@ function logout() {
     }
 }
 
-// Admin-specific JavaScript
-window.addEventListener("DOMContentLoaded", () => {
-    // Only run admin functionality on admin page
-    if (document.querySelectorAll(".room[id]").length > 0) {
-        // Add request status counters to each room
-        updateRoomRequestCounts();
-        
-        // Add click event to each room to show requests
-        document.querySelectorAll(".room[id]").forEach(room => {
-            if (room.id === "room-MIS") return; // Skip MIS room if needed
-            
-            room.addEventListener("click", () => {
-                const role = sessionStorage.getItem("role");
-                if (role === "admin") {
-                    showRoomRequests(room.id);
-                } else {
-                    showReservationForm(room.id);
-                }
-            });
-        });
-
-        // Close modals when clicking on X or outside the modal
-        const requestModal = document.getElementById("requestModal");
-        const reservationModal = document.getElementById("reservationModal");
-        
-        if (requestModal) {
-            document.getElementById("closeRequestModal")?.addEventListener("click", closeRequestModal);
-            requestModal.addEventListener("click", (e) => {
-                if (e.target === requestModal) {
-                    closeRequestModal();
-                }
-            });
-        }
-        
-        if (reservationModal) {
-            document.getElementById("closeReservationModal")?.addEventListener("click", () => {
-                reservationModal.classList.remove("active");
-            });
-            
-            reservationModal.addEventListener("click", (e) => {
-                if (e.target === reservationModal) {
-                    reservationModal.classList.remove("active");
-                }
-            });
-            
-            // Handle form submission
-            document.getElementById("reserveForm")?.addEventListener("submit", handleReservationSubmit);
-        }
-        
-        // Add clock functionality if element exists
-        if (document.getElementById('currentTime')) {
-            updateDateTime();
-            setInterval(updateDateTime, 1000);
-        }
-    }
-});
-
-function updateRoomRequestCounts() {
-    // Group schedules by room
-    const schedulesByRoom = {};
-    Database.schedules.forEach(schedule => {
-        const roomId = schedule.room.toLowerCase();
-        if (!schedulesByRoom[roomId]) {
-            schedulesByRoom[roomId] = [];
-        }
-        schedulesByRoom[roomId].push(schedule);
-    });
-
-    // Update each room with request count
-    document.querySelectorAll(".room[id]").forEach(room => {
-        const roomId = room.id.toLowerCase();
-        if (roomId === "room-mis") return; // Skip MIS room
-
-        const schedules = schedulesByRoom[roomId] || [];
-        const requestCount = schedules.length;
-        
-        const roomHeader = room.querySelector("h1");
-        const roomName = getRoomName(roomId);
-        
-        const role = sessionStorage.getItem("role");
-        if (role === "admin") {
-            roomHeader.textContent = `${roomName} (${requestCount} Requests)`;
-            // Add a visual indicator for requests
-            if (requestCount > 0) {
-                room.classList.add("has-requests");
-            } else {
-                room.classList.remove("has-requests");
-            }
-        } else {
-            // User view
-            if (requestCount === 0) {
-                room.classList.add("Availability");
-                roomHeader.textContent = `${roomName} (Available)`;
-            } else {
-                room.classList.remove("Availability");
-                roomHeader.textContent = `${roomName} (${requestCount} Reservations)`;
-            }
-        }
-    });
-}
-
+// Utility functions
 function getRoomName(roomId) {
-    // Convert room-301 to Room 301
     return "Room " + roomId.split("-")[1].toUpperCase();
 }
 
-function showRoomRequests(roomId) {
-    const modal = document.getElementById("requestModal");
-    const modalTitle = document.getElementById("modalRoomTitle");
-    const requestsList = document.getElementById("requestsList");
+function convertTo24Hour(time, meridian) {
+    let [hours, minutes] = time.split(':');
+    hours = parseInt(hours);
     
-    // Clear previous requests
-    requestsList.innerHTML = "";
-    
-    // Update title
-    const roomName = getRoomName(roomId);
-    modalTitle.textContent = `${roomName} - Reservation Requests`;
-    
-    // Get schedules for this room
-    const roomSchedules = Database.schedules.filter(
-        schedule => schedule.room.toLowerCase() === roomId.toLowerCase()
-    );
-    
-    if (roomSchedules.length === 0) {
-        requestsList.innerHTML = "<p class='no-requests'>No reservation requests for this room.</p>";
-    } else {
-        // Create a request card for each schedule
-        roomSchedules.forEach(schedule => {
-            const user = Database.getUserById(schedule.userId);
-            const requestCard = document.createElement("div");
-            requestCard.className = "request-card";
-            requestCard.innerHTML = `
-                <div class="request-info">
-                    <h3>${schedule.subject}</h3>
-                    <p><strong>Date:</strong> ${schedule.date}</p>
-                    <p><strong>Time:</strong> ${schedule.timeStart} ${schedule.meridianStart} - ${schedule.timeEnd} ${schedule.meridianEnd}</p>
-                    <p><strong>Professor:</strong> ${schedule.professor}</p>
-                    <p><strong>Requested by:</strong> ${user ? user.name : 'Unknown'} (${user ? user.section : 'N/A'})</p>
-                </div>
-                <div class="request-actions">
-                    <button class="accept-btn" data-id="${schedule.id}">Accept</button>
-                    <button class="decline-btn" data-id="${schedule.id}">Decline</button>
-                </div>
-            `;
-            requestsList.appendChild(requestCard);
-        });
-        
-        // Add event listeners to accept/decline buttons
-        document.querySelectorAll(".accept-btn").forEach(btn => {
-            btn.addEventListener("click", () => acceptRequest(parseInt(btn.dataset.id)));
-        });
-        
-        document.querySelectorAll(".decline-btn").forEach(btn => {
-            btn.addEventListener("click", () => declineRequest(parseInt(btn.dataset.id)));
-        });
+    if (meridian === 'PM' && hours < 12) {
+        hours += 12;
+    }
+    if (meridian === 'AM' && hours === 12) {
+        hours = 0;
     }
     
-    // Show modal
-    modal.classList.add("active");
+    return hours * 60 + parseInt(minutes);
 }
 
-function closeRequestModal() {
-    document.getElementById("requestModal").classList.remove("active");
+function isValidTimeFormat(time) {
+    const timeRegex = /^([0-9]|0[0-9]|1[0-2]):([0-5][0-9])$/;
+    return timeRegex.test(time);
 }
 
-function acceptRequest(scheduleId) {
-    // Here you would normally update the status in the database
-    // For now, we'll just show an alert and remove from the list
-    const schedule = Database.schedules.find(s => s.id === scheduleId);
-    if (schedule) {
-        alert(`Reservation for ${schedule.subject} has been accepted!`);
-        // In a real system, you might update a status field instead of removing
-        updateRequestDisplay(scheduleId, true);
-    }
-}
-
-function declineRequest(scheduleId) {
-    // Similar to accept but with different message
-    const schedule = Database.schedules.find(s => s.id === scheduleId);
-    if (schedule) {
-        alert(`Reservation for ${schedule.subject} has been declined.`);
-        Database.removeSchedule(scheduleId);
-        updateRequestDisplay(scheduleId, false);
-    }
-}
-
-function updateRequestDisplay(scheduleId, accepted) {
-    // Remove the request card from the display
-    const requestCard = document.querySelector(`.request-card button[data-id="${scheduleId}"]`).closest('.request-card');
-    if (requestCard) {
-        // Add a fade-out animation
-        requestCard.classList.add('fade-out');
-        setTimeout(() => {
-            requestCard.remove();
-            
-            // If no more requests, show the "no requests" message
-            const requestsList = document.getElementById("requestsList");
-            if (requestsList.children.length === 0) {
-                requestsList.innerHTML = "<p class='no-requests'>No reservation requests for this room.</p>";
-            }
-            
-            // Update the room request counts
-            updateRoomRequestCounts();
-        }, 500); // Match the animation duration
-    }
-}
-
-
-// Variables
-let currentRoom = null;
-        
-// Check if user is logged in
-window.addEventListener("DOMContentLoaded", () => {
-    const loggedIn = sessionStorage.getItem("loggedIn");
-    const role = sessionStorage.getItem("role");
-
-    if (loggedIn !== "true" || role !== "user") {
-        window.location.href = "/schedule.html";
-        return;
-    }
-
-    // Update room status
-    updateRoomStatus();
-    
-    // Add clock functionality
-    updateDateTime();
-    setInterval(updateDateTime, 1000);
-});
-
-// Update date and time
+// Update date and time for pages that need it
 function updateDateTime() {
+    if (!document.getElementById('currentTime')) return;
+    
     const now = new Date();
     
     // Format the date: April 23, 2025
@@ -485,160 +365,3 @@ function updateDateTime() {
     document.getElementById('currentDay').textContent = dayName;
     document.getElementById('currentTime').textContent = formattedTime;
 }
-
-function showReservationForm(roomId) {
-    const currentRoom = roomId;
-    
-    // Update modal title
-    const roomName = getRoomName(roomId);
-    document.getElementById("reservationRoomTitle").textContent = `${roomName} - Reservation`;
-    
-    // Set the hidden room ID field
-    document.getElementById("roomId").value = roomId;
-    
-    // Set default date to today
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById("date").value = today;
-    document.getElementById("date").min = today;
-    
-    // Load existing reservations for this room
-    loadRoomReservations(roomId);
-    
-    // Show the modal
-    document.getElementById("reservationModal").classList.add("active");
-}
-
-function loadRoomReservations(roomId) {
-    const reservationsContainer = document.getElementById("roomReservations");
-    reservationsContainer.innerHTML = "";
-    
-    // Get schedules for this room
-    const roomSchedules = Database.schedules.filter(
-        schedule => schedule.room.toLowerCase() === roomId.toLowerCase()
-    );
-    
-    if (roomSchedules.length === 0) {
-        reservationsContainer.innerHTML = "<p class='no-reservations'>No current reservations for this room.</p>";
-    } else {
-        // Sort schedules by date and time
-        roomSchedules.sort((a, b) => {
-            if (a.date !== b.date) return new Date(a.date) - new Date(b.date);
-            
-            // Compare times
-            const timeA = convertTo24Hour(a.timeStart, a.meridianStart);
-            const timeB = convertTo24Hour(b.timeStart, b.meridianStart);
-            return timeA - timeB;
-        });
-        
-        // Create a list of reservations
-        roomSchedules.forEach(schedule => {
-            const user = Database.getUserById(schedule.userId);
-            const reservationItem = document.createElement("div");
-            reservationItem.className = "reservation-item";
-            
-            reservationItem.innerHTML = `
-                <div class="reservation-details">
-                    <p class="reservation-date">${schedule.date}</p>
-                    <p class="reservation-subject">${schedule.subject}</p>
-                    <p class="reservation-time">${schedule.timeStart} ${schedule.meridianStart} - ${schedule.timeEnd} ${schedule.meridianEnd}</p>
-                    <p class="reservation-user">By: ${user ? user.name : 'Unknown'}</p>
-                </div>
-            `;
-            
-            reservationsContainer.appendChild(reservationItem);
-        });
-    }
-}
-
-function convertTo24Hour(time, meridian) {
-    let [hours, minutes] = time.split(':');
-    hours = parseInt(hours);
-    
-    if (meridian === 'PM' && hours < 12) {
-        hours += 12;
-    }
-    if (meridian === 'AM' && hours === 12) {
-        hours = 0;
-    }
-    
-    return hours * 60 + parseInt(minutes);
-}
-
-function handleReservationSubmit(e) {
-    e.preventDefault();
-    
-    const form = e.target;
-    const userId = parseInt(sessionStorage.getItem("userId"));
-    const roomId = form.roomId.value;
-    const date = form.date.value;
-    const subject = form.subject.value;
-    const professor = form.professor.value;
-    const timeStart = form.timeStart.value;
-    const meridianStart = form.meridianStart.value;
-    const timeEnd = form.timeEnd.value;
-    const meridianEnd = form.meridianEnd.value;
-    
-    // Validate times
-    if (!isValidTimeFormat(timeStart) || !isValidTimeFormat(timeEnd)) {
-        alert("Please enter valid times in HH:MM format (e.g., 9:30, 11:00)");
-        return;
-    }
-    
-    // Check for time conflict
-    if (!isTimeAvailable(roomId, date, timeStart, meridianStart, timeEnd, meridianEnd)) {
-        alert("This time slot conflicts with an existing reservation. Please choose a different time.");
-        return;
-    }
-    
-    // Create the schedule
-    Database.createSchedule(
-        userId,
-        date,
-        roomId,
-        timeStart,
-        meridianStart,
-        timeEnd,
-        meridianEnd,
-        subject,
-        professor
-    );
-    
-    alert("Your reservation request has been submitted and is pending approval.");
-    form.reset();
-    document.getElementById("reservationModal").classList.remove("active");
-    
-    // Update room status
-    updateRoomStatus();
-}
-
-function isValidTimeFormat(time) {
-    const timeRegex = /^([0-9]|0[0-9]|1[0-2]):([0-5][0-9])$/;
-    return timeRegex.test(time);
-}
-
-function isTimeAvailable(roomId, date, startTime, startMeridian, endTime, endMeridian) {
-    // Get existing schedules for this room and date
-    const existingSchedules = Database.schedules.filter(
-        schedule => schedule.room.toLowerCase() === roomId.toLowerCase() && schedule.date === date
-    );
-    
-    if (existingSchedules.length === 0) return true;
-    
-    // Convert times to minutes from midnight for easier comparison
-    const newStart = convertTo24Hour(startTime, startMeridian);
-    const newEnd = convertTo24Hour(endTime, endMeridian);
-    
-    // Check for overlap with any existing schedule
-    for (const schedule of existingSchedules) {
-        const existingStart = convertTo24Hour(schedule.timeStart, schedule.meridianStart);
-        const existingEnd = convertTo24Hour(schedule.timeEnd, schedule.meridianEnd);
-        
-        // Check for overlap
-        if (!(newEnd <= existingStart || newStart >= existingEnd)) {
-            return false; // There is an overlap
-        }
-    }
-    
-    return true; // No overlap found
-}
-
