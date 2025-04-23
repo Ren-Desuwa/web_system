@@ -1370,6 +1370,7 @@ button[type="submit"]:hover {
 .tabs-container {
     width: 90vw;
     display: flex;
+    flex-wrap: nowrap;         /* keep them in one row */
     overflow-x: auto;
     margin-left: 5vw;
     margin-top: 15vh;
@@ -1503,20 +1504,4 @@ button[type="submit"]:hover {
     color: #555;
     line-height: 1.6;
     margin-bottom: 20px;
-}
-
-/* Room Content Mobile Responsiveness */
-@media (max-width: 768px) {
-    .room-container {
-        flex-direction: column;
-    }
-    
-    .room-gallery {
-        height: 300px;
-        margin-top: 20px;
-    }
-    
-    .room-info {
-        padding-right: 0;
-    }
 }
