@@ -197,11 +197,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
     }
+    setupRoomDropdown();
 
-    // Run room gallery initialization if on the rooms page
-    if (path.includes("rooms.html")) {
-        initializeGallery();
-    }
+        window.addEventListener('resize', function() {
+            setupRoomDropdown(); 
+        }); 
 });
 
 // Login modal functionality
@@ -311,97 +311,71 @@ function updateDateTime() {
     if (timeElement) timeElement.textContent = formattedTime;
 }
 
-// Room tabs functionality
-function openRoom(roomId) {
-    // Hide all tab contents
-    const tabContents = document.getElementsByClassName('tab-content');
-    for (let i = 0; i < tabContents.length; i++) {
-        tabContents[i].classList.remove('active');
-    }
+// Function to handle the MIS Room dropdown
+function setupRoomDropdown() {
+    const trigger = document.getElementById('misRoomTrigger');
+    const subMenu = document.getElementById('roomsSubMenu');
+    const dropdownContainer = document.querySelector('.dropdown-container');
     
-    // Remove active class from all tabs
-    const tabs = document.getElementsByClassName('tab');
-    for (let i = 0; i < tabs.length; i++) {
-        tabs[i].classList.remove('active');
-    }
+    if (!trigger || !subMenu || !dropdownContainer) return;
     
-    // Show the selected tab content
-    document.getElementById(roomId).classList.add('active');
+    let timeout;
+    const delay = 300; // milliseconds to wait before hiding submenu
     
-    // Add active class to the clicked tab
-    const clickedTab = document.querySelector(`[onclick="openRoom('${roomId}')"]`);
-    clickedTab.classList.add('active');
-    
-    // Reset all galleries to show first slide
-    initializeGallery();
-}
-
-// Gallery functionality
-function initializeGallery() {
-    const galleries = document.querySelectorAll('.gallery-container');
-    
-    galleries.forEach(gallery => {
-        const slides = gallery.querySelectorAll('.gallery-slide');
-        const dots = gallery.querySelectorAll('.gallery-dot');
-        let currentSlide = 0;
+    // Open submenu on click (works on all devices)
+    trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         
-        // Initial state
-        if (slides.length > 0) {
-            slides[0].classList.add('active');
+        this.classList.toggle('active');
+        subMenu.classList.toggle('active');
+        
+        // If menu is now active, add a click handler to the document to close it
+        if (this.classList.contains('active')) {
+            setTimeout(() => {
+                document.addEventListener('click', closeSubmenuOnClickOutside);
+            }, 10);
+        } else {
+            document.removeEventListener('click', closeSubmenuOnClickOutside);
         }
-        if (dots.length > 0) {
-            dots[0].classList.add('active');
-        }
-        
-        // Start automatic slideshow
-        const interval = setInterval(() => {
-            nextSlide(gallery);
-        }, 5000);
-        
-        // Store interval reference
-        gallery.dataset.interval = interval;
-        
-        // Set up dot click handlers
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                clearInterval(parseInt(gallery.dataset.interval));
-                showSlide(gallery, index);
-                
-                // Restart automatic slideshow
-                gallery.dataset.interval = setInterval(() => {
-                    nextSlide(gallery);
-                }, 5000);
-            });
+    });
+    
+    // For desktop: Add hover behavior with delay
+    if (window.matchMedia("(min-width: 769px)").matches) {
+        // Mouse enter dropdown container
+        dropdownContainer.addEventListener('mouseenter', function() {
+            clearTimeout(timeout);
+            trigger.classList.add('active');
+            subMenu.classList.add('active');
         });
-    });
-}
+        
+        // Mouse leave dropdown container
+        dropdownContainer.addEventListener('mouseleave', function() {
+            timeout = setTimeout(() => {
+                // Only close if it wasn't clicked open
+                if (!trigger.classList.contains('clicked')) {
+                    trigger.classList.remove('active');
+                    subMenu.classList.remove('active');
+                }
+            }, delay);
+        });
+        
+        // Keep menu open when moving from trigger to submenu
+        subMenu.addEventListener('mouseenter', function() {
+            clearTimeout(timeout);
+        });
+    }
 
-function showSlide(gallery, index) {
-    const slides = gallery.querySelectorAll('.gallery-slide');
-    const dots = gallery.querySelectorAll('.gallery-dot');
-    
-    // Hide all slides
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-    
-    // Show selected slide
-    slides[index].classList.add('active');
-    dots[index].classList.add('active');
-}
-
-function nextSlide(gallery) {
-    const slides = gallery.querySelectorAll('.gallery-slide');
-    const dots = gallery.querySelectorAll('.gallery-dot');
-    
-    // Find current active slide
-    let currentIndex = 0;
-    slides.forEach((slide, index) => {
-        if (slide.classList.contains('active')) {
-            currentIndex = index;
+    // Function to close submenu when clicking outside
+    function closeSubmenuOnClickOutside(e) {
+        if (!dropdownContainer.contains(e.target)) {
+            trigger.classList.remove('active', 'clicked');
+            subMenu.classList.remove('active');
+            document.removeEventListener('click', closeSubmenuOnClickOutside);
         }
+    }
+    trigger.addEventListener('mousedown', function() {
+        this.classList.add('clicked');
     });
-    
-    // Move to next slide
-    const nextIndex = (currentIndex + 1) % slides.length;
-    showSlide(gallery, nextIndex);
 }
+
