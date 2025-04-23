@@ -229,9 +229,7 @@ function logout() {
     window.location.href = "index.html";
 }
 
-<<<<<<< HEAD
 /* Edit Profile*/
-=======
 function logoutpages() {
     sessionStorage.clear();
     window.location.href = "../index.html";
@@ -638,4 +636,4 @@ function isTimeAvailable(roomId, date, startTime, startMeridian, endTime, endMer
     
     return true; // No overlap found
 }
->>>>>>> 1016cbd37667e06fb1ac2a79b5c1f923e8811a07
+
