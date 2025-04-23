@@ -20,8 +20,22 @@
                 <span class="menu-dot"></span>
                 <span class="menu-dot"></span>
             </label>
-            <div style="display: none;"><!-- drop down menu --></div>
-        </div>
+            <div class="menu-items">
+                <a href="index.html">Home</a>
+                <div class="dropdown-container">
+                    <a href="#" class="dropdown-trigger" id="misRoomTrigger">MIS Room <span class="dropdown-arrow">▶</span></a>
+                    <div class="sub-menu" id="roomsSubMenu">
+                        <a href="pages/room_301.html" class="sub-item">Room 301 (BSIS)</a>
+                        <a href="pages/room_302.html" class="sub-item">Room 302 (BSCS)</a>
+                        <a href="pages/room_303.html" class="sub-item">Room 303 (BSIT)</a>
+                        <a href="pages/room_304.html" class="sub-item">Room 304 (EMC)</a>
+                    </div>
+                </div>
+                <a href="schedule.html">Schedule</a>
+                <a href="#" id="logoutBtn" onclick="logout()">Logout</a>
+                <a href="#" id="loginMenuItem">Log in</a>
+                <a href="profile.html">Profile</a>
+            </div>
     </div>
 
     <main class="content">

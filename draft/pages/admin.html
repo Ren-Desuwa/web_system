@@ -21,13 +21,16 @@
                 <span class="menu-dot"></span>
             </label>
             <div class="menu-items">
-                <a href="../index.html">Home</a>
-                <a href="rooms.html">Rooms</a>
-                <a href="MIS_room.html">MIS Room</a>
-                <a href="room_301.html">Room 301 (BSIS)</a>
-                <a href="room_302.html">Room 302 (BSCS)</a>
-                <a href="room_303.html">Room 303 (BSIT)</a>
-                <a href="room_304.html">Room 304 (EMC)</a>
+                <a href="index.html">Home</a>
+                <div class="dropdown-container">
+                    <a href="#" class="dropdown-trigger" id="misRoomTrigger">MIS Room <span class="dropdown-arrow">▶</span></a>
+                    <div class="sub-menu" id="roomsSubMenu">
+                        <a href="pages/room_301.html" class="sub-item">Room 301 (BSIS)</a>
+                        <a href="pages/room_302.html" class="sub-item">Room 302 (BSCS)</a>
+                        <a href="pages/room_303.html" class="sub-item">Room 303 (BSIT)</a>
+                        <a href="pages/room_304.html" class="sub-item">Room 304 (EMC)</a>
+                    </div>
+                </div>
                 <a href="schedule.html">Schedule</a>
                 <a href="#" id="logoutBtn" onclick="logout()">Logout</a>
                 <a href="#" id="loginMenuItem">Log in</a>
