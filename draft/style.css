@@ -93,7 +93,7 @@ body {
     display: flex;
     align-items: center;
     align-content: center;
-    z-index: 1000;
+    z-index: 50;
 }
 
 .nav-home {
@@ -108,7 +108,7 @@ body {
     display: flex;
     align-items: center;
     text-decoration: none;
-}
+} 
 
 .logo {
     display: inline-block;
@@ -130,12 +130,15 @@ body {
     font-weight: 500;
     color: black;
     margin: 0;
-    padding: 0;
+    padding: 2px 10px;
     cursor: pointer;
+    background-color: #ffffffaf;
+    border-radius: 20px;
     transition: all 0.3s ease;
 }
 
 .nav-home h1:hover {
+    background-color: #ffffff;
     color: #03e005;
     transform: scale(1.1);
 }
@@ -145,8 +148,8 @@ body {
 }
 
 .menu-dots {
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     margin-left: 20px;
     display: flex;
     flex-direction: column;
@@ -155,6 +158,8 @@ body {
     transform: rotate(90deg);
     transition: all 0.3s ease;
     cursor: pointer;
+    background-color: #ffffffaf;
+    border-radius: 50%;
 }
 
 .menu-dot {
@@ -436,14 +441,112 @@ body {
 
 /* ----- Introduction - Title and Get Started ----- */
 
-/* ----- Introduction - Second Page ----- */
+/* ----- Introduction - Second Page Info Sections ----- */
 
 .second-page {
     position: relative;
     width: 100vw;
-    height: 170vh;
+    min-height: 170vh;
+    padding: 5vh 0;
 }
 
+.second-page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5vh;
+    padding: 0 5vw;
+}
+
+/* Common styles for all info sections */
+.info-1, .info-2, .info-3 {
+    width: 80vw;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.info-1:hover, .info-2:hover, .info-3:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Header section with icon and h2 */
+.info-1 .header, .info-2 .header, .info-3 .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Increased icon size */
+.info-1-icon, .info-2-icon, .info-3-icon {
+    width: 140px;
+    height: 140px;
+    margin-right: 20px;
+    object-fit: contain;
+}
+
+/* Heading styling */
+.info-1 h2, .info-2 h2, .info-3 h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+    flex: 1;
+}
+
+/* Subtext styling with justified text */
+.info-1 .subtext, .info-2 .subtext, .info-3 .subtext {
+    width: 70vw;
+    padding-left: 100px; /* Increased to align with the heading text after larger icon */
+}
+
+.info-1 .subtext p, .info-2 .subtext p, .info-3 .subtext p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+    text-align: justify; /* Added justified text alignment */
+}
+
+/* Responsive design for smaller screens */
+@media (min-width: 480px) and (max-width: 900px) {
+    .info-1, .info-2, .info-3 {
+        width: 90vw;
+        padding: 20px;
+    }
+    
+    .info-1-icon, .info-2-icon, .info-3-icon {
+        width: 60px; /* Still larger than original but appropriate for medium screens */
+        height: 60px;
+    }
+    
+    .info-1 h2, .info-2 h2, .info-3 h2 {
+        font-size: 1.5rem;
+    }
+    
+    .info-1 .subtext, .info-2 .subtext, .info-3 .subtext {
+        padding-left: 80px; /* Adjusted for medium screens */
+    }
+}
+
+/* Further optimization for very small screens */
+@media (max-width: 480px) {
+    .info-1 .header, .info-2 .header, .info-3 .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .info-1-icon, .info-2-icon, .info-3-icon {
+        width: 70px; /* Keep icons relatively large even on small screens */
+        height: 70px;
+        margin-bottom: 15px;
+    }
+    
+    .info-1 .subtext, .info-2 .subtext, .info-3 .subtext {
+        padding-left: 0;
+    }
+}
 
 
 /* ----- Login - Design ----- */
