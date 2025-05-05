@@ -205,7 +205,16 @@ document.addEventListener("DOMContentLoaded", () => {
             setupRoomDropdown(); 
         }); 
 
+    const login = document.getElementById('logoutBtn');
+    const logout = document.getElementById('loginMenuItem');
 
+    if (loggedIn) {
+        logout.style.display = "none";
+        login.style.display = "block";
+    } else {
+        logout.style.display = "block";
+        login.style.display = "none";
+    }
 });
 
 // Login modal functionality
