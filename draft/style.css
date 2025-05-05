@@ -93,7 +93,7 @@ body {
     display: flex;
     align-items: center;
     align-content: center;
-    z-index: 1000;
+    z-index: 50;
 }
 
 .nav-home {
@@ -108,7 +108,7 @@ body {
     display: flex;
     align-items: center;
     text-decoration: none;
-}
+} 
 
 .logo {
     display: inline-block;
@@ -130,12 +130,15 @@ body {
     font-weight: 500;
     color: black;
     margin: 0;
-    padding: 0;
+    padding: 2px 10px;
     cursor: pointer;
+    background-color: #ffffffaf;
+    border-radius: 20px;
     transition: all 0.3s ease;
 }
 
 .nav-home h1:hover {
+    background-color: #ffffff;
     color: #03e005;
     transform: scale(1.1);
 }
@@ -145,8 +148,8 @@ body {
 }
 
 .menu-dots {
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     margin-left: 20px;
     display: flex;
     flex-direction: column;
@@ -155,6 +158,8 @@ body {
     transform: rotate(90deg);
     transition: all 0.3s ease;
     cursor: pointer;
+    background-color: #ffffffaf;
+    border-radius: 50%;
 }
 
 .menu-dot {
@@ -378,7 +383,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #0000003c;
+    background-color: #9191913c;
     color: #000000;
     font-size: 1.5rem;
     font-weight: 500;
@@ -390,6 +395,7 @@ body {
 
 .get_started:hover {
     background-color: #03e005;
+    box-shadow: #000000 0px 0px 2px 0px;
     color: #ffffff;
     transform: scale(1.1);
 }
@@ -436,233 +442,148 @@ body {
 
 /* ----- Introduction - Title and Get Started ----- */
 
-/* ----- Introduction - Second Page ----- */
+/* ----- Introduction - Second Page Info Sections ----- */
 
 .second-page {
     position: relative;
     width: 100vw;
-    height: 170vh;
+    min-height: 170vh;
+    padding: 5vh 0;
 }
 
-/* Base styling for all titles with icons */
-.title1-left, .title2-right, .title3-left {
-    margin-bottom: 40px;
-    padding: 0 20px;
-    position: relative;
+.second-page-content {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 5vh;
+    padding: 0 5vw;
 }
 
-/* Title positioning */
-.title1-left {
-    transform: translateX(50px);
-    text-align: left;
+/* Common styles for all info sections */
+.info-1, .info-2, .info-3 {
+    width: 80vw;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
-.title2-right {
-    transform: translateX(650px);
-    text-align: right;
+.info-1:hover, .info-2:hover, .info-3:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.title3-left {
-    transform: translateX(50px);
-    text-align: left;
+/* Header section with icon and h2 */
+.info-1 .header, .info-2 .header, .info-3 .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Increased icon size */
+.info-1-icon, .info-2-icon, .info-3-icon {
+    width: 140px;
+    height: 140px;
+    margin-right: 20px;
+    object-fit: contain;
 }
 
 /* Heading styling */
-.title1-left h2, .title2-right h2, .title3-left h2 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
+.info-1 h2, .info-2 h2, .info-3 h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+    flex: 1;
 }
 
-/* Align title2 content to the right */
-.title2-right h2 {
-    justify-content: flex-end;
+/* Subtext styling with justified text */
+.info-1 .subtext, .info-2 .subtext, .info-3 .subtext {
+    width: 70vw;
+    padding-left: 100px; /* Increased to align with the heading text after larger icon */
 }
 
-/* Icon styling */
-.title_icon1, .title_icon2, .title_icon3 {
-    width: 50px;
-    height: 50px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+.info-1 .subtext p, .info-2 .subtext p, .info-3 .subtext p {
+    margin: 0;
+    line-height: 1.6;
+    color: #555;
+    text-align: justify; /* Added justified text alignment */
 }
 
-/* Icon positioning for left titles */
-.title1-left h2 .title_icon1, .title3-left h2 .title_icon3 {
-    margin-right: 15px;
-    order: -1; /* Place icon before the text */
-}
-
-/* Icon positioning for right title */
-.title2-right h2 .title_icon2 {
-    margin-left: 15px;
-    order: 1; /* Place icon after the text */
-}
-
-/* Subtext styling */
-.title1-left .subtext, .title3-left .subtext {
-    width: 40vw;
-    text-align: left;
-}
-
-.title2-right .subtext {
-    width: 40vw;
-    text-align: right;
-}
-
-/* Icon styling - make sure icons are visible */
-.title_icon1, .title_icon2, .title_icon3 {
-    width: 50px;
-    height: 50px;
-    display: inline-block; /* Ensure it's displayed as a block element */
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    vertical-align: middle; /* Align with text */
-    margin: 0 15px; /* Add margin on both sides */
-}
-
-/* Specific styling for title2_icon */
-.title2-right .title_icon2 {
-    margin-left: 15px;
-    margin-right: 0;
-    opacity: 1; /* Ensure full opacity */
-    visibility: visible; /* Make sure it's visible */
-}
-
-/* Specific styling for title1_icon and title3_icon */
-.title1-left .title_icon1, .title3-left .title_icon3 {
-    margin-right: 15px;
-    margin-left: 0;
-}
-
-/* Improve the heading to properly contain the icon */
-.title1-left h2, .title2-right h2, .title3-left h2 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-    display: flex; /* Use flexbox for better alignment */
-    align-items: center; /* Center items vertically */
-    flex-wrap: nowrap; /* Prevent wrapping */
-}
-
-/* Ensure icons are displayed inside heading */
-.title2-right h2 {
-    justify-content: flex-end; /* Right align content */
-}
-
-/* Add a debug outline to help identify any issues - remove in production */
-.title_icon2 {
-    border: 1px dashed #ccc; /* Add this temporarily to see if the element is rendered */
-}
-
-/* Media queries for mobile responsiveness */
-@media (max-width: 900px) {
-    .title1-left, .title3-left {
-        transform: none;
-        width: 85%;
-        margin: 0 auto 40px 5%;
-        padding: 0 10px;
-        text-align: left;
-    }
-    
-    .title2-right {
-        transform: none;
-        width: 30%;
-        margin: 0 5% 40px auto;
-        padding: 0 10px;
-        text-align: right;
-    }
-    
-    .title1-left h2, .title3-left h2 {
-        font-size: 1.6rem;
-        text-align: left;
-        margin-bottom: 10px;
-    }
-    
-    .title2-right h2 {
-        font-size: 1.6rem;
-        text-align: right;
-        margin-bottom: 10px;
-        justify-content: flex-end; /* Aligns icon and text to the right */
-    }
-    
-    .title1-left .subtext, .title3-left .subtext {
-        width: 100%;
-        text-align: left;
-        font-size: 0.9rem;
-    }
-    
-    .title2-right .subtext {
-        width: 100%;
-        text-align: right;
-        font-size: 0.9rem;
-    }
-    
-    .second-page {
-        height: auto;
-        padding-bottom: 50px;
-    }
-}
-
-/* Additional tablet-specific adjustments */
+/* Responsive design for smaller screens */
 @media (min-width: 480px) and (max-width: 900px) {
-    .title1-left, .title3-left {
-        width: 75%;
+    .info-1, .info-2, .info-3 {
+        width: 90vw;
+        padding: 20px;
     }
     
-    .title2-right {
-        width: 75%;
+    .info-1-icon, .info-2-icon, .info-3-icon {
+        width: 60px; /* Still larger than original but appropriate for medium screens */
+        height: 60px;
     }
     
-    .title1-left h2, .title2-right h2, .title3-left h2 {
-        font-size: 1.8rem;
+    .info-1 h2, .info-2 h2, .info-3 h2 {
+        font-size: 1.5rem;
     }
     
-    .title1-left .subtext, .title2-right .subtext, .title3-left .subtext {
-        font-size: 1rem;
+    .info-1 .subtext, .info-2 .subtext, .info-3 .subtext {
+        padding-left: 80px; /* Adjusted for medium screens */
     }
 }
 
-/* For slightly larger phones */
-@media (min-width: 600px) and (max-width: 900px) {
-    .title1-left, .title3-left {
-        width: 65%;
-    }
-    
-    .title2-right {
-        width: 65%;
-    }
-}
-
-/* Very small screens need more adjustments */
+/* Further optimization for very small screens */
 @media (max-width: 480px) {
-    .title1-left, .title3-left, .title2-right {
-        width: 90%;
-        margin: 0 auto 30px auto;
-        text-align: center;
+    .info-1 .header, .info-2 .header, .info-3 .header {
+        flex-direction: column;
+        align-items: flex-start;
     }
     
-    .title1-left h2, .title3-left h2, .title2-right h2 {
-        text-align: center;
-        justify-content: center;
-        font-size: 1.4rem;
+    .info-1-icon, .info-2-icon, .info-3-icon {
+        width: 70px; /* Keep icons relatively large even on small screens */
+        height: 70px;
+        margin-bottom: 15px;
     }
     
-    .title1-left .subtext, .title3-left .subtext, .title2-right .subtext {
-        text-align: center;
+    .info-1 .subtext, .info-2 .subtext, .info-3 .subtext {
+        padding-left: 0;
+    }
+}
+
+/* Special styling for info-2 section - right aligned */
+.info-2 .header {
+    flex-direction: row-reverse; /* Reverse the order of elements */
+}
+
+.info-2 .header h2 {
+    text-align: right; /* Right-align the heading text */
+}
+
+.info-2 .info-2-icon {
+    margin-right: 0;
+    margin-left: 20px; /* Move margin from right to left */
+}
+
+.info-2 .subtext {
+    padding-left: 0;
+    padding-right: 100px; /* Move padding from left to right */
+}
+
+/* Responsive design adjustments for info-2 */
+@media (min-width: 480px) and (max-width: 900px) {
+    .info-2 .subtext {
+        padding-left: 0;
+        padding-right: 80px; /* Adjusted for medium screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .info-2 .header {
+        flex-direction: column; /* Stack vertically on very small screens */
+        align-items: flex-end; /* Align to the right */
     }
     
-    /* Center the icons on small screens */
-    .title1-left h2 .title_icon1, .title3-left h2 .title_icon3 {
-        margin-right: 10px;
-    }
-    
-    .title2-right h2 .title_icon2 {
-        margin-left: 10px;
+    .info-2 .subtext {
+        padding-right: 0;
     }
 }
 
